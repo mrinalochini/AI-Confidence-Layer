@@ -58,16 +58,16 @@ if st.button("Generate Answer"):
     stream=False
     )
             
-            answer_text = response.choices[0].message.content
-            result = json.loads(answer_text)
+    answer_text = response.choices[0].message.content
+    result = json.loads(answer_text)
             
-            st.subheader("Confidence-Layered Output:")
-            for claim in result["claims"]:
+    st.subheader("Confidence-Layered Output:")
+    for claim in result["claims"]:
 
-                st.markdown(
-                    f"""
-                    **Claim {claim['id']}**
+        st.markdown(
+            f"""
+            **Claim {claim['id']}**
 
-                    {claim['text']}
-                    """
-                )
+            {claim['text']}
+            """
+        )
