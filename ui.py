@@ -3,7 +3,7 @@ import html
 
 
 # =========================================================
-# GLOBAL CSS
+# GLOBAL DESIGN
 # =========================================================
 
 def load_css():
@@ -12,420 +12,855 @@ def load_css():
         """
         <style>
 
-        /* =========================
-           PAGE
-        ========================= */
+        /* =================================================
+           MAIN PAGE
+        ================================================= */
 
         .stApp {
-            background: #f6f7fb;
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(190, 170, 255, 0.35),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(140, 210, 255, 0.30),
+                    transparent 30%
+                ),
+                linear-gradient(
+                    135deg,
+                    #f9f7ff 0%,
+                    #f5f9ff 50%,
+                    #fff8fc 100%
+                );
+
             color: #172033;
         }
 
+
+        /* =================================================
+           PAGE WIDTH
+        ================================================= */
+
         .main .block-container {
-            max-width: 1100px;
+
+            max-width: 1150px;
+
             padding-top: 3rem;
-            padding-bottom: 4rem;
+            padding-bottom: 5rem;
+
         }
 
 
-        /* =========================
-           GLOBAL FONT
-        ========================= */
+        /* =================================================
+           GENERAL FONT
+        ================================================= */
 
-        html, body, [class*="css"] {
-            font-family: "Segoe UI", "Trebuchet MS", Arial, sans-serif;
+        html,
+        body,
+        [class*="css"] {
+
+            font-family:
+                "Trebuchet MS",
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
         }
 
-        p, span, div, label {
-            font-family: "Segoe UI", "Trebuchet MS", Arial, sans-serif;
-        }
 
-
-        /* =========================
-           HERO
-        ========================= */
+        /* =================================================
+           HERO SECTION
+        ================================================= */
 
         .hero {
-            background: linear-gradient(
-                135deg,
-                #ffffff 0%,
-                #f4f1ff 50%,
-                #eef4ff 100%
-            );
 
-            border: 1px solid #e5e7f0;
-            border-radius: 24px;
+            position: relative;
 
-            padding: 42px 40px;
+            overflow: hidden;
 
-            margin-bottom: 35px;
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(255,255,255,0.96),
+                    rgba(246,242,255,0.97),
+                    rgba(239,248,255,0.97)
+                );
+
+            border: 1px solid rgba(135, 120, 210, 0.18);
+
+            border-radius: 30px;
+
+            padding: 48px 45px;
+
+            margin-bottom: 38px;
 
             text-align: center;
 
             box-shadow:
-                0 10px 30px rgba(40, 50, 90, 0.08);
+                0 20px 50px rgba(70, 60, 130, 0.10);
+
         }
+
+
+        .hero::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 180px;
+            height: 180px;
+
+            background: rgba(157, 125, 255, 0.13);
+
+            border-radius: 50%;
+
+            top: -80px;
+            left: -60px;
+
+        }
+
+
+        .hero::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 160px;
+            height: 160px;
+
+            background: rgba(75, 190, 255, 0.12);
+
+            border-radius: 50%;
+
+            bottom: -70px;
+            right: -50px;
+
+        }
+
+
+        /* =================================================
+           HERO ICON
+        ================================================= */
 
         .hero-icon {
-            font-size: 48px;
-            margin-bottom: 10px;
+
+            font-size: 54px;
+
+            margin-bottom: 12px;
+
         }
+
+
+        /* =================================================
+           HERO TITLE
+        ================================================= */
 
         .hero-title {
-            font-size: 38px;
-            font-weight: 750;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 44px;
+
+            font-weight: 800;
+
             letter-spacing: -1px;
-            color: #172033;
-            margin-bottom: 12px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #7048e8,
+                    #a23fc7,
+                    #3c82e8
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            margin-bottom: 14px;
+
         }
+
+
+        /* =================================================
+           HERO SUBTITLE
+        ================================================= */
 
         .hero-subtitle {
-            font-size: 17px;
-            line-height: 1.6;
-            color: #667085;
-            max-width: 650px;
+
+            font-family:
+                "Trebuchet MS",
+                sans-serif;
+
+            font-size: 18px;
+
+            line-height: 1.7;
+
+            color: #657086;
+
+            max-width: 700px;
+
             margin: auto;
+
         }
+
 
         .hero-highlight {
-            color: #6d4aff;
-            font-weight: 700;
+
+            color: #7048e8;
+
+            font-weight: 750;
+
         }
 
 
-        /* =========================
-           QUESTION AREA
-        ========================= */
+        /* =================================================
+           QUESTION LABEL
+        ================================================= */
 
         .question-label {
-            font-size: 18px;
-            font-weight: 650;
-            color: #172033;
-            margin-bottom: 8px;
+
+            font-family:
+                Georgia,
+                serif;
+
+            font-size: 21px;
+
+            font-weight: 700;
+
+            color: #252c42;
+
+            margin-bottom: 7px;
+
         }
 
 
-        /* =========================
-           INPUT
-        ========================= */
+        /* =================================================
+           TEXT INPUT
+        ================================================= */
+
+        div[data-testid="stTextInput"] {
+
+            margin-bottom: 12px;
+
+        }
+
 
         div[data-baseweb="input"] {
-            border-radius: 12px !important;
-            border: 1px solid #dfe3ed !important;
-            background: white !important;
-        }
 
-        div[data-baseweb="input"]:focus-within {
-            border: 1px solid #8066ff !important;
-            box-shadow: 0 0 0 3px rgba(128, 102, 255, 0.12) !important;
-        }
+            background: #ffffff !important;
 
-        input {
-            font-size: 16px !important;
-            color: #172033 !important;
-        }
+            border: 2px solid #e2e4ee !important;
 
+            border-radius: 16px !important;
 
-        /* =========================
-           BUTTON
-        ========================= */
-
-        .stButton > button {
-            border: none;
-            border-radius: 12px;
-
-            background: linear-gradient(
-                135deg,
-                #7456f5,
-                #5b8def
-            );
-
-            color: white;
-
-            font-size: 16px;
-            font-weight: 650;
-
-            padding: 12px 25px;
+            min-height: 55px !important;
 
             box-shadow:
-                0 6px 15px rgba(100, 85, 220, 0.25);
+                0 5px 18px rgba(60, 70, 120, 0.06);
 
             transition: all 0.2s ease;
+
         }
 
+
+        div[data-baseweb="input"]:hover {
+
+            border-color: #b7a6f5 !important;
+
+        }
+
+
+        div[data-baseweb="input"]:focus-within {
+
+            border-color: #8064e8 !important;
+
+            box-shadow:
+                0 0 0 4px rgba(128, 100, 232, 0.12),
+                0 7px 20px rgba(80, 60, 150, 0.08) !important;
+
+        }
+
+
+        /* IMPORTANT:
+           Make the typed question clearly visible
+        */
+
+        div[data-baseweb="input"] input {
+
+            color: #172033 !important;
+
+            background: #ffffff !important;
+
+            font-family:
+                "Trebuchet MS",
+                "Segoe UI",
+                sans-serif !important;
+
+            font-size: 17px !important;
+
+            font-weight: 600 !important;
+
+        }
+
+
+        div[data-baseweb="input"] input::placeholder {
+
+            color: #98a0b3 !important;
+
+            opacity: 1 !important;
+
+            font-weight: 400 !important;
+
+        }
+
+
+        /* =================================================
+           ANALYZE BUTTON
+        ================================================= */
+
+        .stButton > button {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #7655e8,
+                    #a04de0,
+                    #4d8de8
+                ) !important;
+
+            color: white !important;
+
+            border: none !important;
+
+            border-radius: 14px !important;
+
+            padding: 13px 28px !important;
+
+            font-family:
+                "Trebuchet MS",
+                sans-serif !important;
+
+            font-size: 16px !important;
+
+            font-weight: 750 !important;
+
+            letter-spacing: 0.2px;
+
+            box-shadow:
+                0 8px 20px rgba(110, 75, 210, 0.25);
+
+            transition: all 0.2s ease;
+
+        }
+
+
         .stButton > button:hover {
+
             transform: translateY(-2px);
 
             box-shadow:
-                0 9px 20px rgba(100, 85, 220, 0.30);
+                0 12px 26px rgba(110, 75, 210, 0.32);
+
         }
 
 
-        /* =========================
+        /* =================================================
            SECTION TITLE
-        ========================= */
+        ================================================= */
 
         .section-title {
-            font-size: 25px;
-            font-weight: 750;
 
-            color: #172033;
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
 
-            margin-top: 40px;
-            margin-bottom: 22px;
+            font-size: 29px;
+
+            font-weight: 800;
+
+            color: #252c42;
+
+            margin-top: 42px;
+
+            margin-bottom: 8px;
+
         }
+
 
         .section-description {
-            color: #667085;
+
+            font-family:
+                "Segoe UI",
+                sans-serif;
+
             font-size: 15px;
-            margin-top: -14px;
+
+            line-height: 1.6;
+
+            color: #7a8294;
+
             margin-bottom: 25px;
+
         }
 
 
-        /* =========================
+        /* =================================================
            CLAIM CARD
-        ========================= */
+        ================================================= */
 
         .claim-card {
-            background: white;
 
-            border: 1px solid #e4e7ef;
+            background: rgba(255,255,255,0.97);
 
-            border-radius: 18px;
+            border: 1px solid #e7e8f0;
 
-            padding: 26px;
+            border-radius: 20px;
 
-            margin-bottom: 20px;
-
-            box-shadow:
-                0 5px 18px rgba(30, 40, 70, 0.06);
-        }
-
-        .claim-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 28px;
 
             margin-bottom: 18px;
+
+            box-shadow:
+                0 8px 25px rgba(50, 55, 90, 0.07);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+
         }
+
+
+        .claim-card:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 30px rgba(50, 55, 90, 0.10);
+
+        }
+
+
+        /* =================================================
+           CLAIM HEADER
+        ================================================= */
+
+        .claim-header {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 17px;
+
+        }
+
 
         .claim-label {
-            font-size: 13px;
+
+            font-family:
+                "Courier New",
+                monospace;
+
+            font-size: 12px;
+
             font-weight: 700;
 
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.4px;
 
-            color: #7b8498;
+            text-transform: uppercase;
+
+            color: #9299aa;
+
         }
 
 
-        /* =========================
+        /* =================================================
            CONFIDENCE BADGES
-        ========================= */
+        ================================================= */
 
         .confidence-badge {
-            padding: 7px 13px;
+
+            padding: 8px 14px;
 
             border-radius: 999px;
 
-            font-size: 12px;
-            font-weight: 750;
+            font-family:
+                "Trebuchet MS",
+                sans-serif;
 
-            letter-spacing: 0.5px;
+            font-size: 12px;
+
+            font-weight: 800;
+
+            letter-spacing: 0.4px;
+
         }
+
 
         .confidence-high {
-            background: #e8f8ee;
-            color: #16834a;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e4f9ec,
+                    #d7f5e5
+                );
+
+            color: #16834c;
+
         }
+
 
         .confidence-medium {
-            background: #fff5d9;
-            color: #a66b00;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff5d9,
+                    #fff0c5
+                );
+
+            color: #a86d00;
+
         }
+
 
         .confidence-low {
-            background: #ffe9e9;
-            color: #c43d3d;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffe9ec,
+                    #ffdddd
+                );
+
+            color: #c33c50;
+
         }
 
 
-        /* =========================
+        /* =================================================
            CLAIM TEXT
-        ========================= */
+        ================================================= */
 
         .claim-text {
-            font-size: 19px;
+
+            font-family:
+                Georgia,
+                "Times New Roman",
+                serif;
+
+            font-size: 21px;
 
             line-height: 1.65;
 
-            font-weight: 550;
+            font-weight: 600;
 
-            color: #20283a;
+            color: #20283b;
 
-            margin-bottom: 20px;
+            margin-bottom: 21px;
+
         }
 
 
-        /* =========================
+        /* =================================================
            WHY BOX
-        ========================= */
+        ================================================= */
 
         .reason-box {
-            background: #f7f8fc;
 
-            border-left: 4px solid #7456f5;
+            background:
+                linear-gradient(
+                    135deg,
+                    #f8f5ff,
+                    #f3f8ff
+                );
 
-            border-radius: 10px;
+            border-left: 4px solid #8262e8;
 
-            padding: 15px 18px;
+            border-radius: 12px;
 
-            margin-bottom: 18px;
+            padding: 16px 19px;
+
+            margin-bottom: 5px;
+
         }
+
 
         .reason-title {
+
+            font-family:
+                "Trebuchet MS",
+                sans-serif;
+
             font-size: 13px;
-            font-weight: 750;
 
-            color: #7456f5;
+            font-weight: 800;
 
-            margin-bottom: 5px;
+            color: #7555d9;
+
+            margin-bottom: 6px;
+
         }
+
 
         .reason-text {
+
+            font-family:
+                "Segoe UI",
+                sans-serif;
+
             font-size: 15px;
-            line-height: 1.5;
 
-            color: #596273;
+            line-height: 1.55;
+
+            color: #60697b;
+
         }
 
 
-        /* =========================
-           EVIDENCE
-        ========================= */
+        /* =================================================
+           EVIDENCE EXPANDER
+        ================================================= */
 
-        .evidence-title {
-            font-size: 14px;
+        div[data-testid="stExpander"] {
 
-            font-weight: 700;
+            background: rgba(255,255,255,0.95) !important;
 
-            color: #30394d;
+            border: 1px solid #e4e6ef !important;
 
-            margin-bottom: 8px;
-        }
-
-        .source-card {
-            background: #fafbfe;
-
-            border: 1px solid #e8eaf1;
-
-            border-radius: 10px;
-
-            padding: 14px 16px;
-
-            margin-top: 10px;
-        }
-
-        .source-name {
-            font-size: 14px;
-            font-weight: 700;
-
-            color: #344054;
-
-            margin-bottom: 5px;
-        }
-
-        .source-content {
-            font-size: 13px;
-
-            line-height: 1.5;
-
-            color: #667085;
-        }
-
-        .source-link {
-            display: inline-block;
+            border-radius: 14px !important;
 
             margin-top: 8px;
 
+        }
+
+
+        div[data-testid="stExpander"] summary {
+
+            font-family:
+                "Trebuchet MS",
+                sans-serif !important;
+
+            font-weight: 700 !important;
+
+            color: #424a60 !important;
+
+        }
+
+
+        /* =================================================
+           EVIDENCE SOURCE
+        ================================================= */
+
+        .source-card {
+
+            background: #fafbff;
+
+            border: 1px solid #e9ebf3;
+
+            border-radius: 12px;
+
+            padding: 16px;
+
+            margin-top: 10px;
+
+        }
+
+
+        .source-name {
+
+            font-family:
+                Georgia,
+                serif;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            color: #30394e;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .source-content {
+
+            font-family:
+                "Segoe UI",
+                sans-serif;
+
             font-size: 13px;
 
-            color: #635bff;
+            line-height: 1.55;
+
+            color: #687185;
+
+        }
+
+
+        .source-link {
+
+            display: inline-block;
+
+            margin-top: 9px;
+
+            font-family:
+                "Trebuchet MS",
+                sans-serif;
+
+            font-size: 13px;
+
+            color: #7054df;
 
             text-decoration: none;
 
-            font-weight: 650;
+            font-weight: 750;
+
         }
 
 
-        /* =========================
+        /* =================================================
            SUMMARY
-        ========================= */
+        ================================================= */
 
         .summary-grid {
+
             display: flex;
-            gap: 15px;
+
+            gap: 16px;
 
             margin-bottom: 30px;
+
         }
 
+
         .summary-card {
+
             flex: 1;
 
-            background: white;
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    #fafaff
+                );
 
-            border: 1px solid #e4e7ef;
+            border: 1px solid #e5e7ef;
 
-            border-radius: 15px;
+            border-radius: 17px;
 
-            padding: 20px;
+            padding: 21px;
 
             text-align: center;
 
             box-shadow:
-                0 4px 15px rgba(30, 40, 70, 0.05);
+                0 6px 18px rgba(50, 55, 90, 0.05);
+
         }
+
 
         .summary-number {
-            font-size: 28px;
 
-            font-weight: 750;
+            font-family:
+                Georgia,
+                serif;
 
-            color: #172033;
+            font-size: 30px;
+
+            font-weight: 800;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #7250dc,
+                    #4788e8
+                );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
         }
+
 
         .summary-label {
+
+            font-family:
+                "Trebuchet MS",
+                sans-serif;
+
             font-size: 13px;
 
-            color: #7b8498;
+            color: #7b8497;
 
             margin-top: 4px;
+
         }
 
 
-        /* =========================
-           EXPANDER
-        ========================= */
-
-        div[data-testid="stExpander"] {
-            border: 1px solid #e5e7ef !important;
-
-            border-radius: 12px !important;
-
-            background: #ffffff !important;
-        }
-
-
-        /* =========================
-           WARNINGS
-        ========================= */
+        /* =================================================
+           STREAMLIT ALERTS
+        ================================================= */
 
         div[data-testid="stAlert"] {
-            border-radius: 12px;
+
+            border-radius: 13px;
+
         }
 
+
+        /* =================================================
+           MOBILE
+        ================================================= */
+
+        @media (max-width: 700px) {
+
+            .hero {
+
+                padding: 35px 20px;
+
+            }
+
+            .hero-title {
+
+                font-size: 34px;
+
+            }
+
+            .hero-subtitle {
+
+                font-size: 16px;
+
+            }
+
+            .summary-grid {
+
+                flex-direction: column;
+
+            }
+
+            .claim-header {
+
+                align-items: flex-start;
+
+                gap: 10px;
+
+                flex-direction: column;
+
+            }
+
+        }
 
         </style>
         """,
@@ -443,18 +878,28 @@ def display_header():
         """
         <div class="hero">
 
-            <div class="hero-icon">🧠</div>
+            <div class="hero-icon">
+                🧠✨
+            </div>
 
             <div class="hero-title">
                 AI Confidence Layer
             </div>
 
             <div class="hero-subtitle">
-                Don't just get an AI answer.
-                Understand
+
+                Get answers from AI —
+                then discover
                 <span class="hero-highlight">
-                    why you should trust it.
+                    how much you can trust them.
                 </span>
+
+                <br>
+
+                We check individual claims against
+                supporting evidence so you can make
+                better-informed decisions.
+
             </div>
 
         </div>
@@ -471,12 +916,14 @@ def display_analysis_header():
     st.html(
         """
         <div class="section-title">
-            🔬 Claim-by-Claim Analysis
+            🔍 Claim-by-Claim Analysis
         </div>
 
         <div class="section-description">
-            Each claim is evaluated against external evidence
-            to help you understand how trustworthy the answer is.
+
+            We've broken the AI response into individual
+            claims and checked the evidence behind each one.
+
         </div>
         """
     )
@@ -509,11 +956,18 @@ def display_claim(claim, confidence, evidence):
     safe_claim = html.escape(str(claim))
 
     safe_reason = html.escape(
-        str(confidence.get("reason", "No explanation provided."))
+        str(
+            confidence.get(
+                "reason",
+                "No explanation was provided."
+            )
+        )
     )
 
 
-    # Main claim card
+    # -----------------------------------------------------
+    # CLAIM CARD
+    # -----------------------------------------------------
 
     st.html(
         f"""
@@ -522,7 +976,7 @@ def display_claim(claim, confidence, evidence):
             <div class="claim-header">
 
                 <div class="claim-label">
-                    AI Claim
+                    AI CLAIM
                 </div>
 
                 <div class="confidence-badge {badge_class}">
@@ -531,14 +985,16 @@ def display_claim(claim, confidence, evidence):
 
             </div>
 
+
             <div class="claim-text">
                 {safe_claim}
             </div>
 
+
             <div class="reason-box">
 
                 <div class="reason-title">
-                    Why this confidence level?
+                    💡 Why this confidence level?
                 </div>
 
                 <div class="reason-text">
@@ -552,36 +1008,54 @@ def display_claim(claim, confidence, evidence):
     )
 
 
-    # Evidence section
+    # -----------------------------------------------------
+    # EVIDENCE
+    # -----------------------------------------------------
 
-    with st.expander("📚 View supporting evidence"):
+    with st.expander("📚  View supporting evidence"):
 
         if not evidence:
 
-            st.info("No supporting evidence was found.")
+            st.info(
+                "We couldn't find supporting evidence for this claim."
+            )
 
         else:
 
             for source in evidence:
 
                 title = html.escape(
-                    str(source.get("title", "Unknown source"))
+                    str(
+                        source.get(
+                            "title",
+                            "Unknown source"
+                        )
+                    )
                 )
 
                 content = html.escape(
-                    str(source.get("content", ""))
+                    str(
+                        source.get(
+                            "content",
+                            ""
+                        )
+                    )
                 )
 
                 url = str(
-                    source.get("url", "#")
+                    source.get(
+                        "url",
+                        "#"
+                    )
                 )
+
 
                 st.html(
                     f"""
                     <div class="source-card">
 
                         <div class="source-name">
-                            {title}
+                            📖 {title}
                         </div>
 
                         <div class="source-content">
@@ -593,7 +1067,7 @@ def display_claim(claim, confidence, evidence):
                             href="{url}"
                             target="_blank"
                         >
-                            Open source →
+                            Read source →
                         </a>
 
                     </div>
@@ -631,10 +1105,11 @@ def display_summary(analyzed_claims):
     st.html(
         f"""
         <div class="section-title">
-            📊 Trust Summary
+            ✨ Trust Summary
         </div>
 
         <div class="summary-grid">
+
 
             <div class="summary-card">
 
@@ -643,7 +1118,7 @@ def display_summary(analyzed_claims):
                 </div>
 
                 <div class="summary-label">
-                    Total Claims
+                    Claims Analyzed
                 </div>
 
             </div>
@@ -656,7 +1131,7 @@ def display_summary(analyzed_claims):
                 </div>
 
                 <div class="summary-label">
-                    High Confidence
+                    🟢 High Confidence
                 </div>
 
             </div>
@@ -669,7 +1144,7 @@ def display_summary(analyzed_claims):
                 </div>
 
                 <div class="summary-label">
-                    Medium Confidence
+                    🟡 Medium Confidence
                 </div>
 
             </div>
@@ -682,10 +1157,11 @@ def display_summary(analyzed_claims):
                 </div>
 
                 <div class="summary-label">
-                    Low Confidence
+                    🔴 Low Confidence
                 </div>
 
             </div>
+
 
         </div>
         """
