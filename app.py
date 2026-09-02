@@ -8,7 +8,8 @@ from ui import (
     load_css,
     display_header,
     display_claim,
-    display_summary
+    display_summary,
+    display_analysis_header
 )
 
 load_css()
@@ -60,10 +61,7 @@ if st.button("🔍 Analyze Answer"):
 
         display_summary(analyzed_claims)
 
-        st.markdown(
-            '<div class="section-title">🔬 Claim-by-Claim Analysis</div>',
-            unsafe_allow_html=True
-        )
+        display_analysis_header()
 
         for item in analyzed_claims:
 
