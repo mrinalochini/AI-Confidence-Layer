@@ -4,8 +4,25 @@ import os
 from llm_engine import generate_claims
 from evidence_engine import find_evidence
 from confidence_engine import calculate_confidence
-from ui import display_claim
+from ui import (
+    load_css,
+    display_header,
+    display_claim,
+    display_summary
+)
 
+
+# -------------------------------
+# FRONTEND
+# -------------------------------
+
+load_css()
+display_header()
+
+
+# -------------------------------
+# QUESTION INPUT
+# -------------------------------
 
 st.title("AI Confidence Layer")
 
