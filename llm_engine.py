@@ -51,7 +51,7 @@ if st.button("Generate Answer"):
     User question:
     {user_question}
     """
-                response = client.chat.completions.create(
+    response = client.chat.completions.create(
     model="openai/gpt-oss-120b",
     messages=[{"role": "user", "content": prompt}],
     response_format={"type": "json_object"},
