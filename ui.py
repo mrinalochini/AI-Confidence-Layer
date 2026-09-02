@@ -407,56 +407,104 @@ def load_css():
 
 
         /* =====================================================
-           ANALYZE BUTTON
-        ===================================================== */
+   ANALYZE BUTTON
+   ===================================================== */
 
-        .stButton > button {
+.stButton > button,
+div[data-testid="stFormSubmitButton"] > button {
 
-            background:
-                linear-gradient(
-                    135deg,
-                    #7754e8,
-                    #a14ed8,
-                    #4d8ee8
-                ) !important;
+    background: linear-gradient(
+        135deg,
+        #7654E8 0%,
+        #A64ED6 50%,
+        #4D8FE8 100%
+    ) !important;
 
-            color: #ffffff !important;
+    color: #FFFFFF !important;
 
-            border: none !important;
+    -webkit-text-fill-color: #FFFFFF !important;
 
-            border-radius: 15px !important;
+    border: none !important;
 
-            min-height: 50px !important;
+    border-radius: 15px !important;
 
-            padding:
-                10px 27px !important;
+    min-height: 52px !important;
 
-            font-family:
-                "Space Grotesk",
-                sans-serif !important;
+    padding: 10px 28px !important;
 
-            font-size: 16px !important;
+    font-family: "Space Grotesk", sans-serif !important;
 
-            font-weight: 700 !important;
+    font-size: 16px !important;
 
-            letter-spacing: 0.2px;
+    font-weight: 700 !important;
 
-            box-shadow:
-                0 8px 22px rgba(106, 77, 210, 0.25);
+    letter-spacing: 0.2px;
 
-            transition: all 0.2s ease !important;
+    box-shadow:
+        0 8px 22px rgba(106, 77, 210, 0.25) !important;
 
-        }
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease !important;
+
+}
 
 
-        .stButton > button:hover {
+/* Button text */
 
-            transform: translateY(-2px) scale(1.01);
+.stButton > button p,
+div[data-testid="stFormSubmitButton"] > button p {
 
-            box-shadow:
-                0 13px 28px rgba(106, 77, 210, 0.32);
+    color: #FFFFFF !important;
 
-        }
+    -webkit-text-fill-color: #FFFFFF !important;
+
+    font-family: "Space Grotesk", sans-serif !important;
+
+    font-weight: 700 !important;
+
+}
+
+
+/* Hover */
+
+.stButton > button:hover,
+div[data-testid="stFormSubmitButton"] > button:hover {
+
+    background: linear-gradient(
+        135deg,
+        #6847DD 0%,
+        #9641C8 50%,
+        #4384DF 100%
+    ) !important;
+
+    color: #FFFFFF !important;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 12px 28px rgba(106, 77, 210, 0.32) !important;
+
+}
+
+
+/* Clicked / focused */
+
+.stButton > button:focus,
+div[data-testid="stFormSubmitButton"] > button:focus {
+
+    color: #FFFFFF !important;
+
+    -webkit-text-fill-color: #FFFFFF !important;
+
+    outline: none !important;
+
+    box-shadow:
+        0 0 0 4px rgba(118, 84, 232, 0.18),
+        0 8px 22px rgba(106, 77, 210, 0.25) !important;
+
+}
 
 
         /* =====================================================
