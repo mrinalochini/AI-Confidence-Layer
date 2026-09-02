@@ -35,7 +35,7 @@ display_header()
 
 
 # =========================================================
-# ANALYSIS FUNCTION
+# ANALYZE QUESTION
 # =========================================================
 
 def analyze_question(question):
@@ -44,9 +44,7 @@ def analyze_question(question):
         "🧠 Thinking... This may take a few minutes."
     ):
 
-        # ---------------------------------------------
-        # GENERATE CLAIMS
-        # ---------------------------------------------
+        # Generate claims
 
         result = generate_claims(
             question
@@ -56,22 +54,22 @@ def analyze_question(question):
         analyzed_claims = []
 
 
-        # ---------------------------------------------
-        # PROCESS CLAIMS
-        # ---------------------------------------------
+        # Process each claim
 
         for claim in result["claims"]:
 
             claim_text = claim["text"]
 
 
-            # Find evidence
+            # Retrieve evidence
+
             evidence = find_evidence(
                 claim_text
             )
 
 
             # Calculate confidence
+
             confidence = calculate_confidence(
                 claim_text,
                 evidence
@@ -93,11 +91,11 @@ def analyze_question(question):
 
 
 # =========================================================
-# FIRST QUESTION
+# FIRST QUESTION FORM
 # =========================================================
 
 with st.form(
-    "main_question_form",
+    "question_form",
     clear_on_submit=False
 ):
 
@@ -105,10 +103,10 @@ with st.form(
         """
         <div style="
             font-family:'Space Grotesk',sans-serif;
-            font-size:19px;
+            font-size:20px;
             font-weight:700;
             color:#343B53;
-            margin-bottom:7px;
+            margin-bottom:6px;
         ">
             💬 What would you like to know?
         </div>
@@ -119,8 +117,8 @@ with st.form(
             color:#7A8195;
             margin-bottom:13px;
         ">
-            Ask anything and we'll help you understand how much
-            you can trust the answer.
+            Ask anything and we'll help you understand
+            how much you can trust the answer.
         </div>
         """,
         unsafe_allow_html=True
@@ -141,7 +139,7 @@ with st.form(
 
 
 # =========================================================
-# PROCESS FIRST QUESTION
+# RUN FIRST QUESTION
 # =========================================================
 
 if submitted:
@@ -154,38 +152,42 @@ if submitted:
 
     else:
 
-        st.session_state["question"] = question
-
         st.session_state["analyzed_claims"] = (
             analyze_question(question)
         )
 
+        st.session_state["has_answer"] = True
+
 
 # =========================================================
-# DISPLAY CURRENT ANSWER
+# SHOW ANSWER
 # =========================================================
 
-if "analyzed_claims" in st.session_state:
+if st.session_state.get(
+    "has_answer",
+    False
+):
 
-    analyzed_claims = (
-        st.session_state["analyzed_claims"]
+    analyzed_claims = st.session_state.get(
+        "analyzed_claims",
+        []
     )
 
 
     if analyzed_claims:
 
-        # ---------------------------------------------
-        # TRUST SUMMARY
-        # ---------------------------------------------
+        # -------------------------------------------------
+        # SUMMARY
+        # -------------------------------------------------
 
         display_summary(
             analyzed_claims
         )
 
 
-        # ---------------------------------------------
+        # -------------------------------------------------
         # CLAIM ANALYSIS
-        # ---------------------------------------------
+        # -------------------------------------------------
 
         display_analysis_header()
 
@@ -200,37 +202,37 @@ if "analyzed_claims" in st.session_state:
 
 
         # =================================================
-        # ASK ANOTHER QUESTION
+        # FOLLOW-UP QUESTION
         # =================================================
 
         display_question_prompt()
 
 
         with st.form(
-            "another_question_form",
+            "followup_question_form",
             clear_on_submit=False
         ):
 
-            another_question = st.text_input(
+            followup_question = st.text_input(
                 "Another question",
                 placeholder="Ask another question...",
                 label_visibility="collapsed",
-                key="another_question"
+                key="followup_question"
             )
 
 
-            another_submitted = st.form_submit_button(
+            followup_submitted = st.form_submit_button(
                 "✨  Analyze New Question"
             )
 
 
         # =================================================
-        # PROCESS NEW QUESTION
+        # RUN FOLLOW-UP QUESTION
         # =================================================
 
-        if another_submitted:
+        if followup_submitted:
 
-            if not another_question.strip():
+            if not followup_question.strip():
 
                 st.warning(
                     "✨ Please enter a question first."
@@ -238,13 +240,9 @@ if "analyzed_claims" in st.session_state:
 
             else:
 
-                st.session_state["question"] = (
-                    another_question
-                )
-
                 st.session_state["analyzed_claims"] = (
                     analyze_question(
-                        another_question
+                        followup_question
                     )
                 )
 
