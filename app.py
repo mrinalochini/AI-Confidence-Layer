@@ -12,61 +12,184 @@ from ui import (
     display_analysis_header
 )
 
-load_css()
-display_header()
 
-question = st.text_input(
-    "Ask a question",
-    placeholder="Example: Who invented the telephone?"
+# =========================================================
+# PAGE SETUP
+# =========================================================
+
+st.set_page_config(
+    page_title="AI Confidence Layer",
+    page_icon="🧠",
+    layout="centered"
 )
 
-if st.button("🔍 Analyze Answer"):
+load_css()
 
-    if not question:
-        st.warning("Please enter a question.")
+display_header()
+
+
+# =========================================================
+# QUESTION AREA
+# =========================================================
+
+st.markdown(
+    """
+    <div style="
+        margin-top: 10px;
+        margin-bottom: 8px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 19px;
+        font-weight: 700;
+        color: #343b53;
+    ">
+        💬 What would you like to know?
+    </div>
+
+    <div style="
+        margin-bottom: 14px;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 14px;
+        color: #7a8397;
+    ">
+        Ask anything and we'll help you understand how much you can trust the answer.
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
+
+# =========================================================
+# FORM
+# =========================================================
+
+with st.form(
+    key="question_form",
+    clear_on_submit=False
+):
+
+    question = st.text_input(
+        "Question",
+        placeholder="Try: Who invented the telephone?",
+        label_visibility="collapsed"
+    )
+
+    submitted = st.form_submit_button(
+        "🔍  Analyze Answer",
+        use_container_width=False
+    )
+
+
+# =========================================================
+# PROCESS QUESTION
+# =========================================================
+
+if submitted:
+
+    if not question.strip():
+
+        st.warning(
+            "✨ Please enter a question first."
+        )
 
     else:
 
-        with st.spinner("🧠 Generating and separating claims..."):
+        # -------------------------------------------------
+        # ONE SIMPLE PROCESSING MESSAGE
+        # -------------------------------------------------
 
+        with st.spinner(
+            "🧠 Thinking... This may take a few minutes."
+        ):
+
+            # Generate claims
             result = generate_claims(question)
 
-        analyzed_claims = []
+            analyzed_claims = []
 
-        for claim in result["claims"]:
 
-            claim_id = claim["id"]
-            claim_text = claim["text"]
+            # -------------------------------------------------
+            # PROCESS EVERYTHING QUIETLY
+            # -------------------------------------------------
 
-            with st.spinner(
-                f"🔎 Finding evidence for Claim {claim_id}..."
-            ):
+            for claim in result["claims"]:
 
-                evidence = find_evidence(claim_text)
+                claim_text = claim["text"]
 
-            with st.spinner(
-                f"🧠 Evaluating Claim {claim_id}..."
-            ):
 
+                # Find supporting evidence
+                evidence = find_evidence(
+                    claim_text
+                )
+
+
+                # Calculate confidence
                 confidence = calculate_confidence(
                     claim_text,
                     evidence
                 )
 
-            analyzed_claims.append({
-                "claim": claim_text,
-                "confidence": confidence,
-                "evidence": evidence
-            })
 
-        display_summary(analyzed_claims)
+                analyzed_claims.append({
 
-        display_analysis_header()
+                    "claim": claim_text,
 
-        for item in analyzed_claims:
+                    "confidence": confidence,
 
-            display_claim(
-                item["claim"],
-                item["confidence"],
-                item["evidence"]
+                    "evidence": evidence
+
+                })
+
+
+        # =================================================
+        # RESULTS
+        # =================================================
+
+        if analyzed_claims:
+
+            display_summary(
+                analyzed_claims
+            )
+
+            display_analysis_header()
+
+
+            for item in analyzed_claims:
+
+                display_claim(
+                    item["claim"],
+                    item["confidence"],
+                    item["evidence"]
+                )
+
+
+            # =================================================
+            # ASK ANOTHER QUESTION
+            # =================================================
+
+            st.markdown(
+                """
+                <div style="
+                    text-align:center;
+                    margin-top:45px;
+                    margin-bottom:10px;
+                    font-family:'Playfair Display', serif;
+                    font-size:25px;
+                    font-weight:700;
+                    color:#343b53;
+                ">
+                    💭 Have another question?
+                </div>
+
+                <div style="
+                    text-align:center;
+                    margin-bottom:25px;
+                    font-family:'Quicksand', sans-serif;
+                    font-size:15px;
+                    color:#7a8397;
+                ">
+                    Ask another question above and discover whether
+                    you can trust that answer too.
+                </div>
+                """,
+                unsafe_allow_html=True
             )
