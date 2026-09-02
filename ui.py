@@ -641,7 +641,53 @@ def load_css():
             color: #c23b50;
 
         }
+/* ==========================================
+   PURE GENERATION / SPECULATIVE
+========================================== */
 
+.speculative-card {
+
+    background: linear-gradient(
+        135deg,
+        #FFF9EB,
+        #FFF2D5
+    );
+
+    border: 1px solid #F6C567;
+
+    border-radius: 22px;
+
+    box-shadow: 0 8px 25px rgba(228,160,45,0.12);
+
+}
+
+.speculative-badge {
+
+    background: #FFF3D4;
+
+    color: #B45309;
+
+    border-radius: 999px;
+
+    padding: 8px 14px;
+
+    font-weight: 700;
+
+}
+
+.speculative-underline {
+
+    text-decoration: underline;
+
+    text-decoration-style: dashed;
+
+    text-decoration-color: #D97706;
+
+    text-decoration-thickness: 3px;
+
+    text-underline-offset: 8px;
+
+}
 
         /* =====================================================
            CLAIM TEXT
@@ -1063,149 +1109,244 @@ def display_analysis_header():
 # CLAIM DISPLAY
 # =========================================================
 
+import html
+import streamlit as st
+
 def display_claim(claim, confidence, evidence):
 
-    level = confidence["confidence"]
+    level = confidence["confidence"].upper()
+    reason = confidence.get("reason", "")
+
+    # ------------------------------
+    # Confidence Themes
+    # ------------------------------
 
     if level == "HIGH":
-
         icon = "🟢"
-        badge_class = "confidence-high"
+        badge_color = "#16A34A"
+        badge_bg = "#E8FFF0"
+        card_bg = "#FFFFFF"
+        underline = "none"
+        title = "Verified Claim"
 
     elif level == "MEDIUM":
-
         icon = "🟡"
-        badge_class = "confidence-medium"
+        badge_color = "#2563EB"
+        badge_bg = "#EAF4FF"
+        card_bg = "#FCFEFF"
+        underline = "none"
+        title = "Likely Supported Claim"
+
+    elif level == "SPECULATIVE":
+        icon = "✨"
+        badge_color = "#B45309"
+        badge_bg = "#FFF4D6"
+
+        # Warm amber gradient
+        card_bg = """
+        linear-gradient(
+            135deg,
+            #FFF9EC 0%,
+            #FFF2CC 100%
+        )
+        """
+
+        underline = "3px dashed #D97706"
+        title = "AI Generated Insight"
 
     else:
-
         icon = "🔴"
-        badge_class = "confidence-low"
+        badge_color = "#DC2626"
+        badge_bg = "#FFECEC"
+        card_bg = "#FFFDFD"
+        underline = "none"
+        title = "Low Confidence Claim"
 
+    # Escape text
+    safe_claim = html.escape(claim)
+    safe_reason = html.escape(reason)
 
-    safe_claim = html.escape(
-        str(claim)
-    )
+    # ------------------------------
+    # Claim Card
+    # ------------------------------
 
-    safe_reason = html.escape(
-        str(
-            confidence.get(
-                "reason",
-                "No explanation was provided."
-            )
-        )
-    )
-
-
-    # =====================================================
-    # CLAIM CARD
-    # =====================================================
-
-    st.html(
+    st.markdown(
         f"""
-        <div class="claim-card">
+        <div style="
+            background:{card_bg};
+            border-radius:22px;
+            padding:24px;
+            margin-bottom:20px;
+            border:1px solid #EFE7D0;
+            box-shadow:0 10px 30px rgba(0,0,0,0.05);
+        ">
 
-            <div class="claim-header">
+            <div style="
+                display:flex;
+                justify-content:space-between;
+                align-items:center;
+                margin-bottom:18px;
+            ">
 
-                <div class="claim-label">
-                    AI CLAIM
+                <div style="
+                    font-family:'Space Grotesk';
+                    font-size:13px;
+                    letter-spacing:1.5px;
+                    color:#7A7A7A;
+                    text-transform:uppercase;
+                    font-weight:700;
+                ">
+                    {title}
                 </div>
 
-                <div class="confidence-badge {badge_class}">
-                    {icon} {html.escape(level)} CONFIDENCE
+                <div style="
+                    background:{badge_bg};
+                    color:{badge_color};
+                    padding:8px 14px;
+                    border-radius:999px;
+                    font-weight:700;
+                    font-size:13px;
+                ">
+                    {icon} {level}
                 </div>
 
             </div>
 
-
-            <div class="claim-text">
+            <div style="
+                font-family:'Playfair Display';
+                font-size:23px;
+                line-height:1.6;
+                color:#2D3142;
+                font-weight:700;
+                text-decoration:{underline};
+                text-underline-offset:6px;
+            ">
                 {safe_claim}
             </div>
 
+            <div style="
+                margin-top:20px;
+                background:rgba(255,255,255,0.55);
+                border-left:4px solid {badge_color};
+                padding:15px;
+                border-radius:12px;
+            ">
 
-            <div class="reason-box">
-
-                <div class="reason-title">
-                    💡 Why this confidence level?
+                <div style="
+                    font-family:'Space Grotesk';
+                    font-size:13px;
+                    color:{badge_color};
+                    font-weight:700;
+                    margin-bottom:6px;
+                ">
+                    💡 Why this rating?
                 </div>
 
-                <div class="reason-text">
+                <div style="
+                    font-family:'Quicksand';
+                    font-size:15px;
+                    color:#555;
+                    line-height:1.5;
+                ">
                     {safe_reason}
                 </div>
 
             </div>
 
         </div>
-        """
+        """,
+        unsafe_allow_html=True
     )
 
+    # ------------------------------
+    # Evidence Section
+    # ------------------------------
 
-    # =====================================================
-    # EVIDENCE
-    # =====================================================
+    if level == "SPECULATIVE":
 
-    with st.expander("📚  View supporting evidence"):
+        st.markdown(
+            """
+            <div style="
+                background:#FFF8E8;
+                border:2px dashed #E09B2D;
+                border-radius:14px;
+                padding:16px;
+                margin-top:-10px;
+                margin-bottom:20px;
+            ">
 
-        if not evidence:
+                <div style="
+                    font-family:'Space Grotesk';
+                    color:#B45309;
+                    font-weight:700;
+                    margin-bottom:8px;
+                ">
+                    ✨ Pure AI Generation
+                </div>
 
-            st.info(
-                "We couldn't find supporting evidence for this claim."
-            )
+                <div style="
+                    font-family:'Quicksand';
+                    color:#8A5B14;
+                    font-size:14px;
+                    line-height:1.6;
+                ">
+                    This statement was generated by the AI without retrieved supporting evidence.
+                    Treat it as a creative suggestion, hypothesis, or speculation rather than a verified fact.
+                </div>
 
-        else:
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-            for source in evidence:
+    else:
 
-                title = html.escape(
-                    str(
-                        source.get(
-                            "title",
-                            "Unknown source"
-                        )
-                    )
-                )
+        with st.expander("📚 View Supporting Evidence"):
 
-                content = html.escape(
-                    str(
-                        source.get(
-                            "content",
-                            ""
-                        )
-                    )
-                )
+            if not evidence:
+                st.info("No supporting evidence was found.")
 
-                url = str(
-                    source.get(
-                        "url",
-                        "#"
-                    )
-                )
+            else:
 
+                for source in evidence:
 
-                st.html(
-                    f"""
-                    <div class="source-card">
+                    st.markdown(
+                        f"""
+                        <div style="
+                            background:#FCFCFF;
+                            border:1px solid #ECECF4;
+                            border-radius:14px;
+                            padding:16px;
+                            margin-bottom:12px;
+                        ">
 
-                        <div class="source-name">
-                            📖 {title}
+                            <div style="
+                                font-family:'Poppins';
+                                font-weight:700;
+                                color:#3B3B5C;
+                                margin-bottom:6px;
+                            ">
+                                📖 {html.escape(source.get("title","Source"))}
+                            </div>
+
+                            <div style="
+                                font-family:'Quicksand';
+                                color:#666;
+                                line-height:1.5;
+                                font-size:14px;
+                            ">
+                                {html.escape(source.get("content",""))}
+                            </div>
+
                         </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
 
-                        <div class="source-content">
-                            {content}
-                        </div>
-
-                        <a
-                            class="source-link"
-                            href="{url}"
-                            target="_blank"
-                        >
-                            Read source →
-                        </a>
-
-                    </div>
-                    """
-                )
-
+                    if source.get("url"):
+                        st.markdown(
+                            f"🔗 **[Read Source]({source['url']})**"
+                        )
 
 # =========================================================
 # SUMMARY
