@@ -193,20 +193,35 @@ def load_css():
 
 def display_header():
 
-    st.markdown("""
-    <div class="hero">
+    st.markdown(
+        """
+        <div style="
+            text-align: center;
+            padding: 30px 10px 25px 10px;
+        ">
 
-        <div class="hero-title">
-            🧠 AI Confidence Layer
+            <h1 style="
+                font-size: 46px;
+                font-weight: 800;
+                margin-bottom: 10px;
+                color: white;
+            ">
+                🧠 AI Confidence Layer
+            </h1>
+
+            <p style="
+                font-size: 18px;
+                color: #94a3b8;
+                margin: 0 auto;
+            ">
+                Don't just get an AI answer.
+                Understand <b>why you should trust it.</b>
+            </p>
+
         </div>
-
-        <div class="hero-subtitle">
-            Don't just get an AI answer.
-            Understand <b>why you should trust it.</b>
-        </div>
-
-    </div>
-    """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True
+    )
 
 
 # ---------------------------------------------------------
