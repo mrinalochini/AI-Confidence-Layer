@@ -1,73 +1,71 @@
 import html
-import textwrap
 import streamlit as st
 
 
 # =========================================================
-# SAFE HTML RENDERER
+# HTML HELPER
 # =========================================================
 
 def render_html(content):
     """
-    Safely removes indentation from multiline HTML
-    before sending it to Streamlit.
-    
-    This prevents Streamlit from displaying HTML
-    as a code block.
+    Use Streamlit's native HTML renderer.
+    This prevents HTML from being displayed as code.
     """
-
-    st.markdown(
-        textwrap.dedent(content).strip(),
-        unsafe_allow_html=True
-    )
+    st.html(content)
 
 
 # =========================================================
-# PAGE STYLING
+# PAGE CSS
 # =========================================================
 
 def load_css():
 
-    css = """
+    st.html("""
     <style>
 
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Quicksand:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+    /* =====================================================
+       GOOGLE FONTS
+       ===================================================== */
+
+    @import url(
+        'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Quicksand:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap'
+    );
 
 
     /* =====================================================
-       MAIN PAGE
+       WHOLE PAGE
        ===================================================== */
 
     .stApp {
 
         background:
             radial-gradient(
-                circle at 10% 10%,
-                rgba(255, 214, 240, 0.45),
+                circle at 5% 5%,
+                rgba(255, 210, 238, 0.55),
+                transparent 27%
+            ),
+
+            radial-gradient(
+                circle at 95% 10%,
+                rgba(207, 227, 255, 0.65),
                 transparent 30%
             ),
 
             radial-gradient(
-                circle at 90% 15%,
-                rgba(211, 231, 255, 0.55),
-                transparent 32%
-            ),
-
-            radial-gradient(
                 circle at 50% 100%,
-                rgba(255, 235, 190, 0.40),
+                rgba(255, 231, 187, 0.45),
                 transparent 35%
             ),
 
             #F8F9FF;
 
-        color: #20263A;
+        color: #26324A;
 
     }
 
 
     /* =====================================================
-       REMOVE STREAMLIT TOP PADDING
+       CONTENT WIDTH
        ===================================================== */
 
     .block-container {
@@ -89,47 +87,64 @@ def load_css():
 
         background: #FFFFFF !important;
 
-        border: 2px solid #D9DCEF !important;
+        border: 2px solid #D9DDEF !important;
 
         border-radius: 17px !important;
 
         box-shadow:
-            0 6px 20px rgba(79, 88, 140, 0.08) !important;
+            0 7px 22px rgba(67, 76, 120, 0.08) !important;
+
+    }
+
+
+    div[data-baseweb="input"]:hover {
+
+        border-color: #B8B2EA !important;
 
     }
 
 
     div[data-baseweb="input"]:focus-within {
 
-        border-color: #8A63E8 !important;
+        background: #FFFFFF !important;
+
+        border-color: #8064E8 !important;
 
         box-shadow:
-            0 0 0 4px rgba(138, 99, 232, 0.12),
-            0 8px 25px rgba(79, 88, 140, 0.10) !important;
+            0 0 0 4px rgba(128, 100, 232, 0.12),
+            0 8px 24px rgba(67, 76, 120, 0.10) !important;
 
     }
 
 
-    input {
+    /* THE ACTUAL TEXT THE USER TYPES */
 
-        color: #20263A !important;
+    div[data-baseweb="input"] input {
 
-        -webkit-text-fill-color: #20263A !important;
+        background: #FFFFFF !important;
+
+        color: #20283D !important;
+
+        -webkit-text-fill-color: #20283D !important;
 
         font-family:
             "DM Sans",
             sans-serif !important;
 
-        font-size: 16px !important;
+        font-size: 17px !important;
 
         font-weight: 500 !important;
 
     }
 
 
-    input::placeholder {
+    /* PLACEHOLDER */
 
-        color: #8D94A8 !important;
+    div[data-baseweb="input"] input::placeholder {
+
+        color: #969DB1 !important;
+
+        -webkit-text-fill-color: #969DB1 !important;
 
         opacity: 1 !important;
 
@@ -137,7 +152,22 @@ def load_css():
 
 
     /* =====================================================
-       ANALYZE BUTTON
+       ENTER HINT
+       ===================================================== */
+
+    div[data-testid="InputInstructions"] {
+
+        color: #9AA0B2 !important;
+
+        font-family:
+            "Quicksand",
+            sans-serif !important;
+
+    }
+
+
+    /* =====================================================
+       BUTTON
        ===================================================== */
 
     .stButton > button,
@@ -146,9 +176,9 @@ def load_css():
         background:
             linear-gradient(
                 135deg,
-                #7654E8,
-                #A34FD1,
-                #4C8FE8
+                #7756E8 0%,
+                #A84FD3 50%,
+                #4C91E9 100%
             ) !important;
 
         color: #FFFFFF !important;
@@ -161,8 +191,7 @@ def load_css():
 
         min-height: 52px !important;
 
-        padding:
-            10px 28px !important;
+        padding: 10px 28px !important;
 
         font-family:
             "Space Grotesk",
@@ -173,7 +202,7 @@ def load_css():
         font-weight: 700 !important;
 
         box-shadow:
-            0 8px 22px rgba(106, 77, 210, 0.25) !important;
+            0 9px 24px rgba(103, 78, 213, 0.25) !important;
 
         transition:
             transform 0.2s ease,
@@ -204,21 +233,23 @@ def load_css():
         background:
             linear-gradient(
                 135deg,
-                #6946DC,
-                #963DC5,
-                #3E82DD
+                #6846DC,
+                #963CC4,
+                #3D82DC
             ) !important;
+
+        color: #FFFFFF !important;
 
         transform: translateY(-2px);
 
         box-shadow:
-            0 12px 28px rgba(106, 77, 210, 0.32) !important;
+            0 13px 30px rgba(103, 78, 213, 0.32) !important;
 
     }
 
 
     /* =====================================================
-       EXPANDER
+       EXPANDERS
        ===================================================== */
 
     div[data-testid="stExpander"] {
@@ -226,21 +257,21 @@ def load_css():
         background: #FFFFFF !important;
 
         border:
-            1px solid #E2E5F0 !important;
+            1px solid #E0E4F0 !important;
 
         border-radius: 16px !important;
 
-        margin-top: 14px !important;
+        margin-top: 12px !important;
 
         box-shadow:
-            0 5px 18px rgba(70, 76, 120, 0.06) !important;
+            0 5px 18px rgba(65, 75, 120, 0.06) !important;
 
     }
 
 
     div[data-testid="stExpander"] summary {
 
-        color: #414960 !important;
+        color: #414A63 !important;
 
         font-family:
             "Space Grotesk",
@@ -254,7 +285,22 @@ def load_css():
 
 
     /* =====================================================
-       STREAMLIT DIVIDER
+       WARNINGS / INFO
+       ===================================================== */
+
+    div[data-testid="stAlert"] {
+
+        border-radius: 15px !important;
+
+        font-family:
+            "Quicksand",
+            sans-serif !important;
+
+    }
+
+
+    /* =====================================================
+       DIVIDERS
        ===================================================== */
 
     hr {
@@ -265,9 +311,7 @@ def load_css():
 
 
     </style>
-    """
-
-    render_html(css)
+    """)
 
 
 # =========================================================
@@ -276,69 +320,82 @@ def load_css():
 
 def display_header():
 
-    render_html(
-        """
+    render_html("""
+    <div style="
+        background:
+            linear-gradient(
+                135deg,
+                #FFFFFF 0%,
+                #FAF4FF 45%,
+                #EFF8FF 100%
+            );
+
+        border: 1px solid #E2E2F0;
+
+        border-radius: 28px;
+
+        padding: 44px 35px;
+
+        margin-bottom: 38px;
+
+        text-align: center;
+
+        box-shadow:
+            0 15px 40px rgba(75, 84, 130, 0.10);
+    ">
+
         <div style="
-            background:
-                linear-gradient(
-                    135deg,
-                    #FFFFFF 0%,
-                    #F8F3FF 48%,
-                    #EEF7FF 100%
-                );
+            font-size: 50px;
+            margin-bottom: 12px;
+        ">
+            🧠✨
+        </div>
 
-            border:
-                1px solid #E3E1F2;
 
-            border-radius: 28px;
+        <div style="
+            font-family:
+                'Playfair Display',
+                serif;
 
-            padding:
-                42px 35px;
+            font-size: 44px;
 
-            margin-bottom: 38px;
+            font-weight: 700;
 
-            text-align: center;
+            color: #20283D;
 
-            box-shadow:
-                0 14px 40px rgba(84, 91, 140, 0.10);
+            line-height: 1.15;
+
+            margin-bottom: 16px;
+        ">
+            AI Confidence Layer
+        </div>
+
+
+        <div style="
+            font-family:
+                'Quicksand',
+                sans-serif;
+
+            font-size: 18px;
+
+            color: #68728A;
+
+            line-height: 1.6;
         ">
 
-            <div style="
-                font-size: 48px;
-                margin-bottom: 12px;
-            ">
-                🧠✨
-            </div>
+            Don't just get an AI answer.
 
-            <div style="
-                font-family: 'Playfair Display', serif;
-                font-size: 44px;
+            <span style="
+                color: #7654E8;
                 font-weight: 700;
-                color: #20263A;
-                line-height: 1.15;
-                margin-bottom: 15px;
             ">
-                AI Confidence Layer
-            </div>
-
-            <div style="
-                font-family: 'Quicksand', sans-serif;
-                font-size: 18px;
-                color: #687089;
-                line-height: 1.6;
-            ">
-                Don't just get an AI answer.
-                <span style="
-                    color: #7654E8;
-                    font-weight: 700;
-                ">
-                    Understand why you should trust it.
-                </span>
-            </div>
+                Understand why you should trust it.
+            </span>
 
         </div>
-        """
-    )
+
+    </div>
+    """)
 
 
 # =========================================================
@@ -347,38 +404,47 @@ def display_header():
 
 def display_analysis_header():
 
-    render_html(
-        """
+    render_html("""
+    <div style="
+        margin-top: 40px;
+        margin-bottom: 20px;
+    ">
+
         <div style="
-            margin-top: 38px;
-            margin-bottom: 20px;
+            font-family:
+                'Playfair Display',
+                serif;
+
+            font-size: 30px;
+
+            font-weight: 700;
+
+            color: #20283D;
         ">
-
-            <div style="
-                font-family: 'Playfair Display', serif;
-                font-size: 29px;
-                font-weight: 700;
-                color: #20263A;
-            ">
-                🔬 Claim-by-Claim Analysis
-            </div>
-
-            <div style="
-                font-family: 'Quicksand', sans-serif;
-                font-size: 14px;
-                color: #7B8297;
-                margin-top: 5px;
-            ">
-                See exactly which parts of the answer deserve your trust.
-            </div>
-
+            🔬 Claim-by-Claim Analysis
         </div>
-        """
-    )
+
+
+        <div style="
+            font-family:
+                'Quicksand',
+                sans-serif;
+
+            font-size: 14px;
+
+            color: #7B8499;
+
+            margin-top: 6px;
+        ">
+            See exactly which parts of the answer deserve your trust.
+        </div>
+
+    </div>
+    """)
 
 
 # =========================================================
-# CLAIM CARD
+# CLAIM
 # =========================================================
 
 def display_claim(claim, confidence, evidence):
@@ -390,9 +456,12 @@ def display_claim(claim, confidence, evidence):
         )
     ).upper()
 
-    reason = confidence.get(
-        "reason",
-        "No explanation was provided."
+
+    reason = str(
+        confidence.get(
+            "reason",
+            "No explanation was provided."
+        )
     )
 
 
@@ -401,7 +470,7 @@ def display_claim(claim, confidence, evidence):
     )
 
     safe_reason = html.escape(
-        str(reason)
+        reason
     )
 
 
@@ -413,27 +482,17 @@ def display_claim(claim, confidence, evidence):
 
         icon = "🟢"
 
-        badge_text = "HIGH CONFIDENCE"
+        badge = "HIGH CONFIDENCE"
 
         badge_bg = "#E7F9EF"
 
         badge_color = "#168A4A"
 
-        card_background = (
-            "linear-gradient("
-            "135deg,"
-            "#FFFFFF 0%,"
-            "#F1FFF7 100%"
-            ")"
-        )
+        background = "#F5FFF9"
 
-        border_color = "#CBEFD9"
+        border = "#CBEED9"
 
-        title = "Evidence-backed claim"
-
-        claim_color = "#25334A"
-
-        underline = "none"
+        label = "Evidence-backed claim"
 
 
     # =====================================================
@@ -444,27 +503,17 @@ def display_claim(claim, confidence, evidence):
 
         icon = "🔵"
 
-        badge_text = "MEDIUM CONFIDENCE"
+        badge = "MEDIUM CONFIDENCE"
 
         badge_bg = "#EAF3FF"
 
         badge_color = "#2874C7"
 
-        card_background = (
-            "linear-gradient("
-            "135deg,"
-            "#FFFFFF 0%,"
-            "#F1F8FF 100%"
-            ")"
-        )
+        background = "#F5FAFF"
 
-        border_color = "#D2E5FA"
+        border = "#D1E5F8"
 
-        title = "Partially supported claim"
-
-        claim_color = "#25334A"
-
-        underline = "none"
+        label = "Partially supported claim"
 
 
     # =====================================================
@@ -475,33 +524,17 @@ def display_claim(claim, confidence, evidence):
 
         icon = "✨"
 
-        badge_text = "PURE GENERATION"
+        badge = "PURE GENERATION"
 
-        badge_bg = "#FFF1C9"
+        badge_bg = "#FFF0C9"
 
         badge_color = "#A86408"
 
-        card_background = (
-            "linear-gradient("
-            "135deg,"
-            "#FFFDF7 0%,"
-            "#FFF2D2 100%"
-            ")"
-        )
+        background = "#FFF9EA"
 
-        border_color = "#F1D18A"
+        border = "#E7C36F"
 
-        title = "AI-generated insight"
-
-        claim_color = "#493716"
-
-        underline = (
-            "text-decoration: underline;"
-            "text-decoration-style: dashed;"
-            "text-decoration-color: #D68B18;"
-            "text-decoration-thickness: 3px;"
-            "text-underline-offset: 7px;"
-        )
+        label = "AI-generated insight"
 
 
     # =====================================================
@@ -512,177 +545,171 @@ def display_claim(claim, confidence, evidence):
 
         icon = "🔴"
 
-        badge_text = "LOW CONFIDENCE"
+        badge = "LOW CONFIDENCE"
 
         badge_bg = "#FFEAEA"
 
         badge_color = "#C83C3C"
 
-        card_background = (
-            "linear-gradient("
-            "135deg,"
-            "#FFFFFF 0%,"
-            "#FFF5F5 100%"
-            ")"
-        )
+        background = "#FFF8F8"
 
-        border_color = "#F1CCCC"
+        border = "#F0CCCC"
 
-        title = "Weakly supported claim"
-
-        claim_color = "#4A2A2A"
-
-        underline = "none"
+        label = "Weakly supported claim"
 
 
     # =====================================================
-    # CLAIM CARD HTML
+    # CLAIM CARD
     # =====================================================
 
-    render_html(
-        f"""
+    render_html(f"""
+    <div style="
+        background: {background};
+
+        border:
+            1px solid {border};
+
+        border-radius: 23px;
+
+        padding: 25px 27px;
+
+        margin-bottom: 17px;
+
+        box-shadow:
+            0 9px 26px
+            rgba(70, 76, 120, 0.07);
+    ">
+
         <div style="
-            background: {card_background};
+            display: flex;
 
-            border:
-                1px solid {border_color};
+            justify-content:
+                space-between;
 
-            border-radius: 23px;
+            align-items:
+                center;
 
-            padding: 25px 27px;
+            gap: 15px;
 
-            margin-bottom: 18px;
-
-            box-shadow:
-                0 10px 28px
-                rgba(70, 76, 120, 0.07);
+            margin-bottom: 17px;
         ">
 
             <div style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                gap: 15px;
-                margin-bottom: 18px;
+                font-family:
+                    'Space Grotesk',
+                    sans-serif;
+
+                font-size: 12px;
+
+                letter-spacing: 1.2px;
+
+                text-transform: uppercase;
+
+                color: #7A8195;
+
+                font-weight: 700;
             ">
+                {label}
+            </div>
 
-                <div style="
-                    font-family:
-                        'Space Grotesk',
-                        sans-serif;
 
-                    font-size: 12px;
+            <div style="
+                background: {badge_bg};
 
-                    letter-spacing: 1.3px;
+                color: {badge_color};
 
-                    text-transform: uppercase;
+                border-radius: 999px;
 
-                    color: #7A8195;
+                padding:
+                    8px 13px;
 
-                    font-weight: 700;
-                ">
-                    {title}
-                </div>
+                font-family:
+                    'Space Grotesk',
+                    sans-serif;
 
-                <div style="
-                    background: {badge_bg};
+                font-size: 12px;
 
-                    color: {badge_color};
+                font-weight: 700;
 
-                    border-radius: 999px;
+                white-space: nowrap;
+            ">
+                {icon} {badge}
+            </div>
 
-                    padding:
-                        8px 13px;
+        </div>
 
-                    font-family:
-                        'Space Grotesk',
-                        sans-serif;
 
-                    font-size: 12px;
+        <div style="
+            font-family:
+                'DM Sans',
+                sans-serif;
 
-                    font-weight: 700;
+            font-size: 21px;
 
-                    white-space: nowrap;
-                ">
-                    {icon} {badge_text}
-                </div>
+            line-height: 1.6;
 
+            color: #26324A;
+
+            font-weight: 600;
+        ">
+            {safe_claim}
+        </div>
+
+
+        <div style="
+            margin-top: 21px;
+
+            background:
+                rgba(255,255,255,0.78);
+
+            border-left:
+                4px solid {badge_color};
+
+            border-radius: 12px;
+
+            padding:
+                14px 16px;
+        ">
+
+            <div style="
+                font-family:
+                    'Space Grotesk',
+                    sans-serif;
+
+                color: {badge_color};
+
+                font-size: 12px;
+
+                font-weight: 700;
+
+                letter-spacing: 0.5px;
+
+                margin-bottom: 5px;
+            ">
+                💡 WHY THIS RATING?
             </div>
 
 
             <div style="
                 font-family:
-                    'DM Sans',
+                    'Quicksand',
                     sans-serif;
 
-                font-size: 21px;
+                color: #626B7E;
 
-                line-height: 1.65;
+                font-size: 14px;
 
-                color: {claim_color};
+                line-height: 1.6;
 
-                font-weight: 600;
-
-                {underline}
+                font-weight: 500;
             ">
-                {safe_claim}
-            </div>
-
-
-            <div style="
-                margin-top: 21px;
-
-                background:
-                    rgba(255,255,255,0.68);
-
-                border-left:
-                    4px solid {badge_color};
-
-                border-radius: 12px;
-
-                padding:
-                    14px 16px;
-            ">
-
-                <div style="
-                    font-family:
-                        'Space Grotesk',
-                        sans-serif;
-
-                    color: {badge_color};
-
-                    font-size: 12px;
-
-                    font-weight: 700;
-
-                    letter-spacing: 0.6px;
-
-                    margin-bottom: 5px;
-                ">
-                    💡 WHY THIS RATING?
-                </div>
-
-                <div style="
-                    font-family:
-                        'Quicksand',
-                        sans-serif;
-
-                    color: #5D6475;
-
-                    font-size: 14px;
-
-                    line-height: 1.6;
-
-                    font-weight: 500;
-                ">
-                    {safe_reason}
-                </div>
-
+                {safe_reason}
             </div>
 
         </div>
-        """
-    )
+
+    </div>
+    """)
 
 
     # =====================================================
@@ -691,66 +718,65 @@ def display_claim(claim, confidence, evidence):
 
     if level == "SPECULATIVE":
 
-        render_html(
-            """
+        render_html("""
+        <div style="
+            background: #FFF8E8;
+
+            border:
+                2px dashed #D89A2B;
+
+            border-radius: 15px;
+
+            padding:
+                15px 17px;
+
+            margin-top: -5px;
+
+            margin-bottom: 17px;
+        ">
+
             <div style="
-                background: #FFF9EA;
+                font-family:
+                    'Space Grotesk',
+                    sans-serif;
 
-                border:
-                    2px dashed #E1A238;
+                color: #A86408;
 
-                border-radius: 15px;
+                font-size: 13px;
 
-                padding:
-                    15px 17px;
+                font-weight: 700;
 
-                margin-top: -6px;
-
-                margin-bottom: 18px;
+                margin-bottom: 5px;
             ">
-
-                <div style="
-                    font-family:
-                        'Space Grotesk',
-                        sans-serif;
-
-                    color: #A86408;
-
-                    font-size: 13px;
-
-                    font-weight: 700;
-
-                    margin-bottom: 5px;
-                ">
-                    ✨ Pure AI Generation
-                </div>
-
-                <div style="
-                    font-family:
-                        'Quicksand',
-                        sans-serif;
-
-                    color: #806126;
-
-                    font-size: 14px;
-
-                    line-height: 1.55;
-                ">
-                    No retrieved supporting source was found for this
-                    statement. Treat it as a hypothesis or AI-generated
-                    suggestion rather than a verified fact.
-                </div>
-
+                ✨ PURE AI GENERATION
             </div>
-            """
-        )
+
+
+            <div style="
+                font-family:
+                    'Quicksand',
+                    sans-serif;
+
+                color: #806126;
+
+                font-size: 14px;
+
+                line-height: 1.55;
+            ">
+                No retrieved supporting source was found.
+                Treat this statement as an AI-generated insight
+                rather than a verified fact.
+            </div>
+
+        </div>
+        """)
 
 
     # =====================================================
-    # EVIDENCE
+    # SUPPORTING EVIDENCE
     # =====================================================
 
-    with st.expander("📚 View Supporting Evidence"):
+    with st.expander("📚  View Supporting Evidence"):
 
         if not evidence:
 
@@ -762,7 +788,7 @@ def display_claim(claim, confidence, evidence):
 
             for index, source in enumerate(evidence):
 
-                title = html.escape(
+                source_title = html.escape(
                     str(
                         source.get(
                             "title",
@@ -771,7 +797,8 @@ def display_claim(claim, confidence, evidence):
                     )
                 )
 
-                content = html.escape(
+
+                source_content = html.escape(
                     str(
                         source.get(
                             "content",
@@ -781,55 +808,53 @@ def display_claim(claim, confidence, evidence):
                 )
 
 
-                render_html(
-                    f"""
+                render_html(f"""
+                <div style="
+                    background: #FAFBFF;
+
+                    border:
+                        1px solid #E4E7F0;
+
+                    border-radius: 15px;
+
+                    padding: 17px;
+
+                    margin-bottom: 12px;
+                ">
+
                     <div style="
-                        background: #FAFBFF;
+                        font-family:
+                            'Space Grotesk',
+                            sans-serif;
 
-                        border:
-                            1px solid #E7E9F2;
+                        color: #39415A;
 
-                        border-radius: 15px;
+                        font-size: 15px;
 
-                        padding:
-                            16px;
+                        font-weight: 700;
 
-                        margin-bottom: 12px;
+                        margin-bottom: 8px;
                     ">
-
-                        <div style="
-                            font-family:
-                                'Space Grotesk',
-                                sans-serif;
-
-                            color: #39415A;
-
-                            font-size: 15px;
-
-                            font-weight: 700;
-
-                            margin-bottom: 8px;
-                        ">
-                            📖 {title}
-                        </div>
-
-                        <div style="
-                            font-family:
-                                'Quicksand',
-                                sans-serif;
-
-                            color: #697186;
-
-                            font-size: 14px;
-
-                            line-height: 1.6;
-                        ">
-                            {content}
-                        </div>
-
+                        📖 {source_title}
                     </div>
-                    """
-                )
+
+
+                    <div style="
+                        font-family:
+                            'Quicksand',
+                            sans-serif;
+
+                        color: #697286;
+
+                        font-size: 14px;
+
+                        line-height: 1.6;
+                    ">
+                        {source_content}
+                    </div>
+
+                </div>
+                """)
 
 
                 if source.get("url"):
@@ -839,274 +864,319 @@ def display_claim(claim, confidence, evidence):
                     )
 
 
-                if index < len(evidence) - 1:
-
-                    st.markdown("")
-
-
 # =========================================================
-# SUMMARY
+# TRUST SUMMARY
 # =========================================================
 
 def display_summary(analyzed_claims):
 
     total = len(analyzed_claims)
 
+
     high = sum(
         1
         for item in analyzed_claims
-        if item["confidence"]["confidence"].upper() == "HIGH"
+        if item["confidence"]["confidence"].upper()
+        == "HIGH"
     )
+
 
     medium = sum(
         1
         for item in analyzed_claims
-        if item["confidence"]["confidence"].upper() == "MEDIUM"
+        if item["confidence"]["confidence"].upper()
+        == "MEDIUM"
     )
+
 
     speculative = sum(
         1
         for item in analyzed_claims
-        if item["confidence"]["confidence"].upper() == "SPECULATIVE"
+        if item["confidence"]["confidence"].upper()
+        == "SPECULATIVE"
     )
+
 
     low = sum(
         1
         for item in analyzed_claims
-        if item["confidence"]["confidence"].upper() == "LOW"
+        if item["confidence"]["confidence"].upper()
+        == "LOW"
     )
 
 
-    render_html(
-        f"""
+    render_html(f"""
+    <div style="
+        margin-top: 30px;
+        margin-bottom: 25px;
+    ">
+
         <div style="
-            margin-top: 30px;
-            margin-bottom: 25px;
+            font-family:
+                'Playfair Display',
+                serif;
+
+            font-size: 30px;
+
+            font-weight: 700;
+
+            color: #20283D;
+
+            margin-bottom: 15px;
+        ">
+            ✨ Trust Summary
+        </div>
+
+
+        <div style="
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 10px;
         ">
 
+
             <div style="
-                font-family:
-                    'Playfair Display',
-                    serif;
-
-                font-size: 29px;
-
-                font-weight: 700;
-
-                color: #20263A;
-
-                margin-bottom: 15px;
+                background: #FFFFFF;
+                border: 1px solid #E2E5EF;
+                border-radius: 16px;
+                padding: 15px;
+                text-align: center;
             ">
-                ✨ Trust Summary
+
+                <div style="
+                    font-family:
+                        'Space Grotesk',
+                        sans-serif;
+
+                    font-size: 25px;
+
+                    font-weight: 700;
+
+                    color: #7654E8;
+                ">
+                    {total}
+                </div>
+
+                <div style="
+                    font-family:
+                        'Quicksand',
+                        sans-serif;
+
+                    font-size: 12px;
+
+                    color: #7A8195;
+                ">
+                    Claims
+                </div>
+
             </div>
 
 
             <div style="
-                display: grid;
-
-                grid-template-columns:
-                    repeat(5, 1fr);
-
-                gap: 10px;
+                background: #F0FFF6;
+                border: 1px solid #D1F0DE;
+                border-radius: 16px;
+                padding: 15px;
+                text-align: center;
             ">
 
-
                 <div style="
-                    background: #FFFFFF;
-                    border: 1px solid #E3E5EF;
-                    border-radius: 16px;
-                    padding: 15px;
-                    text-align: center;
-                ">
-                    <div style="
-                        font-family:
-                            'Space Grotesk';
-                        font-size: 25px;
-                        font-weight: 700;
-                        color: #7654E8;
-                    ">
-                        {total}
-                    </div>
+                    font-family:
+                        'Space Grotesk',
+                        sans-serif;
 
-                    <div style="
-                        font-family:
-                            'Quicksand';
-                        font-size: 12px;
-                        color: #7A8195;
-                    ">
-                        Claims
-                    </div>
+                    font-size: 25px;
+
+                    font-weight: 700;
+
+                    color: #168A4A;
+                ">
+                    {high}
                 </div>
 
-
                 <div style="
-                    background: #F0FFF6;
-                    border: 1px solid #D1F0DE;
-                    border-radius: 16px;
-                    padding: 15px;
-                    text-align: center;
-                ">
-                    <div style="
-                        font-family:
-                            'Space Grotesk';
-                        font-size: 25px;
-                        font-weight: 700;
-                        color: #168A4A;
-                    ">
-                        {high}
-                    </div>
+                    font-family:
+                        'Quicksand',
+                        sans-serif;
 
-                    <div style="
-                        font-family:
-                            'Quicksand';
-                        font-size: 12px;
-                        color: #61806F;
-                    ">
-                        High
-                    </div>
+                    font-size: 12px;
+
+                    color: #61806F;
+                ">
+                    High
                 </div>
 
+            </div>
+
+
+            <div style="
+                background: #F0F7FF;
+                border: 1px solid #D7E8FA;
+                border-radius: 16px;
+                padding: 15px;
+                text-align: center;
+            ">
 
                 <div style="
-                    background: #F0F7FF;
-                    border: 1px solid #D7E8FA;
-                    border-radius: 16px;
-                    padding: 15px;
-                    text-align: center;
-                ">
-                    <div style="
-                        font-family:
-                            'Space Grotesk';
-                        font-size: 25px;
-                        font-weight: 700;
-                        color: #2874C7;
-                    ">
-                        {medium}
-                    </div>
+                    font-family:
+                        'Space Grotesk',
+                        sans-serif;
 
-                    <div style="
-                        font-family:
-                            'Quicksand';
-                        font-size: 12px;
-                        color: #617B99;
-                    ">
-                        Medium
-                    </div>
+                    font-size: 25px;
+
+                    font-weight: 700;
+
+                    color: #2874C7;
+                ">
+                    {medium}
                 </div>
 
-
                 <div style="
-                    background: #FFF8E8;
-                    border: 1px solid #F2D89D;
-                    border-radius: 16px;
-                    padding: 15px;
-                    text-align: center;
-                ">
-                    <div style="
-                        font-family:
-                            'Space Grotesk';
-                        font-size: 25px;
-                        font-weight: 700;
-                        color: #A86408;
-                    ">
-                        {speculative}
-                    </div>
+                    font-family:
+                        'Quicksand',
+                        sans-serif;
 
-                    <div style="
-                        font-family:
-                            'Quicksand';
-                        font-size: 12px;
-                        color: #8A6A35;
-                    ">
-                        Speculative
-                    </div>
+                    font-size: 12px;
+
+                    color: #617B99;
+                ">
+                    Medium
                 </div>
 
+            </div>
+
+
+            <div style="
+                background: #FFF8E8;
+                border: 1px solid #F2D89D;
+                border-radius: 16px;
+                padding: 15px;
+                text-align: center;
+            ">
 
                 <div style="
-                    background: #FFF2F2;
-                    border: 1px solid #F0D3D3;
-                    border-radius: 16px;
-                    padding: 15px;
-                    text-align: center;
-                ">
-                    <div style="
-                        font-family:
-                            'Space Grotesk';
-                        font-size: 25px;
-                        font-weight: 700;
-                        color: #C83C3C;
-                    ">
-                        {low}
-                    </div>
+                    font-family:
+                        'Space Grotesk',
+                        sans-serif;
 
-                    <div style="
-                        font-family:
-                            'Quicksand';
-                        font-size: 12px;
-                        color: #956565;
-                    ">
-                        Low
-                    </div>
+                    font-size: 25px;
+
+                    font-weight: 700;
+
+                    color: #A86408;
+                ">
+                    {speculative}
+                </div>
+
+                <div style="
+                    font-family:
+                        'Quicksand',
+                        sans-serif;
+
+                    font-size: 12px;
+
+                    color: #8A6A35;
+                ">
+                    Speculative
+                </div>
+
+            </div>
+
+
+            <div style="
+                background: #FFF2F2;
+                border: 1px solid #F0D3D3;
+                border-radius: 16px;
+                padding: 15px;
+                text-align: center;
+            ">
+
+                <div style="
+                    font-family:
+                        'Space Grotesk',
+                        sans-serif;
+
+                    font-size: 25px;
+
+                    font-weight: 700;
+
+                    color: #C83C3C;
+                ">
+                    {low}
+                </div>
+
+                <div style="
+                    font-family:
+                        'Quicksand',
+                        sans-serif;
+
+                    font-size: 12px;
+
+                    color: #956565;
+                ">
+                    Low
                 </div>
 
             </div>
 
         </div>
-        """
-    )
+
+    </div>
+    """)
 
 
 # =========================================================
-# ASK ANOTHER QUESTION
+# FOLLOW-UP QUESTION HEADER
 # =========================================================
 
 def display_question_prompt():
 
-    render_html(
-        """
+    render_html("""
+    <div style="
+        text-align: center;
+
+        margin-top: 52px;
+
+        margin-bottom: 20px;
+
+        padding-top: 32px;
+
+        border-top:
+            1px solid #E1E4EF;
+    ">
+
         <div style="
-            text-align: center;
+            font-family:
+                'Playfair Display',
+                serif;
 
-            margin-top: 48px;
+            font-size: 28px;
 
-            margin-bottom: 17px;
+            font-weight: 700;
 
-            padding-top: 30px;
-
-            border-top:
-                1px solid #E4E6F0;
+            color: #20283D;
         ">
-
-            <div style="
-                font-family:
-                    'Playfair Display',
-                    serif;
-
-                font-size: 27px;
-
-                font-weight: 700;
-
-                color: #20263A;
-            ">
-                💭 Have another question?
-            </div>
-
-            <div style="
-                font-family:
-                    'Quicksand',
-                    sans-serif;
-
-                font-size: 14px;
-
-                color: #7A8195;
-
-                margin-top: 6px;
-            ">
-                Ask another question and discover how much you can trust
-                the answer.
-            </div>
-
+            💭 Have another question?
         </div>
-        """
-    )
+
+
+        <div style="
+            font-family:
+                'Quicksand',
+                sans-serif;
+
+            font-size: 15px;
+
+            color: #7A8195;
+
+            margin-top: 7px;
+        ">
+            Ask something related to this answer —
+            or explore something completely new.
+        </div>
+
+    </div>
+    """)
