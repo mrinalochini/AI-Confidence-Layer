@@ -1,1129 +1,339 @@
-import streamlit as st
 import html
+import textwrap
+import streamlit as st
 
 
 # =========================================================
-# GLOBAL STYLING
+# SAFE HTML RENDERER
 # =========================================================
 
-def load_css():
+def render_html(content):
+    """
+    Safely removes indentation from multiline HTML
+    before sending it to Streamlit.
+    
+    This prevents Streamlit from displaying HTML
+    as a code block.
+    """
 
     st.markdown(
-        """
-        <style>
-
-        /* =====================================================
-           IMPORT BEAUTIFUL FONTS
-        ===================================================== */
-
-        @import url(
-            'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap'
-        );
-
-
-        /* =====================================================
-           PAGE BACKGROUND
-        ===================================================== */
-
-        .stApp {
-
-            background:
-                radial-gradient(
-                    circle at 5% 5%,
-                    rgba(215, 190, 255, 0.55),
-                    transparent 25%
-                ),
-
-                radial-gradient(
-                    circle at 95% 5%,
-                    rgba(180, 225, 255, 0.55),
-                    transparent 25%
-                ),
-
-                radial-gradient(
-                    circle at 50% 100%,
-                    rgba(255, 210, 235, 0.35),
-                    transparent 30%
-                ),
-
-                linear-gradient(
-                    135deg,
-                    #f9f7ff,
-                    #f3f8ff 50%,
-                    #fff7fc
-                );
-
-            color: #172033;
-
-        }
-
-
-        /* =====================================================
-           MAIN CONTAINER
-        ===================================================== */
-
-        .main .block-container {
-
-            max-width: 1150px;
-
-            padding-top: 3rem;
-            padding-bottom: 5rem;
-
-        }
-
-
-        /* =====================================================
-           DEFAULT TEXT
-        ===================================================== */
-
-.stApp {
-    color: #172033;
-}
-
-.stApp p {
-    font-family: "Poppins", sans-serif;
-}
-
-
-        /* =====================================================
-           HERO
-        ===================================================== */
-
-        .hero {
-
-            position: relative;
-
-            overflow: hidden;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(255,255,255,0.98),
-                    rgba(247,242,255,0.97),
-                    rgba(239,248,255,0.98)
-                );
-
-            border-radius: 32px;
-
-            border: 1px solid rgba(125, 105, 210, 0.15);
-
-            padding: 50px 40px 46px;
-
-            margin-bottom: 40px;
-
-            text-align: center;
-
-            box-shadow:
-                0 20px 55px rgba(78, 67, 130, 0.10);
-
-        }
-
-
-        /* Decorative blobs */
-
-        .hero::before {
-
-            content: "";
-
-            position: absolute;
-
-            width: 190px;
-            height: 190px;
-
-            border-radius: 50%;
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(190, 130, 255, 0.20),
-                    transparent 70%
-                );
-
-            top: -90px;
-            left: -60px;
-
-        }
-
-
-        .hero::after {
-
-            content: "";
-
-            position: absolute;
-
-            width: 180px;
-            height: 180px;
-
-            border-radius: 50%;
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(80, 190, 255, 0.18),
-                    transparent 70%
-                );
-
-            bottom: -90px;
-            right: -60px;
-
-        }
-
-
-        /* =====================================================
-           HERO ICON
-        ===================================================== */
-
-        .hero-icon {
-
-            font-size: 58px;
-
-            line-height: 1;
-
-            margin-bottom: 18px;
-
-            position: relative;
-
-            z-index: 2;
-
-        }
-
-
-        /* =====================================================
-           HERO TITLE
-        ===================================================== */
-
-        .hero-title {
-
-            font-family:
-                "Playfair Display",
-                Georgia,
-                serif;
-
-            font-size: 46px;
-
-            font-weight: 800;
-
-            line-height: 1.15;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #6845e8,
-                    #b34dcc,
-                    #3f83e8
-                );
-
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-
-            margin-bottom: 15px;
-
-            position: relative;
-
-            z-index: 2;
-
-        }
-
-
-        /* =====================================================
-           HERO SUBTITLE
-        ===================================================== */
-
-        .hero-subtitle {
-
-            font-family:
-                "Quicksand",
-                sans-serif;
-
-            font-size: 18px;
-
-            font-weight: 500;
-
-            line-height: 1.7;
-
-            color: #68738a;
-
-            max-width: 720px;
-
-            margin: auto;
-
-            position: relative;
-
-            z-index: 2;
-
-        }
-
-
-        .hero-highlight {
-
-            color: #7650e8;
-
-            font-weight: 700;
-
-        }
-
-
-        /* =====================================================
-           QUESTION LABEL
-        ===================================================== */
-
-        div[data-testid="stTextInput"] label {
-
-            color: #343b53 !important;
-
-            font-family:
-                "Space Grotesk",
-                sans-serif !important;
-
-            font-size: 18px !important;
-
-            font-weight: 700 !important;
-
-            opacity: 1 !important;
-
-        }
-
-
-        div[data-testid="stTextInput"] label p {
-
-            color: #343b53 !important;
-
-            font-family:
-                "Space Grotesk",
-                sans-serif !important;
-
-            font-weight: 700 !important;
-
-        }
-
-
-        /* =====================================================
-           INPUT CONTAINER
-        ===================================================== */
-
-        div[data-testid="stTextInput"] {
-
-            margin-bottom: 14px;
-
-        }
-
-
-        div[data-testid="stTextInput"] > div {
-
-            background: transparent !important;
-
-        }
-
-
-        /* =====================================================
-           INPUT BOX — IMPORTANT FIX
-        ===================================================== */
-
-        div[data-testid="stTextInput"] div[data-baseweb="input"] {
-
-            background-color: #ffffff !important;
-
-            border: 2px solid #e2e4ef !important;
-
-            border-radius: 17px !important;
-
-            min-height: 58px !important;
-
-            box-shadow:
-                0 7px 22px rgba(70, 70, 120, 0.08) !important;
-
-            transition:
-                border 0.2s ease,
-                box-shadow 0.2s ease,
-                transform 0.2s ease !important;
-
-        }
-
-
-        /* =====================================================
-           ACTUAL TEXT INPUT
-           This is what fixes the invisible typing.
-        ===================================================== */
-
-        div[data-testid="stTextInput"] input {
-
-            background-color: #ffffff !important;
-
-            color: #172033 !important;
-
-            -webkit-text-fill-color: #172033 !important;
-
-            caret-color: #7650e8 !important;
-
-            font-family:
-                "Quicksand",
-                sans-serif !important;
-
-            font-size: 17px !important;
-
-            font-weight: 600 !important;
-
-            opacity: 1 !important;
-
-        }
-
-
-        /* Placeholder */
-
-        div[data-testid="stTextInput"] input::placeholder {
-
-            color: #9aa2b4 !important;
-
-            -webkit-text-fill-color: #9aa2b4 !important;
-
-            opacity: 1 !important;
-
-            font-family:
-                "Quicksand",
-                sans-serif !important;
-
-            font-weight: 500 !important;
-
-        }
-
-
-        /* =====================================================
-           INPUT FOCUS
-        ===================================================== */
-
-        div[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within {
-
-            background-color: #ffffff !important;
-
-            border-color: #8564ef !important;
-
-            box-shadow:
-                0 0 0 4px rgba(133, 100, 239, 0.12),
-                0 10px 28px rgba(105, 80, 190, 0.12) !important;
-
-            transform: translateY(-1px);
-
-        }
-
-
-        /* =====================================================
-   ANALYZE BUTTON
-   ===================================================== */
-
-.stButton > button,
-div[data-testid="stFormSubmitButton"] > button {
-
-    background: linear-gradient(
-        135deg,
-        #7654E8 0%,
-        #A64ED6 50%,
-        #4D8FE8 100%
-    ) !important;
-
-    color: #FFFFFF !important;
-
-    -webkit-text-fill-color: #FFFFFF !important;
-
-    border: none !important;
-
-    border-radius: 15px !important;
-
-    min-height: 52px !important;
-
-    padding: 10px 28px !important;
-
-    font-family: "Space Grotesk", sans-serif !important;
-
-    font-size: 16px !important;
-
-    font-weight: 700 !important;
-
-    letter-spacing: 0.2px;
-
-    box-shadow:
-        0 8px 22px rgba(106, 77, 210, 0.25) !important;
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease !important;
-
-}
-
-
-/* Button text */
-
-.stButton > button p,
-div[data-testid="stFormSubmitButton"] > button p {
-
-    color: #FFFFFF !important;
-
-    -webkit-text-fill-color: #FFFFFF !important;
-
-    font-family: "Space Grotesk", sans-serif !important;
-
-    font-weight: 700 !important;
-
-}
-
-
-/* Hover */
-
-.stButton > button:hover,
-div[data-testid="stFormSubmitButton"] > button:hover {
-
-    background: linear-gradient(
-        135deg,
-        #6847DD 0%,
-        #9641C8 50%,
-        #4384DF 100%
-    ) !important;
-
-    color: #FFFFFF !important;
-
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 12px 28px rgba(106, 77, 210, 0.32) !important;
-
-}
-
-
-/* Clicked / focused */
-
-.stButton > button:focus,
-div[data-testid="stFormSubmitButton"] > button:focus {
-
-    color: #FFFFFF !important;
-
-    -webkit-text-fill-color: #FFFFFF !important;
-
-    outline: none !important;
-
-    box-shadow:
-        0 0 0 4px rgba(118, 84, 232, 0.18),
-        0 8px 22px rgba(106, 77, 210, 0.25) !important;
-
-}
-
-
-        /* =====================================================
-           SECTION TITLE
-        ===================================================== */
-
-        .section-title {
-
-            font-family:
-                "Playfair Display",
-                Georgia,
-                serif;
-
-            font-size: 30px;
-
-            font-weight: 800;
-
-            color: #252c42;
-
-            margin-top: 45px;
-
-            margin-bottom: 8px;
-
-        }
-
-
-        .section-description {
-
-            font-family:
-                "Quicksand",
-                sans-serif;
-
-            font-size: 15px;
-
-            font-weight: 500;
-
-            line-height: 1.7;
-
-            color: #7a8397;
-
-            margin-bottom: 26px;
-
-        }
-
-
-        /* =====================================================
-           CLAIM CARD
-        ===================================================== */
-
-        .claim-card {
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #ffffff,
-                    #fcfbff
-                );
-
-            border: 1px solid #e5e6ef;
-
-            border-radius: 21px;
-
-            padding: 28px;
-
-            margin-bottom: 19px;
-
-            box-shadow:
-                0 9px 27px rgba(45, 50, 90, 0.07);
-
-            transition:
-                transform 0.2s ease,
-                box-shadow 0.2s ease;
-
-        }
-
-
-        .claim-card:hover {
-
-            transform: translateY(-3px);
-
-            box-shadow:
-                0 14px 35px rgba(45, 50, 90, 0.11);
-
-        }
-
-
-        /* =====================================================
-           CLAIM HEADER
-        ===================================================== */
-
-        .claim-header {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            margin-bottom: 18px;
-
-        }
-
-
-        .claim-label {
-
-            font-family:
-                "Space Grotesk",
-                sans-serif;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-            letter-spacing: 1.5px;
-
-            color: #9aa1b2;
-
-        }
-
-
-        /* =====================================================
-           CONFIDENCE BADGES
-        ===================================================== */
-
-        .confidence-badge {
-
-            padding: 8px 15px;
-
-            border-radius: 999px;
-
-            font-family:
-                "Poppins",
-                sans-serif;
-
-            font-size: 12px;
-
-            font-weight: 800;
-
-        }
-
-
-        .confidence-high {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #ddf8e9,
-                    #cff4e0
-                );
-
-            color: #137a46;
-
-            box-shadow:
-                0 3px 10px rgba(35, 170, 95, 0.10);
-
-        }
-
-
-        .confidence-medium {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #fff4d4,
-                    #ffedbd
-                );
-
-            color: #a26800;
-
-        }
-
-
-        .confidence-low {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #ffe6eb,
-                    #ffd9df
-                );
-
-            color: #c23b50;
-
-        }
-/* ==========================================
-   PURE GENERATION / SPECULATIVE
-========================================== */
-
-.speculative-card {
-
-    background: linear-gradient(
-        135deg,
-        #FFF9EB,
-        #FFF2D5
-    );
-
-    border: 1px solid #F6C567;
-
-    border-radius: 22px;
-
-    box-shadow: 0 8px 25px rgba(228,160,45,0.12);
-
-}
-
-.speculative-badge {
-
-    background: #FFF3D4;
-
-    color: #B45309;
-
-    border-radius: 999px;
-
-    padding: 8px 14px;
-
-    font-weight: 700;
-
-}
-
-.speculative-underline {
-
-    text-decoration: underline;
-
-    text-decoration-style: dashed;
-
-    text-decoration-color: #D97706;
-
-    text-decoration-thickness: 3px;
-
-    text-underline-offset: 8px;
-
-}
-
-        /* =====================================================
-           CLAIM TEXT
-        ===================================================== */
-
-        .claim-text {
-
-            font-family:
-                "Playfair Display",
-                Georgia,
-                serif;
-
-            font-size: 21px;
-
-            line-height: 1.65;
-
-            font-weight: 600;
-
-            color: #20283b;
-
-            margin-bottom: 21px;
-
-        }
-
-
-        /* =====================================================
-           WHY BOX
-        ===================================================== */
-
-        .reason-box {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #f8f3ff,
-                    #f1f8ff
-                );
-
-            border-left:
-                4px solid #815ee8;
-
-            border-radius: 13px;
-
-            padding: 16px 19px;
-
-        }
-
-
-        .reason-title {
-
-            font-family:
-                "Space Grotesk",
-                sans-serif;
-
-            font-size: 13px;
-
-            font-weight: 800;
-
-            color: #7351d4;
-
-            margin-bottom: 6px;
-
-        }
-
-
-        .reason-text {
-
-            font-family:
-                "Quicksand",
-                sans-serif;
-
-            font-size: 15px;
-
-            font-weight: 500;
-
-            line-height: 1.55;
-
-            color: #626b7e;
-
-        }
-
-
-        /* =====================================================
-   EVIDENCE EXPANDER
-   ===================================================== */
-
-div[data-testid="stExpander"] {
-    background: #ffffff !important;
-    border: 1px solid #e4e6ef !important;
-    border-radius: 15px !important;
-    margin-top: 10px !important;
-    margin-bottom: 12px !important;
-    box-shadow: 0 5px 16px rgba(50, 55, 90, 0.05) !important;
-}
-
-
-/* Keep Streamlit's internal expander layout intact */
-
-div[data-testid="stExpander"] summary {
-    color: #414960 !important;
-    font-family: "Space Grotesk", sans-serif !important;
-    font-size: 14px !important;
-    font-weight: 700 !important;
-}
-
-
-/* Don't modify Streamlit's internal icons */
-
-div[data-testid="stExpander"] summary svg {
-    width: 1.2rem !important;
-    height: 1.2rem !important;
-}
-
-
-        /* =====================================================
-           SOURCE CARD
-        ===================================================== */
-
-        .source-card {
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #fbfaff,
-                    #f8fbff
-                );
-
-            border:
-                1px solid #e7e9f1;
-
-            border-radius: 13px;
-
-            padding: 17px;
-
-            margin-top: 11px;
-
-        }
-
-
-        .source-name {
-
-            font-family:
-                "Playfair Display",
-                Georgia,
-                serif;
-
-            font-size: 16px;
-
-            font-weight: 700;
-
-            color: #30384e;
-
-            margin-bottom: 7px;
-
-        }
-
-
-        .source-content {
-
-            font-family:
-                "Quicksand",
-                sans-serif;
-
-            font-size: 13px;
-
-            font-weight: 500;
-
-            line-height: 1.6;
-
-            color: #687185;
-
-        }
-
-
-        .source-link {
-
-            display: inline-block;
-
-            margin-top: 10px;
-
-            font-family:
-                "Space Grotesk",
-                sans-serif;
-
-            font-size: 13px;
-
-            font-weight: 700;
-
-            color: #7152dc;
-
-            text-decoration: none;
-
-        }
-
-
-        /* =====================================================
-           SUMMARY
-        ===================================================== */
-
-        .summary-grid {
-
-            display: flex;
-
-            gap: 16px;
-
-            margin-bottom: 30px;
-
-        }
-
-
-        .summary-card {
-
-            flex: 1;
-
-            background:
-                linear-gradient(
-                    145deg,
-                    #ffffff,
-                    #faf9ff
-                );
-
-            border:
-                1px solid #e4e6ef;
-
-            border-radius: 18px;
-
-            padding: 22px;
-
-            text-align: center;
-
-            box-shadow:
-                0 7px 20px rgba(50, 55, 90, 0.05);
-
-        }
-
-
-        .summary-number {
-
-            font-family:
-                "Playfair Display",
-                Georgia,
-                serif;
-
-            font-size: 31px;
-
-            font-weight: 800;
-
-            background:
-                linear-gradient(
-                    90deg,
-                    #714dd9,
-                    #a94bcf,
-                    #4b86df
-                );
-
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-
-        }
-
-
-        .summary-label {
-
-            font-family:
-                "Quicksand",
-                sans-serif;
-
-            font-size: 13px;
-
-            font-weight: 600;
-
-            color: #7a8397;
-
-            margin-top: 5px;
-
-        }
-
-
-        /* =====================================================
-           ALERTS
-        ===================================================== */
-
-        div[data-testid="stAlert"] {
-
-            border-radius: 13px;
-
-            font-family:
-                "Quicksand",
-                sans-serif;
-
-        }
-
-
-        /* =====================================================
-           SPINNER
-        ===================================================== */
-
-        div[data-testid="stSpinner"] {
-
-            font-family:
-                "Quicksand",
-                sans-serif !important;
-
-        }
-
-
-        /* =====================================================
-           MOBILE
-        ===================================================== */
-
-        @media (max-width: 700px) {
-
-            .hero {
-
-                padding:
-                    38px 20px;
-
-            }
-
-            .hero-title {
-
-                font-size: 35px;
-
-            }
-
-            .hero-subtitle {
-
-                font-size: 16px;
-
-            }
-
-            .summary-grid {
-
-                flex-direction: column;
-
-            }
-
-            .claim-header {
-
-                flex-direction: column;
-
-                align-items: flex-start;
-
-                gap: 12px;
-
-            }
-
-        }
-
-        </style>
-        """,
+        textwrap.dedent(content).strip(),
         unsafe_allow_html=True
     )
 
 
 # =========================================================
-# HERO
+# PAGE STYLING
+# =========================================================
+
+def load_css():
+
+    css = """
+    <style>
+
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Quicksand:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+
+    /* =====================================================
+       MAIN PAGE
+       ===================================================== */
+
+    .stApp {
+
+        background:
+            radial-gradient(
+                circle at 10% 10%,
+                rgba(255, 214, 240, 0.45),
+                transparent 30%
+            ),
+
+            radial-gradient(
+                circle at 90% 15%,
+                rgba(211, 231, 255, 0.55),
+                transparent 32%
+            ),
+
+            radial-gradient(
+                circle at 50% 100%,
+                rgba(255, 235, 190, 0.40),
+                transparent 35%
+            ),
+
+            #F8F9FF;
+
+        color: #20263A;
+
+    }
+
+
+    /* =====================================================
+       REMOVE STREAMLIT TOP PADDING
+       ===================================================== */
+
+    .block-container {
+
+        max-width: 950px !important;
+
+        padding-top: 2rem !important;
+
+        padding-bottom: 4rem !important;
+
+    }
+
+
+    /* =====================================================
+       QUESTION INPUT
+       ===================================================== */
+
+    div[data-baseweb="input"] {
+
+        background: #FFFFFF !important;
+
+        border: 2px solid #D9DCEF !important;
+
+        border-radius: 17px !important;
+
+        box-shadow:
+            0 6px 20px rgba(79, 88, 140, 0.08) !important;
+
+    }
+
+
+    div[data-baseweb="input"]:focus-within {
+
+        border-color: #8A63E8 !important;
+
+        box-shadow:
+            0 0 0 4px rgba(138, 99, 232, 0.12),
+            0 8px 25px rgba(79, 88, 140, 0.10) !important;
+
+    }
+
+
+    input {
+
+        color: #20263A !important;
+
+        -webkit-text-fill-color: #20263A !important;
+
+        font-family:
+            "DM Sans",
+            sans-serif !important;
+
+        font-size: 16px !important;
+
+        font-weight: 500 !important;
+
+    }
+
+
+    input::placeholder {
+
+        color: #8D94A8 !important;
+
+        opacity: 1 !important;
+
+    }
+
+
+    /* =====================================================
+       ANALYZE BUTTON
+       ===================================================== */
+
+    .stButton > button,
+    div[data-testid="stFormSubmitButton"] > button {
+
+        background:
+            linear-gradient(
+                135deg,
+                #7654E8,
+                #A34FD1,
+                #4C8FE8
+            ) !important;
+
+        color: #FFFFFF !important;
+
+        -webkit-text-fill-color: #FFFFFF !important;
+
+        border: none !important;
+
+        border-radius: 15px !important;
+
+        min-height: 52px !important;
+
+        padding:
+            10px 28px !important;
+
+        font-family:
+            "Space Grotesk",
+            sans-serif !important;
+
+        font-size: 16px !important;
+
+        font-weight: 700 !important;
+
+        box-shadow:
+            0 8px 22px rgba(106, 77, 210, 0.25) !important;
+
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease !important;
+
+    }
+
+
+    .stButton > button p,
+    div[data-testid="stFormSubmitButton"] > button p {
+
+        color: #FFFFFF !important;
+
+        -webkit-text-fill-color: #FFFFFF !important;
+
+        font-family:
+            "Space Grotesk",
+            sans-serif !important;
+
+        font-weight: 700 !important;
+
+    }
+
+
+    .stButton > button:hover,
+    div[data-testid="stFormSubmitButton"] > button:hover {
+
+        background:
+            linear-gradient(
+                135deg,
+                #6946DC,
+                #963DC5,
+                #3E82DD
+            ) !important;
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 12px 28px rgba(106, 77, 210, 0.32) !important;
+
+    }
+
+
+    /* =====================================================
+       EXPANDER
+       ===================================================== */
+
+    div[data-testid="stExpander"] {
+
+        background: #FFFFFF !important;
+
+        border:
+            1px solid #E2E5F0 !important;
+
+        border-radius: 16px !important;
+
+        margin-top: 14px !important;
+
+        box-shadow:
+            0 5px 18px rgba(70, 76, 120, 0.06) !important;
+
+    }
+
+
+    div[data-testid="stExpander"] summary {
+
+        color: #414960 !important;
+
+        font-family:
+            "Space Grotesk",
+            sans-serif !important;
+
+        font-size: 14px !important;
+
+        font-weight: 700 !important;
+
+    }
+
+
+    /* =====================================================
+       STREAMLIT DIVIDER
+       ===================================================== */
+
+    hr {
+
+        border-color: #E5E7F0 !important;
+
+    }
+
+
+    </style>
+    """
+
+    render_html(css)
+
+
+# =========================================================
+# HEADER
 # =========================================================
 
 def display_header():
 
-    st.html(
+    render_html(
         """
-        <div class="hero">
+        <div style="
+            background:
+                linear-gradient(
+                    135deg,
+                    #FFFFFF 0%,
+                    #F8F3FF 48%,
+                    #EEF7FF 100%
+                );
 
-            <div class="hero-icon">
+            border:
+                1px solid #E3E1F2;
+
+            border-radius: 28px;
+
+            padding:
+                42px 35px;
+
+            margin-bottom: 38px;
+
+            text-align: center;
+
+            box-shadow:
+                0 14px 40px rgba(84, 91, 140, 0.10);
+        ">
+
+            <div style="
+                font-size: 48px;
+                margin-bottom: 12px;
+            ">
                 🧠✨
             </div>
 
-            <div class="hero-title">
+            <div style="
+                font-family: 'Playfair Display', serif;
+                font-size: 44px;
+                font-weight: 700;
+                color: #20263A;
+                line-height: 1.15;
+                margin-bottom: 15px;
+            ">
                 AI Confidence Layer
             </div>
 
-            <div class="hero-subtitle">
-
+            <div style="
+                font-family: 'Quicksand', sans-serif;
+                font-size: 18px;
+                color: #687089;
+                line-height: 1.6;
+            ">
                 Don't just get an AI answer.
-
-                Discover
-                <span class="hero-highlight">
-                    why you can trust it.
+                <span style="
+                    color: #7654E8;
+                    font-weight: 700;
+                ">
+                    Understand why you should trust it.
                 </span>
-
-                <br>
-
-                We break AI responses into claims,
-                check the evidence, and help you
-                make informed decisions.
-
             </div>
 
         </div>
@@ -1137,16 +347,30 @@ def display_header():
 
 def display_analysis_header():
 
-    st.html(
+    render_html(
         """
-        <div class="section-title">
-            🔍 Claim-by-Claim Analysis
-        </div>
+        <div style="
+            margin-top: 38px;
+            margin-bottom: 20px;
+        ">
 
-        <div class="section-description">
+            <div style="
+                font-family: 'Playfair Display', serif;
+                font-size: 29px;
+                font-weight: 700;
+                color: #20263A;
+            ">
+                🔬 Claim-by-Claim Analysis
+            </div>
 
-            Each part of the AI answer is checked against
-            supporting evidence so you can see what holds up.
+            <div style="
+                font-family: 'Quicksand', sans-serif;
+                font-size: 14px;
+                color: #7B8297;
+                margin-top: 5px;
+            ">
+                See exactly which parts of the answer deserve your trust.
+            </div>
 
         </div>
         """
@@ -1154,147 +378,302 @@ def display_analysis_header():
 
 
 # =========================================================
-# CLAIM DISPLAY
+# CLAIM CARD
 # =========================================================
-
-import html
-import streamlit as st
 
 def display_claim(claim, confidence, evidence):
 
-    level = confidence["confidence"].upper()
-    reason = confidence.get("reason", "")
+    level = str(
+        confidence.get(
+            "confidence",
+            "LOW"
+        )
+    ).upper()
 
-    # ------------------------------
-    # Confidence Themes
-    # ------------------------------
+    reason = confidence.get(
+        "reason",
+        "No explanation was provided."
+    )
+
+
+    safe_claim = html.escape(
+        str(claim)
+    )
+
+    safe_reason = html.escape(
+        str(reason)
+    )
+
+
+    # =====================================================
+    # HIGH
+    # =====================================================
 
     if level == "HIGH":
+
         icon = "🟢"
-        badge_color = "#16A34A"
-        badge_bg = "#E8FFF0"
-        card_bg = "#FFFFFF"
+
+        badge_text = "HIGH CONFIDENCE"
+
+        badge_bg = "#E7F9EF"
+
+        badge_color = "#168A4A"
+
+        card_background = (
+            "linear-gradient("
+            "135deg,"
+            "#FFFFFF 0%,"
+            "#F1FFF7 100%"
+            ")"
+        )
+
+        border_color = "#CBEFD9"
+
+        title = "Evidence-backed claim"
+
+        claim_color = "#25334A"
+
         underline = "none"
-        title = "Verified Claim"
+
+
+    # =====================================================
+    # MEDIUM
+    # =====================================================
 
     elif level == "MEDIUM":
-        icon = "🟡"
-        badge_color = "#2563EB"
-        badge_bg = "#EAF4FF"
-        card_bg = "#FCFEFF"
+
+        icon = "🔵"
+
+        badge_text = "MEDIUM CONFIDENCE"
+
+        badge_bg = "#EAF3FF"
+
+        badge_color = "#2874C7"
+
+        card_background = (
+            "linear-gradient("
+            "135deg,"
+            "#FFFFFF 0%,"
+            "#F1F8FF 100%"
+            ")"
+        )
+
+        border_color = "#D2E5FA"
+
+        title = "Partially supported claim"
+
+        claim_color = "#25334A"
+
         underline = "none"
-        title = "Likely Supported Claim"
+
+
+    # =====================================================
+    # SPECULATIVE
+    # =====================================================
 
     elif level == "SPECULATIVE":
+
         icon = "✨"
-        badge_color = "#B45309"
-        badge_bg = "#FFF4D6"
 
-        # Warm amber gradient
-        card_bg = """
-        linear-gradient(
-            135deg,
-            #FFF9EC 0%,
-            #FFF2CC 100%
+        badge_text = "PURE GENERATION"
+
+        badge_bg = "#FFF1C9"
+
+        badge_color = "#A86408"
+
+        card_background = (
+            "linear-gradient("
+            "135deg,"
+            "#FFFDF7 0%,"
+            "#FFF2D2 100%"
+            ")"
         )
-        """
 
-        underline = "3px dashed #D97706"
-        title = "AI Generated Insight"
+        border_color = "#F1D18A"
+
+        title = "AI-generated insight"
+
+        claim_color = "#493716"
+
+        underline = (
+            "text-decoration: underline;"
+            "text-decoration-style: dashed;"
+            "text-decoration-color: #D68B18;"
+            "text-decoration-thickness: 3px;"
+            "text-underline-offset: 7px;"
+        )
+
+
+    # =====================================================
+    # LOW
+    # =====================================================
 
     else:
+
         icon = "🔴"
-        badge_color = "#DC2626"
-        badge_bg = "#FFECEC"
-        card_bg = "#FFFDFD"
+
+        badge_text = "LOW CONFIDENCE"
+
+        badge_bg = "#FFEAEA"
+
+        badge_color = "#C83C3C"
+
+        card_background = (
+            "linear-gradient("
+            "135deg,"
+            "#FFFFFF 0%,"
+            "#FFF5F5 100%"
+            ")"
+        )
+
+        border_color = "#F1CCCC"
+
+        title = "Weakly supported claim"
+
+        claim_color = "#4A2A2A"
+
         underline = "none"
-        title = "Low Confidence Claim"
 
-    # Escape text
-    safe_claim = html.escape(claim)
-    safe_reason = html.escape(reason)
 
-    # ------------------------------
-    # Claim Card
-    # ------------------------------
+    # =====================================================
+    # CLAIM CARD HTML
+    # =====================================================
 
-    st.markdown(
+    render_html(
         f"""
         <div style="
-            background:{card_bg};
-            border-radius:22px;
-            padding:24px;
-            margin-bottom:20px;
-            border:1px solid #EFE7D0;
-            box-shadow:0 10px 30px rgba(0,0,0,0.05);
+            background: {card_background};
+
+            border:
+                1px solid {border_color};
+
+            border-radius: 23px;
+
+            padding: 25px 27px;
+
+            margin-bottom: 18px;
+
+            box-shadow:
+                0 10px 28px
+                rgba(70, 76, 120, 0.07);
         ">
 
             <div style="
-                display:flex;
-                justify-content:space-between;
-                align-items:center;
-                margin-bottom:18px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 15px;
+                margin-bottom: 18px;
             ">
 
                 <div style="
-                    font-family:'Space Grotesk';
-                    font-size:13px;
-                    letter-spacing:1.5px;
-                    color:#7A7A7A;
-                    text-transform:uppercase;
-                    font-weight:700;
+                    font-family:
+                        'Space Grotesk',
+                        sans-serif;
+
+                    font-size: 12px;
+
+                    letter-spacing: 1.3px;
+
+                    text-transform: uppercase;
+
+                    color: #7A8195;
+
+                    font-weight: 700;
                 ">
                     {title}
                 </div>
 
                 <div style="
-                    background:{badge_bg};
-                    color:{badge_color};
-                    padding:8px 14px;
-                    border-radius:999px;
-                    font-weight:700;
-                    font-size:13px;
+                    background: {badge_bg};
+
+                    color: {badge_color};
+
+                    border-radius: 999px;
+
+                    padding:
+                        8px 13px;
+
+                    font-family:
+                        'Space Grotesk',
+                        sans-serif;
+
+                    font-size: 12px;
+
+                    font-weight: 700;
+
+                    white-space: nowrap;
                 ">
-                    {icon} {level}
+                    {icon} {badge_text}
                 </div>
 
             </div>
 
+
             <div style="
-                font-family:'Playfair Display';
-                font-size:23px;
-                line-height:1.6;
-                color:#2D3142;
-                font-weight:700;
-                text-decoration:{underline};
-                text-underline-offset:6px;
+                font-family:
+                    'DM Sans',
+                    sans-serif;
+
+                font-size: 21px;
+
+                line-height: 1.65;
+
+                color: {claim_color};
+
+                font-weight: 600;
+
+                {underline}
             ">
                 {safe_claim}
             </div>
 
+
             <div style="
-                margin-top:20px;
-                background:rgba(255,255,255,0.55);
-                border-left:4px solid {badge_color};
-                padding:15px;
-                border-radius:12px;
+                margin-top: 21px;
+
+                background:
+                    rgba(255,255,255,0.68);
+
+                border-left:
+                    4px solid {badge_color};
+
+                border-radius: 12px;
+
+                padding:
+                    14px 16px;
             ">
 
                 <div style="
-                    font-family:'Space Grotesk';
-                    font-size:13px;
-                    color:{badge_color};
-                    font-weight:700;
-                    margin-bottom:6px;
+                    font-family:
+                        'Space Grotesk',
+                        sans-serif;
+
+                    color: {badge_color};
+
+                    font-size: 12px;
+
+                    font-weight: 700;
+
+                    letter-spacing: 0.6px;
+
+                    margin-bottom: 5px;
                 ">
-                    💡 Why this rating?
+                    💡 WHY THIS RATING?
                 </div>
 
                 <div style="
-                    font-family:'Quicksand';
-                    font-size:15px;
-                    color:#555;
-                    line-height:1.5;
+                    font-family:
+                        'Quicksand',
+                        sans-serif;
+
+                    color: #5D6475;
+
+                    font-size: 14px;
+
+                    line-height: 1.6;
+
+                    font-weight: 500;
                 ">
                     {safe_reason}
                 </div>
@@ -1302,99 +681,168 @@ def display_claim(claim, confidence, evidence):
             </div>
 
         </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
-    # ------------------------------
-    # Evidence Section
-    # ------------------------------
+
+    # =====================================================
+    # SPECULATIVE NOTICE
+    # =====================================================
 
     if level == "SPECULATIVE":
 
-        st.markdown(
+        render_html(
             """
             <div style="
-                background:#FFF8E8;
-                border:2px dashed #E09B2D;
-                border-radius:14px;
-                padding:16px;
-                margin-top:-10px;
-                margin-bottom:20px;
+                background: #FFF9EA;
+
+                border:
+                    2px dashed #E1A238;
+
+                border-radius: 15px;
+
+                padding:
+                    15px 17px;
+
+                margin-top: -6px;
+
+                margin-bottom: 18px;
             ">
 
                 <div style="
-                    font-family:'Space Grotesk';
-                    color:#B45309;
-                    font-weight:700;
-                    margin-bottom:8px;
+                    font-family:
+                        'Space Grotesk',
+                        sans-serif;
+
+                    color: #A86408;
+
+                    font-size: 13px;
+
+                    font-weight: 700;
+
+                    margin-bottom: 5px;
                 ">
                     ✨ Pure AI Generation
                 </div>
 
                 <div style="
-                    font-family:'Quicksand';
-                    color:#8A5B14;
-                    font-size:14px;
-                    line-height:1.6;
+                    font-family:
+                        'Quicksand',
+                        sans-serif;
+
+                    color: #806126;
+
+                    font-size: 14px;
+
+                    line-height: 1.55;
                 ">
-                    This statement was generated by the AI without retrieved supporting evidence.
-                    Treat it as a creative suggestion, hypothesis, or speculation rather than a verified fact.
+                    No retrieved supporting source was found for this
+                    statement. Treat it as a hypothesis or AI-generated
+                    suggestion rather than a verified fact.
                 </div>
 
             </div>
-            """,
-            unsafe_allow_html=True
+            """
         )
 
-    else:
 
-        with st.expander("📚 View Supporting Evidence"):
+    # =====================================================
+    # EVIDENCE
+    # =====================================================
 
-            if not evidence:
-                st.info("No supporting evidence was found.")
+    with st.expander("📚 View Supporting Evidence"):
 
-            else:
+        if not evidence:
 
-                for source in evidence:
+            st.info(
+                "No supporting evidence was retrieved for this claim."
+            )
+
+        else:
+
+            for index, source in enumerate(evidence):
+
+                title = html.escape(
+                    str(
+                        source.get(
+                            "title",
+                            "Source"
+                        )
+                    )
+                )
+
+                content = html.escape(
+                    str(
+                        source.get(
+                            "content",
+                            ""
+                        )
+                    )
+                )
+
+
+                render_html(
+                    f"""
+                    <div style="
+                        background: #FAFBFF;
+
+                        border:
+                            1px solid #E7E9F2;
+
+                        border-radius: 15px;
+
+                        padding:
+                            16px;
+
+                        margin-bottom: 12px;
+                    ">
+
+                        <div style="
+                            font-family:
+                                'Space Grotesk',
+                                sans-serif;
+
+                            color: #39415A;
+
+                            font-size: 15px;
+
+                            font-weight: 700;
+
+                            margin-bottom: 8px;
+                        ">
+                            📖 {title}
+                        </div>
+
+                        <div style="
+                            font-family:
+                                'Quicksand',
+                                sans-serif;
+
+                            color: #697186;
+
+                            font-size: 14px;
+
+                            line-height: 1.6;
+                        ">
+                            {content}
+                        </div>
+
+                    </div>
+                    """
+                )
+
+
+                if source.get("url"):
 
                     st.markdown(
-                        f"""
-                        <div style="
-                            background:#FCFCFF;
-                            border:1px solid #ECECF4;
-                            border-radius:14px;
-                            padding:16px;
-                            margin-bottom:12px;
-                        ">
-
-                            <div style="
-                                font-family:'Poppins';
-                                font-weight:700;
-                                color:#3B3B5C;
-                                margin-bottom:6px;
-                            ">
-                                📖 {html.escape(source.get("title","Source"))}
-                            </div>
-
-                            <div style="
-                                font-family:'Quicksand';
-                                color:#666;
-                                line-height:1.5;
-                                font-size:14px;
-                            ">
-                                {html.escape(source.get("content",""))}
-                            </div>
-
-                        </div>
-                        """,
-                        unsafe_allow_html=True
+                        f"[🔗 Read source →]({source['url']})"
                     )
 
-                    if source.get("url"):
-                        st.markdown(
-                            f"🔗 **[Read Source]({source['url']})**"
-                        )
+
+                if index < len(evidence) - 1:
+
+                    st.markdown("")
+
 
 # =========================================================
 # SUMMARY
@@ -1407,79 +855,256 @@ def display_summary(analyzed_claims):
     high = sum(
         1
         for item in analyzed_claims
-        if item["confidence"]["confidence"] == "HIGH"
+        if item["confidence"]["confidence"].upper() == "HIGH"
     )
 
     medium = sum(
         1
         for item in analyzed_claims
-        if item["confidence"]["confidence"] == "MEDIUM"
+        if item["confidence"]["confidence"].upper() == "MEDIUM"
+    )
+
+    speculative = sum(
+        1
+        for item in analyzed_claims
+        if item["confidence"]["confidence"].upper() == "SPECULATIVE"
     )
 
     low = sum(
         1
         for item in analyzed_claims
-        if item["confidence"]["confidence"] == "LOW"
+        if item["confidence"]["confidence"].upper() == "LOW"
     )
 
 
-    st.html(
+    render_html(
         f"""
-        <div class="section-title">
-            ✨ Trust Summary
+        <div style="
+            margin-top: 30px;
+            margin-bottom: 25px;
+        ">
+
+            <div style="
+                font-family:
+                    'Playfair Display',
+                    serif;
+
+                font-size: 29px;
+
+                font-weight: 700;
+
+                color: #20263A;
+
+                margin-bottom: 15px;
+            ">
+                ✨ Trust Summary
+            </div>
+
+
+            <div style="
+                display: grid;
+
+                grid-template-columns:
+                    repeat(5, 1fr);
+
+                gap: 10px;
+            ">
+
+
+                <div style="
+                    background: #FFFFFF;
+                    border: 1px solid #E3E5EF;
+                    border-radius: 16px;
+                    padding: 15px;
+                    text-align: center;
+                ">
+                    <div style="
+                        font-family:
+                            'Space Grotesk';
+                        font-size: 25px;
+                        font-weight: 700;
+                        color: #7654E8;
+                    ">
+                        {total}
+                    </div>
+
+                    <div style="
+                        font-family:
+                            'Quicksand';
+                        font-size: 12px;
+                        color: #7A8195;
+                    ">
+                        Claims
+                    </div>
+                </div>
+
+
+                <div style="
+                    background: #F0FFF6;
+                    border: 1px solid #D1F0DE;
+                    border-radius: 16px;
+                    padding: 15px;
+                    text-align: center;
+                ">
+                    <div style="
+                        font-family:
+                            'Space Grotesk';
+                        font-size: 25px;
+                        font-weight: 700;
+                        color: #168A4A;
+                    ">
+                        {high}
+                    </div>
+
+                    <div style="
+                        font-family:
+                            'Quicksand';
+                        font-size: 12px;
+                        color: #61806F;
+                    ">
+                        High
+                    </div>
+                </div>
+
+
+                <div style="
+                    background: #F0F7FF;
+                    border: 1px solid #D7E8FA;
+                    border-radius: 16px;
+                    padding: 15px;
+                    text-align: center;
+                ">
+                    <div style="
+                        font-family:
+                            'Space Grotesk';
+                        font-size: 25px;
+                        font-weight: 700;
+                        color: #2874C7;
+                    ">
+                        {medium}
+                    </div>
+
+                    <div style="
+                        font-family:
+                            'Quicksand';
+                        font-size: 12px;
+                        color: #617B99;
+                    ">
+                        Medium
+                    </div>
+                </div>
+
+
+                <div style="
+                    background: #FFF8E8;
+                    border: 1px solid #F2D89D;
+                    border-radius: 16px;
+                    padding: 15px;
+                    text-align: center;
+                ">
+                    <div style="
+                        font-family:
+                            'Space Grotesk';
+                        font-size: 25px;
+                        font-weight: 700;
+                        color: #A86408;
+                    ">
+                        {speculative}
+                    </div>
+
+                    <div style="
+                        font-family:
+                            'Quicksand';
+                        font-size: 12px;
+                        color: #8A6A35;
+                    ">
+                        Speculative
+                    </div>
+                </div>
+
+
+                <div style="
+                    background: #FFF2F2;
+                    border: 1px solid #F0D3D3;
+                    border-radius: 16px;
+                    padding: 15px;
+                    text-align: center;
+                ">
+                    <div style="
+                        font-family:
+                            'Space Grotesk';
+                        font-size: 25px;
+                        font-weight: 700;
+                        color: #C83C3C;
+                    ">
+                        {low}
+                    </div>
+
+                    <div style="
+                        font-family:
+                            'Quicksand';
+                        font-size: 12px;
+                        color: #956565;
+                    ">
+                        Low
+                    </div>
+                </div>
+
+            </div>
+
         </div>
+        """
+    )
 
-        <div class="summary-grid">
 
-            <div class="summary-card">
+# =========================================================
+# ASK ANOTHER QUESTION
+# =========================================================
 
-                <div class="summary-number">
-                    {total}
-                </div>
+def display_question_prompt():
 
-                <div class="summary-label">
-                    Claims Analyzed
-                </div>
+    render_html(
+        """
+        <div style="
+            text-align: center;
 
+            margin-top: 48px;
+
+            margin-bottom: 17px;
+
+            padding-top: 30px;
+
+            border-top:
+                1px solid #E4E6F0;
+        ">
+
+            <div style="
+                font-family:
+                    'Playfair Display',
+                    serif;
+
+                font-size: 27px;
+
+                font-weight: 700;
+
+                color: #20263A;
+            ">
+                💭 Have another question?
             </div>
 
+            <div style="
+                font-family:
+                    'Quicksand',
+                    sans-serif;
 
-            <div class="summary-card">
+                font-size: 14px;
 
-                <div class="summary-number">
-                    {high}
-                </div>
+                color: #7A8195;
 
-                <div class="summary-label">
-                    🟢 High Confidence
-                </div>
-
-            </div>
-
-
-            <div class="summary-card">
-
-                <div class="summary-number">
-                    {medium}
-                </div>
-
-                <div class="summary-label">
-                    🟡 Medium Confidence
-                </div>
-
-            </div>
-
-
-            <div class="summary-card">
-
-                <div class="summary-number">
-                    {low}
-                </div>
-
-                <div class="summary-label">
-                    🔴 Low Confidence
-                </div>
-
+                margin-top: 6px;
+            ">
+                Ask another question and discover how much you can trust
+                the answer.
             </div>
 
         </div>
