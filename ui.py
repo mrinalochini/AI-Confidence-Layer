@@ -729,39 +729,35 @@ def load_css():
 
 
         /* =====================================================
-           EVIDENCE EXPANDER
-        ===================================================== */
+   EVIDENCE EXPANDER
+   ===================================================== */
 
-        div[data-testid="stExpander"] {
-
-            background: rgba(255,255,255,0.96) !important;
-
-            border:
-                1px solid #e4e6ef !important;
-
-            border-radius: 15px !important;
-
-            margin-top: 9px;
-
-            box-shadow:
-                0 4px 14px rgba(50, 55, 90, 0.04);
-
-        }
+div[data-testid="stExpander"] {
+    background: #ffffff !important;
+    border: 1px solid #e4e6ef !important;
+    border-radius: 15px !important;
+    margin-top: 10px !important;
+    margin-bottom: 12px !important;
+    box-shadow: 0 5px 16px rgba(50, 55, 90, 0.05) !important;
+}
 
 
-        div[data-testid="stExpander"] summary {
+/* Keep Streamlit's internal expander layout intact */
 
-            font-family:
-                "Space Grotesk",
-                sans-serif !important;
+div[data-testid="stExpander"] summary {
+    color: #414960 !important;
+    font-family: "Space Grotesk", sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+}
 
-            font-size: 14px !important;
 
-            font-weight: 700 !important;
+/* Don't modify Streamlit's internal icons */
 
-            color: #424a60 !important;
-
-        }
+div[data-testid="stExpander"] summary svg {
+    width: 1.2rem !important;
+    height: 1.2rem !important;
+}
 
 
         /* =====================================================
