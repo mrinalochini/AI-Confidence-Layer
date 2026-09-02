@@ -1,515 +1,449 @@
 import streamlit as st
 import html
-import textwrap
 
 
 # =========================================================
-# PAGE STYLING
+# GLOBAL CSS
 # =========================================================
 
 def load_css():
 
     st.markdown(
-        textwrap.dedent("""
+        """
         <style>
 
-        /* ==============================
-           MAIN APP
-        ============================== */
+        /* =========================
+           PAGE
+        ========================= */
 
         .stApp {
-            background:
-                radial-gradient(
-                    circle at 20% 0%,
-                    rgba(99, 102, 241, 0.16),
-                    transparent 35%
-                ),
-                radial-gradient(
-                    circle at 90% 10%,
-                    rgba(139, 92, 246, 0.12),
-                    transparent 30%
-                ),
-                #080d1b;
+            background: #f6f7fb;
+            color: #172033;
+        }
 
-            color: #f8fafc;
+        .main .block-container {
+            max-width: 1100px;
+            padding-top: 3rem;
+            padding-bottom: 4rem;
         }
 
 
-        .block-container {
-            max-width: 1050px;
-            padding-top: 2rem;
-            padding-bottom: 5rem;
+        /* =========================
+           GLOBAL FONT
+        ========================= */
+
+        html, body, [class*="css"] {
+            font-family: "Segoe UI", "Trebuchet MS", Arial, sans-serif;
+        }
+
+        p, span, div, label {
+            font-family: "Segoe UI", "Trebuchet MS", Arial, sans-serif;
         }
 
 
-        /* ==============================
+        /* =========================
            HERO
-           ============================== */
+        ========================= */
 
         .hero {
+            background: linear-gradient(
+                135deg,
+                #ffffff 0%,
+                #f4f1ff 50%,
+                #eef4ff 100%
+            );
+
+            border: 1px solid #e5e7f0;
+            border-radius: 24px;
+
+            padding: 42px 40px;
+
+            margin-bottom: 35px;
+
             text-align: center;
-            padding: 45px 20px 35px 20px;
-        }
-
-
-        .hero-icon {
-            font-size: 42px;
-            margin-bottom: 8px;
-        }
-
-
-        .hero-title {
-            font-size: 48px;
-            font-weight: 800;
-            letter-spacing: -1.5px;
-            margin-bottom: 10px;
-
-            background: linear-gradient(
-                90deg,
-                #ffffff,
-                #c4b5fd,
-                #818cf8
-            );
-
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-
-        .hero-subtitle {
-            font-size: 18px;
-            color: #94a3b8;
-            max-width: 650px;
-            margin: auto;
-            line-height: 1.6;
-        }
-
-
-        /* ==============================
-           QUESTION AREA
-           ============================== */
-
-        .question-label {
-            font-size: 14px;
-            font-weight: 700;
-            color: #cbd5e1;
-            margin-bottom: 8px;
-        }
-
-
-        /* ==============================
-           SECTION HEADERS
-           ============================== */
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-
-            font-size: 27px;
-            font-weight: 750;
-
-            color: #f8fafc;
-
-            margin-top: 42px;
-            margin-bottom: 18px;
-        }
-
-
-        .section-description {
-            color: #64748b;
-            font-size: 14px;
-            margin-top: -10px;
-            margin-bottom: 20px;
-        }
-
-
-        /* ==============================
-           CLAIM CARD
-           ============================== */
-
-        .claim-card {
-
-            background: linear-gradient(
-                145deg,
-                rgba(30, 41, 59, 0.92),
-                rgba(15, 23, 42, 0.92)
-            );
-
-            border: 1px solid rgba(148, 163, 184, 0.16);
-
-            border-radius: 20px;
-
-            padding: 25px;
-
-            margin: 18px 0;
 
             box-shadow:
-                0 15px 40px rgba(0, 0, 0, 0.25);
+                0 10px 30px rgba(40, 50, 90, 0.08);
+        }
+
+        .hero-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .hero-title {
+            font-size: 38px;
+            font-weight: 750;
+            letter-spacing: -1px;
+            color: #172033;
+            margin-bottom: 12px;
+        }
+
+        .hero-subtitle {
+            font-size: 17px;
+            line-height: 1.6;
+            color: #667085;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .hero-highlight {
+            color: #6d4aff;
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           QUESTION AREA
+        ========================= */
+
+        .question-label {
+            font-size: 18px;
+            font-weight: 650;
+            color: #172033;
+            margin-bottom: 8px;
+        }
+
+
+        /* =========================
+           INPUT
+        ========================= */
+
+        div[data-baseweb="input"] {
+            border-radius: 12px !important;
+            border: 1px solid #dfe3ed !important;
+            background: white !important;
+        }
+
+        div[data-baseweb="input"]:focus-within {
+            border: 1px solid #8066ff !important;
+            box-shadow: 0 0 0 3px rgba(128, 102, 255, 0.12) !important;
+        }
+
+        input {
+            font-size: 16px !important;
+            color: #172033 !important;
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .stButton > button {
+            border: none;
+            border-radius: 12px;
+
+            background: linear-gradient(
+                135deg,
+                #7456f5,
+                #5b8def
+            );
+
+            color: white;
+
+            font-size: 16px;
+            font-weight: 650;
+
+            padding: 12px 25px;
+
+            box-shadow:
+                0 6px 15px rgba(100, 85, 220, 0.25);
 
             transition: all 0.2s ease;
         }
 
-
-        .claim-card:hover {
-
-            border-color:
-                rgba(129, 140, 248, 0.35);
-
+        .stButton > button:hover {
             transform: translateY(-2px);
 
             box-shadow:
-                0 20px 45px rgba(0, 0, 0, 0.32);
+                0 9px 20px rgba(100, 85, 220, 0.30);
         }
 
 
-        .claim-header {
+        /* =========================
+           SECTION TITLE
+        ========================= */
 
-            display: flex;
+        .section-title {
+            font-size: 25px;
+            font-weight: 750;
 
-            justify-content: space-between;
+            color: #172033;
 
-            align-items: center;
+            margin-top: 40px;
+            margin-bottom: 22px;
+        }
+
+        .section-description {
+            color: #667085;
+            font-size: 15px;
+            margin-top: -14px;
+            margin-bottom: 25px;
+        }
+
+
+        /* =========================
+           CLAIM CARD
+        ========================= */
+
+        .claim-card {
+            background: white;
+
+            border: 1px solid #e4e7ef;
+
+            border-radius: 18px;
+
+            padding: 26px;
 
             margin-bottom: 20px;
+
+            box-shadow:
+                0 5px 18px rgba(30, 40, 70, 0.06);
         }
 
+        .claim-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
 
-        .claim-number {
+            margin-bottom: 18px;
+        }
 
-            color: #64748b;
-
-            font-size: 12px;
-
-            font-weight: 800;
+        .claim-label {
+            font-size: 13px;
+            font-weight: 700;
 
             text-transform: uppercase;
+            letter-spacing: 1px;
 
-            letter-spacing: 1.3px;
+            color: #7b8498;
         }
 
 
-        /* ==============================
+        /* =========================
            CONFIDENCE BADGES
-           ============================== */
+        ========================= */
 
         .confidence-badge {
-
             padding: 7px 13px;
 
             border-radius: 999px;
 
             font-size: 12px;
-
-            font-weight: 800;
+            font-weight: 750;
 
             letter-spacing: 0.5px;
         }
 
-
         .confidence-high {
-
-            background:
-                rgba(34, 197, 94, 0.12);
-
-            color: #4ade80;
-
-            border:
-                1px solid rgba(34, 197, 94, 0.30);
+            background: #e8f8ee;
+            color: #16834a;
         }
-
 
         .confidence-medium {
-
-            background:
-                rgba(234, 179, 8, 0.12);
-
-            color: #facc15;
-
-            border:
-                1px solid rgba(234, 179, 8, 0.30);
+            background: #fff5d9;
+            color: #a66b00;
         }
-
 
         .confidence-low {
-
-            background:
-                rgba(239, 68, 68, 0.12);
-
-            color: #f87171;
-
-            border:
-                1px solid rgba(239, 68, 68, 0.30);
+            background: #ffe9e9;
+            color: #c43d3d;
         }
 
 
-        /* ==============================
+        /* =========================
            CLAIM TEXT
-           ============================== */
+        ========================= */
 
         .claim-text {
-
-            font-size: 20px;
-
-            font-weight: 550;
+            font-size: 19px;
 
             line-height: 1.65;
 
-            color: #f8fafc;
+            font-weight: 550;
+
+            color: #20283a;
 
             margin-bottom: 20px;
         }
 
 
-        /* ==============================
+        /* =========================
            WHY BOX
-           ============================== */
+        ========================= */
 
         .reason-box {
+            background: #f7f8fc;
 
-            background:
-                rgba(2, 6, 23, 0.55);
+            border-left: 4px solid #7456f5;
 
-            border:
-                1px solid rgba(148, 163, 184, 0.10);
+            border-radius: 10px;
 
-            border-left:
-                3px solid #818cf8;
+            padding: 15px 18px;
 
-            border-radius: 12px;
-
-            padding: 15px 17px;
-
-            color: #cbd5e1;
-
-            font-size: 14px;
-
-            line-height: 1.6;
+            margin-bottom: 18px;
         }
 
-
         .reason-title {
-
-            color: #a5b4fc;
-
+            font-size: 13px;
             font-weight: 750;
+
+            color: #7456f5;
 
             margin-bottom: 5px;
         }
 
+        .reason-text {
+            font-size: 15px;
+            line-height: 1.5;
 
-        /* ==============================
-           EVIDENCE CARDS
-           ============================== */
-
-        .evidence-card {
-
-            background:
-                rgba(15, 23, 42, 0.72);
-
-            border:
-                1px solid rgba(148, 163, 184, 0.12);
-
-            border-radius: 14px;
-
-            padding: 17px;
-
-            margin: 12px 0;
+            color: #596273;
         }
 
 
-        .evidence-title {
+        /* =========================
+           EVIDENCE
+        ========================= */
 
-            color: #e2e8f0;
+        .evidence-title {
+            font-size: 14px;
 
             font-weight: 700;
 
-            font-size: 15px;
+            color: #30394d;
 
             margin-bottom: 8px;
         }
 
+        .source-card {
+            background: #fafbfe;
 
-        .evidence-text {
+            border: 1px solid #e8eaf1;
 
-            color: #94a3b8;
+            border-radius: 10px;
 
+            padding: 14px 16px;
+
+            margin-top: 10px;
+        }
+
+        .source-name {
             font-size: 14px;
+            font-weight: 700;
 
-            line-height: 1.6;
+            color: #344054;
+
+            margin-bottom: 5px;
+        }
+
+        .source-content {
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            color: #667085;
+        }
+
+        .source-link {
+            display: inline-block;
+
+            margin-top: 8px;
+
+            font-size: 13px;
+
+            color: #635bff;
+
+            text-decoration: none;
+
+            font-weight: 650;
         }
 
 
-        /* ==============================
+        /* =========================
            SUMMARY
-           ============================== */
+        ========================= */
+
+        .summary-grid {
+            display: flex;
+            gap: 15px;
+
+            margin-bottom: 30px;
+        }
 
         .summary-card {
+            flex: 1;
 
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(30, 41, 59, 0.85),
-                    rgba(15, 23, 42, 0.85)
-                );
+            background: white;
 
-            border:
-                1px solid rgba(148, 163, 184, 0.14);
+            border: 1px solid #e4e7ef;
 
-            border-radius: 18px;
+            border-radius: 15px;
 
-            padding: 22px;
+            padding: 20px;
 
             text-align: center;
 
-            min-height: 105px;
+            box-shadow:
+                0 4px 15px rgba(30, 40, 70, 0.05);
         }
-
 
         .summary-number {
-
             font-size: 28px;
-
-            font-weight: 800;
-
-            color: #f8fafc;
-        }
-
-
-        .summary-label {
-
-            font-size: 12px;
-
-            color: #64748b;
-
-            font-weight: 700;
-
-            text-transform: uppercase;
-
-            letter-spacing: 0.8px;
-
-            margin-top: 3px;
-        }
-
-
-        /* ==============================
-           BUTTON
-           ============================== */
-
-        .stButton > button {
-
-            width: 100%;
-
-            border-radius: 13px;
-
-            border: 1px solid
-                rgba(139, 92, 246, 0.4);
-
-            padding: 12px 20px;
-
-            font-size: 16px;
 
             font-weight: 750;
 
-            background:
-                linear-gradient(
-                    90deg,
-                    #6366f1,
-                    #8b5cf6
-                );
+            color: #172033;
+        }
 
-            color: white;
+        .summary-label {
+            font-size: 13px;
 
-            transition: all 0.2s ease;
+            color: #7b8498;
+
+            margin-top: 4px;
         }
 
 
-        .stButton > button:hover {
-
-            transform: translateY(-2px);
-
-            box-shadow:
-                0 10px 25px
-                rgba(99, 102, 241, 0.30);
-        }
-
-
-        /* ==============================
-           TEXT INPUT
-           ============================== */
-
-        .stTextInput input {
-
-            border-radius: 13px;
-
-            background:
-                rgba(30, 41, 59, 0.75);
-
-            color: white;
-
-            border:
-                1px solid
-                rgba(148, 163, 184, 0.20);
-
-            padding: 13px 15px;
-
-            font-size: 15px;
-        }
-
-
-        .stTextInput input:focus {
-
-            border-color:
-                rgba(129, 140, 248, 0.65);
-
-            box-shadow:
-                0 0 0 1px
-                rgba(129, 140, 248, 0.25);
-        }
-
-
-        /* ==============================
+        /* =========================
            EXPANDER
-           ============================== */
+        ========================= */
 
-        .streamlit-expanderHeader {
+        div[data-testid="stExpander"] {
+            border: 1px solid #e5e7ef !important;
 
-            color: #cbd5e1 !important;
+            border-radius: 12px !important;
 
-            font-weight: 700 !important;
+            background: #ffffff !important;
         }
 
 
-        /* ==============================
-           DIVIDER
-           ============================== */
+        /* =========================
+           WARNINGS
+        ========================= */
 
-        hr {
-
-            border-color:
-                rgba(148, 163, 184, 0.10);
+        div[data-testid="stAlert"] {
+            border-radius: 12px;
         }
 
 
         </style>
-        """),
+        """,
         unsafe_allow_html=True
     )
 
 
 # =========================================================
-# HEADER
+# HERO
 # =========================================================
 
 def display_header():
 
-    st.markdown(
-        textwrap.dedent("""
+    st.html(
+        """
         <div class="hero">
 
-            <div class="hero-icon">
-                🧠
-            </div>
+            <div class="hero-icon">🧠</div>
 
             <div class="hero-title">
                 AI Confidence Layer
@@ -517,12 +451,34 @@ def display_header():
 
             <div class="hero-subtitle">
                 Don't just get an AI answer.
-                Understand <b>why you should trust it.</b>
+                Understand
+                <span class="hero-highlight">
+                    why you should trust it.
+                </span>
             </div>
 
         </div>
-        """),
-        unsafe_allow_html=True
+        """
+    )
+
+
+# =========================================================
+# ANALYSIS HEADER
+# =========================================================
+
+def display_analysis_header():
+
+    st.html(
+        """
+        <div class="section-title">
+            🔬 Claim-by-Claim Analysis
+        </div>
+
+        <div class="section-description">
+            Each claim is evaluated against external evidence
+            to help you understand how trustworthy the answer is.
+        </div>
+        """
     )
 
 
@@ -532,314 +488,205 @@ def display_header():
 
 def display_claim(claim, confidence, evidence):
 
-    level = confidence.get(
-        "confidence",
-        "LOW"
-    ).upper()
-
-    reason = confidence.get(
-        "reason",
-        "There is not enough evidence to determine confidence."
-    )
-
-
-    # Safely escape dynamic content
-    safe_claim = html.escape(str(claim))
-    safe_reason = html.escape(str(reason))
-
-
-    # Choose confidence styling
+    level = confidence["confidence"]
 
     if level == "HIGH":
 
         icon = "🟢"
         badge_class = "confidence-high"
-        label = "HIGH CONFIDENCE"
 
     elif level == "MEDIUM":
 
         icon = "🟡"
         badge_class = "confidence-medium"
-        label = "MEDIUM CONFIDENCE"
 
     else:
 
         icon = "🔴"
         badge_class = "confidence-low"
-        label = "LOW CONFIDENCE"
 
 
-    # Claim card
+    safe_claim = html.escape(str(claim))
 
-    st.markdown(
-        textwrap.dedent(
-            f"""
-            <div class="claim-card">
-
-                <div class="claim-header">
-
-                    <div class="claim-number">
-                        AI CLAIM
-                    </div>
-
-                    <div class="confidence-badge {badge_class}">
-                        {icon} {label}
-                    </div>
-
-                </div>
-
-                <div class="claim-text">
-                    {safe_claim}
-                </div>
-
-                <div class="reason-box">
-
-                    <div class="reason-title">
-                        🔍 Why this rating?
-                    </div>
-
-                    {safe_reason}
-
-                </div>
-
-            </div>
-            """
-        ),
-        unsafe_allow_html=True
+    safe_reason = html.escape(
+        str(confidence.get("reason", "No explanation provided."))
     )
 
 
-    # Evidence
+    # Main claim card
 
-    with st.expander("📚  View supporting evidence"):
+    st.html(
+        f"""
+        <div class="claim-card">
+
+            <div class="claim-header">
+
+                <div class="claim-label">
+                    AI Claim
+                </div>
+
+                <div class="confidence-badge {badge_class}">
+                    {icon} {html.escape(level)} CONFIDENCE
+                </div>
+
+            </div>
+
+            <div class="claim-text">
+                {safe_claim}
+            </div>
+
+            <div class="reason-box">
+
+                <div class="reason-title">
+                    Why this confidence level?
+                </div>
+
+                <div class="reason-text">
+                    {safe_reason}
+                </div>
+
+            </div>
+
+        </div>
+        """
+    )
+
+
+    # Evidence section
+
+    with st.expander("📚 View supporting evidence"):
 
         if not evidence:
 
-            st.warning(
-                "No supporting evidence was found for this claim."
-            )
+            st.info("No supporting evidence was found.")
 
         else:
 
             for source in evidence:
 
                 title = html.escape(
-                    str(
-                        source.get(
-                            "title",
-                            "Source"
-                        )
-                    )
+                    str(source.get("title", "Unknown source"))
                 )
 
                 content = html.escape(
-                    str(
-                        source.get(
-                            "content",
-                            "No source description available."
-                        )
-                    )
+                    str(source.get("content", ""))
                 )
 
-                url = source.get(
-                    "url",
-                    "#"
+                url = str(
+                    source.get("url", "#")
                 )
 
+                st.html(
+                    f"""
+                    <div class="source-card">
 
-                st.markdown(
-                    textwrap.dedent(
-                        f"""
-                        <div class="evidence-card">
-
-                            <div class="evidence-title">
-                                📄 {title}
-                            </div>
-
-                            <div class="evidence-text">
-                                {content}
-                            </div>
-
+                        <div class="source-name">
+                            {title}
                         </div>
-                        """
-                    ),
-                    unsafe_allow_html=True
+
+                        <div class="source-content">
+                            {content}
+                        </div>
+
+                        <a
+                            class="source-link"
+                            href="{url}"
+                            target="_blank"
+                        >
+                            Open source →
+                        </a>
+
+                    </div>
+                    """
                 )
 
 
-                if url != "#":
-
-                    st.markdown(
-                        f"[🔗 Open source]({url})"
-                    )
-
-
 # =========================================================
-# OVERALL SUMMARY
+# SUMMARY
 # =========================================================
 
-def display_summary(claims_data):
+def display_summary(analyzed_claims):
 
-    if not claims_data:
-        return
-
-
-    total = len(claims_data)
-
+    total = len(analyzed_claims)
 
     high = sum(
         1
-        for item in claims_data
-        if item["confidence"]
-        .get("confidence", "LOW")
-        .upper() == "HIGH"
+        for item in analyzed_claims
+        if item["confidence"]["confidence"] == "HIGH"
     )
-
 
     medium = sum(
         1
-        for item in claims_data
-        if item["confidence"]
-        .get("confidence", "LOW")
-        .upper() == "MEDIUM"
+        for item in analyzed_claims
+        if item["confidence"]["confidence"] == "MEDIUM"
     )
-
 
     low = sum(
         1
-        for item in claims_data
-        if item["confidence"]
-        .get("confidence", "LOW")
-        .upper() == "LOW"
+        for item in analyzed_claims
+        if item["confidence"]["confidence"] == "LOW"
     )
 
 
-    # Section title
-
-    st.markdown(
-        textwrap.dedent("""
-        <div class="section-header">
+    st.html(
+        f"""
+        <div class="section-title">
             📊 Trust Summary
         </div>
 
-        <div class="section-description">
-            A quick overview of how well the generated claims
-            are supported by external evidence.
+        <div class="summary-grid">
+
+            <div class="summary-card">
+
+                <div class="summary-number">
+                    {total}
+                </div>
+
+                <div class="summary-label">
+                    Total Claims
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-number">
+                    {high}
+                </div>
+
+                <div class="summary-label">
+                    High Confidence
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-number">
+                    {medium}
+                </div>
+
+                <div class="summary-label">
+                    Medium Confidence
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-number">
+                    {low}
+                </div>
+
+                <div class="summary-label">
+                    Low Confidence
+                </div>
+
+            </div>
+
         </div>
-        """),
-        unsafe_allow_html=True
-    )
-
-
-    # Summary cards
-
-    col1, col2, col3, col4 = st.columns(4)
-
-
-    with col1:
-
-        st.markdown(
-            textwrap.dedent(
-                f"""
-                <div class="summary-card">
-
-                    <div class="summary-number">
-                        {total}
-                    </div>
-
-                    <div class="summary-label">
-                        Total Claims
-                    </div>
-
-                </div>
-                """
-            ),
-            unsafe_allow_html=True
-        )
-
-
-    with col2:
-
-        st.markdown(
-            textwrap.dedent(
-                f"""
-                <div class="summary-card">
-
-                    <div class="summary-number">
-                        🟢 {high}
-                    </div>
-
-                    <div class="summary-label">
-                        High
-                    </div>
-
-                </div>
-                """
-            ),
-            unsafe_allow_html=True
-        )
-
-
-    with col3:
-
-        st.markdown(
-            textwrap.dedent(
-                f"""
-                <div class="summary-card">
-
-                    <div class="summary-number">
-                        🟡 {medium}
-                    </div>
-
-                    <div class="summary-label">
-                        Medium
-                    </div>
-
-                </div>
-                """
-            ),
-            unsafe_allow_html=True
-        )
-
-
-    with col4:
-
-        st.markdown(
-            textwrap.dedent(
-                f"""
-                <div class="summary-card">
-
-                    <div class="summary-number">
-                        🔴 {low}
-                    </div>
-
-                    <div class="summary-label">
-                        Low
-                    </div>
-
-                </div>
-                """
-            ),
-            unsafe_allow_html=True
-        )
-
-
-# =========================================================
-# CLAIM ANALYSIS HEADER
-# =========================================================
-
-def display_analysis_header():
-
-    st.markdown(
-        textwrap.dedent("""
-        <div class="section-header">
-            🔬 Claim-by-Claim Analysis
-        </div>
-
-        <div class="section-description">
-            Each statement is evaluated against external evidence
-            before a trust rating is assigned.
-        </div>
-        """),
-        unsafe_allow_html=True
+        """
     )
