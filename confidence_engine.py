@@ -44,10 +44,11 @@ contradicts it, or there is insufficient evidence.
 
 Return ONLY valid JSON:
 
-{{
-    "confidence": "HIGH",
-    "reason": "Short explanation"
-}}
+if len(evidence) == 0:
+    return {
+        "confidence": "SPECULATIVE",
+        "reason": "No retrieved evidence supports this claim. The model generated this statement based on its internal knowledge or creative inference."
+    }
 """
 
     response = client.chat.completions.create(
