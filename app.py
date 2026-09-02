@@ -70,7 +70,8 @@ with st.form(
     question = st.text_input(
         "Question",
         placeholder="Try: Who invented the telephone?",
-        label_visibility="collapsed"
+        label_visibility="collapsed",
+        key="question_input"
     )
 
     submitted = st.form_submit_button(
