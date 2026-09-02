@@ -3,7 +3,7 @@ import html
 
 
 # =========================================================
-# GLOBAL DESIGN
+# GLOBAL STYLING
 # =========================================================
 
 def load_css():
@@ -12,36 +12,55 @@ def load_css():
         """
         <style>
 
-        /* =================================================
-           MAIN PAGE
-        ================================================= */
+        /* =====================================================
+           IMPORT BEAUTIFUL FONTS
+        ===================================================== */
+
+        @import url(
+            'https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Quicksand:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap'
+        );
+
+
+        /* =====================================================
+           PAGE BACKGROUND
+        ===================================================== */
 
         .stApp {
+
             background:
                 radial-gradient(
-                    circle at 10% 10%,
-                    rgba(190, 170, 255, 0.35),
-                    transparent 30%
+                    circle at 5% 5%,
+                    rgba(215, 190, 255, 0.55),
+                    transparent 25%
                 ),
+
                 radial-gradient(
-                    circle at 90% 15%,
-                    rgba(140, 210, 255, 0.30),
+                    circle at 95% 5%,
+                    rgba(180, 225, 255, 0.55),
+                    transparent 25%
+                ),
+
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(255, 210, 235, 0.35),
                     transparent 30%
                 ),
+
                 linear-gradient(
                     135deg,
-                    #f9f7ff 0%,
-                    #f5f9ff 50%,
-                    #fff8fc 100%
+                    #f9f7ff,
+                    #f3f8ff 50%,
+                    #fff7fc
                 );
 
             color: #172033;
+
         }
 
 
-        /* =================================================
-           PAGE WIDTH
-        ================================================= */
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
 
         .main .block-container {
 
@@ -53,26 +72,26 @@ def load_css():
         }
 
 
-        /* =================================================
-           GENERAL FONT
-        ================================================= */
+        /* =====================================================
+           DEFAULT TEXT
+        ===================================================== */
 
-        html,
-        body,
-        [class*="css"] {
+        .stApp,
+        .stApp p,
+        .stApp span,
+        .stApp div,
+        .stApp label {
 
             font-family:
-                "Trebuchet MS",
-                "Segoe UI",
-                Arial,
+                "Poppins",
                 sans-serif;
 
         }
 
 
-        /* =================================================
-           HERO SECTION
-        ================================================= */
+        /* =====================================================
+           HERO
+        ===================================================== */
 
         .hero {
 
@@ -83,26 +102,28 @@ def load_css():
             background:
                 linear-gradient(
                     135deg,
-                    rgba(255,255,255,0.96),
-                    rgba(246,242,255,0.97),
-                    rgba(239,248,255,0.97)
+                    rgba(255,255,255,0.98),
+                    rgba(247,242,255,0.97),
+                    rgba(239,248,255,0.98)
                 );
 
-            border: 1px solid rgba(135, 120, 210, 0.18);
+            border-radius: 32px;
 
-            border-radius: 30px;
+            border: 1px solid rgba(125, 105, 210, 0.15);
 
-            padding: 48px 45px;
+            padding: 50px 40px 46px;
 
-            margin-bottom: 38px;
+            margin-bottom: 40px;
 
             text-align: center;
 
             box-shadow:
-                0 20px 50px rgba(70, 60, 130, 0.10);
+                0 20px 55px rgba(78, 67, 130, 0.10);
 
         }
 
+
+        /* Decorative blobs */
 
         .hero::before {
 
@@ -110,14 +131,19 @@ def load_css():
 
             position: absolute;
 
-            width: 180px;
-            height: 180px;
-
-            background: rgba(157, 125, 255, 0.13);
+            width: 190px;
+            height: 190px;
 
             border-radius: 50%;
 
-            top: -80px;
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(190, 130, 255, 0.20),
+                    transparent 70%
+                );
+
+            top: -90px;
             left: -60px;
 
         }
@@ -129,266 +155,332 @@ def load_css():
 
             position: absolute;
 
-            width: 160px;
-            height: 160px;
-
-            background: rgba(75, 190, 255, 0.12);
+            width: 180px;
+            height: 180px;
 
             border-radius: 50%;
 
-            bottom: -70px;
-            right: -50px;
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(80, 190, 255, 0.18),
+                    transparent 70%
+                );
+
+            bottom: -90px;
+            right: -60px;
 
         }
 
 
-        /* =================================================
+        /* =====================================================
            HERO ICON
-        ================================================= */
+        ===================================================== */
 
         .hero-icon {
 
-            font-size: 54px;
+            font-size: 58px;
 
-            margin-bottom: 12px;
+            line-height: 1;
+
+            margin-bottom: 18px;
+
+            position: relative;
+
+            z-index: 2;
 
         }
 
 
-        /* =================================================
+        /* =====================================================
            HERO TITLE
-        ================================================= */
+        ===================================================== */
 
         .hero-title {
 
             font-family:
+                "Playfair Display",
                 Georgia,
-                "Times New Roman",
                 serif;
 
-            font-size: 44px;
+            font-size: 46px;
 
             font-weight: 800;
 
-            letter-spacing: -1px;
+            line-height: 1.15;
 
             background:
                 linear-gradient(
                     90deg,
-                    #7048e8,
-                    #a23fc7,
-                    #3c82e8
+                    #6845e8,
+                    #b34dcc,
+                    #3f83e8
                 );
 
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
 
-            margin-bottom: 14px;
+            margin-bottom: 15px;
+
+            position: relative;
+
+            z-index: 2;
 
         }
 
 
-        /* =================================================
+        /* =====================================================
            HERO SUBTITLE
-        ================================================= */
+        ===================================================== */
 
         .hero-subtitle {
 
             font-family:
-                "Trebuchet MS",
+                "Quicksand",
                 sans-serif;
 
             font-size: 18px;
 
+            font-weight: 500;
+
             line-height: 1.7;
 
-            color: #657086;
+            color: #68738a;
 
-            max-width: 700px;
+            max-width: 720px;
 
             margin: auto;
+
+            position: relative;
+
+            z-index: 2;
 
         }
 
 
         .hero-highlight {
 
-            color: #7048e8;
-
-            font-weight: 750;
-
-        }
-
-
-        /* =================================================
-           QUESTION LABEL
-        ================================================= */
-
-        .question-label {
-
-            font-family:
-                Georgia,
-                serif;
-
-            font-size: 21px;
+            color: #7650e8;
 
             font-weight: 700;
 
-            color: #252c42;
+        }
 
-            margin-bottom: 7px;
+
+        /* =====================================================
+           QUESTION LABEL
+        ===================================================== */
+
+        div[data-testid="stTextInput"] label {
+
+            color: #343b53 !important;
+
+            font-family:
+                "Space Grotesk",
+                sans-serif !important;
+
+            font-size: 18px !important;
+
+            font-weight: 700 !important;
+
+            opacity: 1 !important;
 
         }
 
 
-        /* =================================================
-           TEXT INPUT
-        ================================================= */
+        div[data-testid="stTextInput"] label p {
+
+            color: #343b53 !important;
+
+            font-family:
+                "Space Grotesk",
+                sans-serif !important;
+
+            font-weight: 700 !important;
+
+        }
+
+
+        /* =====================================================
+           INPUT CONTAINER
+        ===================================================== */
 
         div[data-testid="stTextInput"] {
 
-            margin-bottom: 12px;
+            margin-bottom: 14px;
 
         }
 
 
-        div[data-baseweb="input"] {
+        div[data-testid="stTextInput"] > div {
 
-            background: #ffffff !important;
+            background: transparent !important;
 
-            border: 2px solid #e2e4ee !important;
+        }
 
-            border-radius: 16px !important;
 
-            min-height: 55px !important;
+        /* =====================================================
+           INPUT BOX — IMPORTANT FIX
+        ===================================================== */
+
+        div[data-testid="stTextInput"] div[data-baseweb="input"] {
+
+            background-color: #ffffff !important;
+
+            border: 2px solid #e2e4ef !important;
+
+            border-radius: 17px !important;
+
+            min-height: 58px !important;
 
             box-shadow:
-                0 5px 18px rgba(60, 70, 120, 0.06);
+                0 7px 22px rgba(70, 70, 120, 0.08) !important;
 
-            transition: all 0.2s ease;
-
-        }
-
-
-        div[data-baseweb="input"]:hover {
-
-            border-color: #b7a6f5 !important;
+            transition:
+                border 0.2s ease,
+                box-shadow 0.2s ease,
+                transform 0.2s ease !important;
 
         }
 
 
-        div[data-baseweb="input"]:focus-within {
+        /* =====================================================
+           ACTUAL TEXT INPUT
+           This is what fixes the invisible typing.
+        ===================================================== */
 
-            border-color: #8064e8 !important;
+        div[data-testid="stTextInput"] input {
 
-            box-shadow:
-                0 0 0 4px rgba(128, 100, 232, 0.12),
-                0 7px 20px rgba(80, 60, 150, 0.08) !important;
-
-        }
-
-
-        /* IMPORTANT:
-           Make the typed question clearly visible
-        */
-
-        div[data-baseweb="input"] input {
+            background-color: #ffffff !important;
 
             color: #172033 !important;
 
-            background: #ffffff !important;
+            -webkit-text-fill-color: #172033 !important;
+
+            caret-color: #7650e8 !important;
 
             font-family:
-                "Trebuchet MS",
-                "Segoe UI",
+                "Quicksand",
                 sans-serif !important;
 
             font-size: 17px !important;
 
             font-weight: 600 !important;
 
+            opacity: 1 !important;
+
         }
 
 
-        div[data-baseweb="input"] input::placeholder {
+        /* Placeholder */
 
-            color: #98a0b3 !important;
+        div[data-testid="stTextInput"] input::placeholder {
+
+            color: #9aa2b4 !important;
+
+            -webkit-text-fill-color: #9aa2b4 !important;
 
             opacity: 1 !important;
 
-            font-weight: 400 !important;
+            font-family:
+                "Quicksand",
+                sans-serif !important;
+
+            font-weight: 500 !important;
 
         }
 
 
-        /* =================================================
+        /* =====================================================
+           INPUT FOCUS
+        ===================================================== */
+
+        div[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within {
+
+            background-color: #ffffff !important;
+
+            border-color: #8564ef !important;
+
+            box-shadow:
+                0 0 0 4px rgba(133, 100, 239, 0.12),
+                0 10px 28px rgba(105, 80, 190, 0.12) !important;
+
+            transform: translateY(-1px);
+
+        }
+
+
+        /* =====================================================
            ANALYZE BUTTON
-        ================================================= */
+        ===================================================== */
 
         .stButton > button {
 
             background:
                 linear-gradient(
                     135deg,
-                    #7655e8,
-                    #a04de0,
-                    #4d8de8
+                    #7754e8,
+                    #a14ed8,
+                    #4d8ee8
                 ) !important;
 
-            color: white !important;
+            color: #ffffff !important;
 
             border: none !important;
 
-            border-radius: 14px !important;
+            border-radius: 15px !important;
 
-            padding: 13px 28px !important;
+            min-height: 50px !important;
+
+            padding:
+                10px 27px !important;
 
             font-family:
-                "Trebuchet MS",
+                "Space Grotesk",
                 sans-serif !important;
 
             font-size: 16px !important;
 
-            font-weight: 750 !important;
+            font-weight: 700 !important;
 
             letter-spacing: 0.2px;
 
             box-shadow:
-                0 8px 20px rgba(110, 75, 210, 0.25);
+                0 8px 22px rgba(106, 77, 210, 0.25);
 
-            transition: all 0.2s ease;
+            transition: all 0.2s ease !important;
 
         }
 
 
         .stButton > button:hover {
 
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.01);
 
             box-shadow:
-                0 12px 26px rgba(110, 75, 210, 0.32);
+                0 13px 28px rgba(106, 77, 210, 0.32);
 
         }
 
 
-        /* =================================================
+        /* =====================================================
            SECTION TITLE
-        ================================================= */
+        ===================================================== */
 
         .section-title {
 
             font-family:
+                "Playfair Display",
                 Georgia,
-                "Times New Roman",
                 serif;
 
-            font-size: 29px;
+            font-size: 30px;
 
             font-weight: 800;
 
             color: #252c42;
 
-            margin-top: 42px;
+            margin-top: 45px;
 
             margin-bottom: 8px;
 
@@ -398,38 +490,45 @@ def load_css():
         .section-description {
 
             font-family:
-                "Segoe UI",
+                "Quicksand",
                 sans-serif;
 
             font-size: 15px;
 
-            line-height: 1.6;
+            font-weight: 500;
 
-            color: #7a8294;
+            line-height: 1.7;
 
-            margin-bottom: 25px;
+            color: #7a8397;
+
+            margin-bottom: 26px;
 
         }
 
 
-        /* =================================================
+        /* =====================================================
            CLAIM CARD
-        ================================================= */
+        ===================================================== */
 
         .claim-card {
 
-            background: rgba(255,255,255,0.97);
+            background:
+                linear-gradient(
+                    145deg,
+                    #ffffff,
+                    #fcfbff
+                );
 
-            border: 1px solid #e7e8f0;
+            border: 1px solid #e5e6ef;
 
-            border-radius: 20px;
+            border-radius: 21px;
 
             padding: 28px;
 
-            margin-bottom: 18px;
+            margin-bottom: 19px;
 
             box-shadow:
-                0 8px 25px rgba(50, 55, 90, 0.07);
+                0 9px 27px rgba(45, 50, 90, 0.07);
 
             transition:
                 transform 0.2s ease,
@@ -440,17 +539,17 @@ def load_css():
 
         .claim-card:hover {
 
-            transform: translateY(-2px);
+            transform: translateY(-3px);
 
             box-shadow:
-                0 12px 30px rgba(50, 55, 90, 0.10);
+                0 14px 35px rgba(45, 50, 90, 0.11);
 
         }
 
 
-        /* =================================================
+        /* =====================================================
            CLAIM HEADER
-        ================================================= */
+        ===================================================== */
 
         .claim-header {
 
@@ -460,7 +559,7 @@ def load_css():
 
             align-items: center;
 
-            margin-bottom: 17px;
+            margin-bottom: 18px;
 
         }
 
@@ -468,41 +567,37 @@ def load_css():
         .claim-label {
 
             font-family:
-                "Courier New",
-                monospace;
+                "Space Grotesk",
+                sans-serif;
 
             font-size: 12px;
 
             font-weight: 700;
 
-            letter-spacing: 1.4px;
+            letter-spacing: 1.5px;
 
-            text-transform: uppercase;
-
-            color: #9299aa;
+            color: #9aa1b2;
 
         }
 
 
-        /* =================================================
+        /* =====================================================
            CONFIDENCE BADGES
-        ================================================= */
+        ===================================================== */
 
         .confidence-badge {
 
-            padding: 8px 14px;
+            padding: 8px 15px;
 
             border-radius: 999px;
 
             font-family:
-                "Trebuchet MS",
+                "Poppins",
                 sans-serif;
 
             font-size: 12px;
 
             font-weight: 800;
-
-            letter-spacing: 0.4px;
 
         }
 
@@ -512,11 +607,14 @@ def load_css():
             background:
                 linear-gradient(
                     135deg,
-                    #e4f9ec,
-                    #d7f5e5
+                    #ddf8e9,
+                    #cff4e0
                 );
 
-            color: #16834c;
+            color: #137a46;
+
+            box-shadow:
+                0 3px 10px rgba(35, 170, 95, 0.10);
 
         }
 
@@ -526,11 +624,11 @@ def load_css():
             background:
                 linear-gradient(
                     135deg,
-                    #fff5d9,
-                    #fff0c5
+                    #fff4d4,
+                    #ffedbd
                 );
 
-            color: #a86d00;
+            color: #a26800;
 
         }
 
@@ -540,24 +638,24 @@ def load_css():
             background:
                 linear-gradient(
                     135deg,
-                    #ffe9ec,
-                    #ffdddd
+                    #ffe6eb,
+                    #ffd9df
                 );
 
-            color: #c33c50;
+            color: #c23b50;
 
         }
 
 
-        /* =================================================
+        /* =====================================================
            CLAIM TEXT
-        ================================================= */
+        ===================================================== */
 
         .claim-text {
 
             font-family:
+                "Playfair Display",
                 Georgia,
-                "Times New Roman",
                 serif;
 
             font-size: 21px;
@@ -573,26 +671,25 @@ def load_css():
         }
 
 
-        /* =================================================
+        /* =====================================================
            WHY BOX
-        ================================================= */
+        ===================================================== */
 
         .reason-box {
 
             background:
                 linear-gradient(
                     135deg,
-                    #f8f5ff,
-                    #f3f8ff
+                    #f8f3ff,
+                    #f1f8ff
                 );
 
-            border-left: 4px solid #8262e8;
+            border-left:
+                4px solid #815ee8;
 
-            border-radius: 12px;
+            border-radius: 13px;
 
             padding: 16px 19px;
-
-            margin-bottom: 5px;
 
         }
 
@@ -600,14 +697,14 @@ def load_css():
         .reason-title {
 
             font-family:
-                "Trebuchet MS",
+                "Space Grotesk",
                 sans-serif;
 
             font-size: 13px;
 
             font-weight: 800;
 
-            color: #7555d9;
+            color: #7351d4;
 
             margin-bottom: 6px;
 
@@ -617,31 +714,37 @@ def load_css():
         .reason-text {
 
             font-family:
-                "Segoe UI",
+                "Quicksand",
                 sans-serif;
 
             font-size: 15px;
 
+            font-weight: 500;
+
             line-height: 1.55;
 
-            color: #60697b;
+            color: #626b7e;
 
         }
 
 
-        /* =================================================
+        /* =====================================================
            EVIDENCE EXPANDER
-        ================================================= */
+        ===================================================== */
 
         div[data-testid="stExpander"] {
 
-            background: rgba(255,255,255,0.95) !important;
+            background: rgba(255,255,255,0.96) !important;
 
-            border: 1px solid #e4e6ef !important;
+            border:
+                1px solid #e4e6ef !important;
 
-            border-radius: 14px !important;
+            border-radius: 15px !important;
 
-            margin-top: 8px;
+            margin-top: 9px;
+
+            box-shadow:
+                0 4px 14px rgba(50, 55, 90, 0.04);
 
         }
 
@@ -649,8 +752,10 @@ def load_css():
         div[data-testid="stExpander"] summary {
 
             font-family:
-                "Trebuchet MS",
+                "Space Grotesk",
                 sans-serif !important;
+
+            font-size: 14px !important;
 
             font-weight: 700 !important;
 
@@ -659,21 +764,27 @@ def load_css():
         }
 
 
-        /* =================================================
-           EVIDENCE SOURCE
-        ================================================= */
+        /* =====================================================
+           SOURCE CARD
+        ===================================================== */
 
         .source-card {
 
-            background: #fafbff;
+            background:
+                linear-gradient(
+                    135deg,
+                    #fbfaff,
+                    #f8fbff
+                );
 
-            border: 1px solid #e9ebf3;
+            border:
+                1px solid #e7e9f1;
 
-            border-radius: 12px;
+            border-radius: 13px;
 
-            padding: 16px;
+            padding: 17px;
 
-            margin-top: 10px;
+            margin-top: 11px;
 
         }
 
@@ -681,14 +792,15 @@ def load_css():
         .source-name {
 
             font-family:
+                "Playfair Display",
                 Georgia,
                 serif;
 
-            font-size: 15px;
+            font-size: 16px;
 
             font-weight: 700;
 
-            color: #30394e;
+            color: #30384e;
 
             margin-bottom: 7px;
 
@@ -698,12 +810,14 @@ def load_css():
         .source-content {
 
             font-family:
-                "Segoe UI",
+                "Quicksand",
                 sans-serif;
 
             font-size: 13px;
 
-            line-height: 1.55;
+            font-weight: 500;
+
+            line-height: 1.6;
 
             color: #687185;
 
@@ -714,26 +828,26 @@ def load_css():
 
             display: inline-block;
 
-            margin-top: 9px;
+            margin-top: 10px;
 
             font-family:
-                "Trebuchet MS",
+                "Space Grotesk",
                 sans-serif;
 
             font-size: 13px;
 
-            color: #7054df;
+            font-weight: 700;
+
+            color: #7152dc;
 
             text-decoration: none;
-
-            font-weight: 750;
 
         }
 
 
-        /* =================================================
+        /* =====================================================
            SUMMARY
-        ================================================= */
+        ===================================================== */
 
         .summary-grid {
 
@@ -754,19 +868,20 @@ def load_css():
                 linear-gradient(
                     145deg,
                     #ffffff,
-                    #fafaff
+                    #faf9ff
                 );
 
-            border: 1px solid #e5e7ef;
+            border:
+                1px solid #e4e6ef;
 
-            border-radius: 17px;
+            border-radius: 18px;
 
-            padding: 21px;
+            padding: 22px;
 
             text-align: center;
 
             box-shadow:
-                0 6px 18px rgba(50, 55, 90, 0.05);
+                0 7px 20px rgba(50, 55, 90, 0.05);
 
         }
 
@@ -774,18 +889,20 @@ def load_css():
         .summary-number {
 
             font-family:
+                "Playfair Display",
                 Georgia,
                 serif;
 
-            font-size: 30px;
+            font-size: 31px;
 
             font-weight: 800;
 
             background:
                 linear-gradient(
                     90deg,
-                    #7250dc,
-                    #4788e8
+                    #714dd9,
+                    #a94bcf,
+                    #4b86df
                 );
 
             -webkit-background-clip: text;
@@ -797,44 +914,64 @@ def load_css():
         .summary-label {
 
             font-family:
-                "Trebuchet MS",
+                "Quicksand",
                 sans-serif;
 
             font-size: 13px;
 
-            color: #7b8497;
+            font-weight: 600;
 
-            margin-top: 4px;
+            color: #7a8397;
+
+            margin-top: 5px;
 
         }
 
 
-        /* =================================================
-           STREAMLIT ALERTS
-        ================================================= */
+        /* =====================================================
+           ALERTS
+        ===================================================== */
 
         div[data-testid="stAlert"] {
 
             border-radius: 13px;
 
+            font-family:
+                "Quicksand",
+                sans-serif;
+
         }
 
 
-        /* =================================================
+        /* =====================================================
+           SPINNER
+        ===================================================== */
+
+        div[data-testid="stSpinner"] {
+
+            font-family:
+                "Quicksand",
+                sans-serif !important;
+
+        }
+
+
+        /* =====================================================
            MOBILE
-        ================================================= */
+        ===================================================== */
 
         @media (max-width: 700px) {
 
             .hero {
 
-                padding: 35px 20px;
+                padding:
+                    38px 20px;
 
             }
 
             .hero-title {
 
-                font-size: 34px;
+                font-size: 35px;
 
             }
 
@@ -852,11 +989,11 @@ def load_css():
 
             .claim-header {
 
+                flex-direction: column;
+
                 align-items: flex-start;
 
-                gap: 10px;
-
-                flex-direction: column;
+                gap: 12px;
 
             }
 
@@ -888,17 +1025,18 @@ def display_header():
 
             <div class="hero-subtitle">
 
-                Get answers from AI —
-                then discover
+                Don't just get an AI answer.
+
+                Discover
                 <span class="hero-highlight">
-                    how much you can trust them.
+                    why you can trust it.
                 </span>
 
                 <br>
 
-                We check individual claims against
-                supporting evidence so you can make
-                better-informed decisions.
+                We break AI responses into claims,
+                check the evidence, and help you
+                make informed decisions.
 
             </div>
 
@@ -921,8 +1059,8 @@ def display_analysis_header():
 
         <div class="section-description">
 
-            We've broken the AI response into individual
-            claims and checked the evidence behind each one.
+            Each part of the AI answer is checked against
+            supporting evidence so you can see what holds up.
 
         </div>
         """
@@ -953,7 +1091,9 @@ def display_claim(claim, confidence, evidence):
         badge_class = "confidence-low"
 
 
-    safe_claim = html.escape(str(claim))
+    safe_claim = html.escape(
+        str(claim)
+    )
 
     safe_reason = html.escape(
         str(
@@ -965,9 +1105,9 @@ def display_claim(claim, confidence, evidence):
     )
 
 
-    # -----------------------------------------------------
+    # =====================================================
     # CLAIM CARD
-    # -----------------------------------------------------
+    # =====================================================
 
     st.html(
         f"""
@@ -1008,11 +1148,13 @@ def display_claim(claim, confidence, evidence):
     )
 
 
-    # -----------------------------------------------------
+    # =====================================================
     # EVIDENCE
-    # -----------------------------------------------------
+    # =====================================================
 
-    with st.expander("📚  View supporting evidence"):
+    with st.expander(
+        "📚  View supporting evidence"
+    ):
 
         if not evidence:
 
@@ -1110,7 +1252,6 @@ def display_summary(analyzed_claims):
 
         <div class="summary-grid">
 
-
             <div class="summary-card">
 
                 <div class="summary-number">
@@ -1161,7 +1302,6 @@ def display_summary(analyzed_claims):
                 </div>
 
             </div>
-
 
         </div>
         """
