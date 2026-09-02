@@ -9,12 +9,13 @@ from ui import (
     display_header,
     display_claim,
     display_summary,
-    display_analysis_header
+    display_analysis_header,
+    display_question_prompt
 )
 
 
 # =========================================================
-# PAGE SETUP
+# PAGE CONFIG
 # =========================================================
 
 st.set_page_config(
@@ -23,65 +24,124 @@ st.set_page_config(
     layout="centered"
 )
 
+
+# =========================================================
+# LOAD UI
+# =========================================================
+
 load_css()
 
 display_header()
 
 
 # =========================================================
-# QUESTION AREA
+# ANALYSIS FUNCTION
 # =========================================================
 
-st.markdown(
-    """
-    <div style="
-        margin-top: 10px;
-        margin-bottom: 8px;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 19px;
-        font-weight: 700;
-        color: #343b53;
-    ">
-        💬 What would you like to know?
-    </div>
+def analyze_question(question):
 
-    <div style="
-        margin-bottom: 14px;
-        font-family: 'Quicksand', sans-serif;
-        font-size: 14px;
-        color: #7a8397;
-    ">
-        Ask anything and we'll help you understand how much you can trust the answer.
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+    with st.spinner(
+        "🧠 Thinking... This may take a few minutes."
+    ):
+
+        # ---------------------------------------------
+        # GENERATE CLAIMS
+        # ---------------------------------------------
+
+        result = generate_claims(
+            question
+        )
+
+
+        analyzed_claims = []
+
+
+        # ---------------------------------------------
+        # PROCESS CLAIMS
+        # ---------------------------------------------
+
+        for claim in result["claims"]:
+
+            claim_text = claim["text"]
+
+
+            # Find evidence
+            evidence = find_evidence(
+                claim_text
+            )
+
+
+            # Calculate confidence
+            confidence = calculate_confidence(
+                claim_text,
+                evidence
+            )
+
+
+            analyzed_claims.append({
+
+                "claim": claim_text,
+
+                "confidence": confidence,
+
+                "evidence": evidence
+
+            })
+
+
+    return analyzed_claims
 
 
 # =========================================================
-# FORM
+# FIRST QUESTION
 # =========================================================
 
 with st.form(
-    key="question_form",
+    "main_question_form",
     clear_on_submit=False
 ):
+
+    st.markdown(
+        """
+        <div style="
+            font-family:'Space Grotesk',sans-serif;
+            font-size:19px;
+            font-weight:700;
+            color:#343B53;
+            margin-bottom:7px;
+        ">
+            💬 What would you like to know?
+        </div>
+
+        <div style="
+            font-family:'Quicksand',sans-serif;
+            font-size:14px;
+            color:#7A8195;
+            margin-bottom:13px;
+        ">
+            Ask anything and we'll help you understand how much
+            you can trust the answer.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
 
     question = st.text_input(
         "Question",
         placeholder="Try: Who invented the telephone?",
         label_visibility="collapsed",
-        key="question_input"
+        key="main_question"
     )
 
+
     submitted = st.form_submit_button(
-        "🔍  Analyze Answer",
-        use_container_width=False
+        "🔍  Analyze Answer"
     )
 
 
 # =========================================================
-# PROCESS QUESTION
+# PROCESS FIRST QUESTION
 # =========================================================
 
 if submitted:
@@ -94,103 +154,98 @@ if submitted:
 
     else:
 
-        # -------------------------------------------------
-        # ONE SIMPLE PROCESSING MESSAGE
-        # -------------------------------------------------
+        st.session_state["question"] = question
 
-        with st.spinner(
-            "🧠 Thinking... This may take a few minutes."
+        st.session_state["analyzed_claims"] = (
+            analyze_question(question)
+        )
+
+
+# =========================================================
+# DISPLAY CURRENT ANSWER
+# =========================================================
+
+if "analyzed_claims" in st.session_state:
+
+    analyzed_claims = (
+        st.session_state["analyzed_claims"]
+    )
+
+
+    if analyzed_claims:
+
+        # ---------------------------------------------
+        # TRUST SUMMARY
+        # ---------------------------------------------
+
+        display_summary(
+            analyzed_claims
+        )
+
+
+        # ---------------------------------------------
+        # CLAIM ANALYSIS
+        # ---------------------------------------------
+
+        display_analysis_header()
+
+
+        for item in analyzed_claims:
+
+            display_claim(
+                item["claim"],
+                item["confidence"],
+                item["evidence"]
+            )
+
+
+        # =================================================
+        # ASK ANOTHER QUESTION
+        # =================================================
+
+        display_question_prompt()
+
+
+        with st.form(
+            "another_question_form",
+            clear_on_submit=False
         ):
 
-            # Generate claims
-            result = generate_claims(question)
-
-            analyzed_claims = []
-
-
-            # -------------------------------------------------
-            # PROCESS EVERYTHING QUIETLY
-            # -------------------------------------------------
-
-            for claim in result["claims"]:
-
-                claim_text = claim["text"]
+            another_question = st.text_input(
+                "Another question",
+                placeholder="Ask another question...",
+                label_visibility="collapsed",
+                key="another_question"
+            )
 
 
-                # Find supporting evidence
-                evidence = find_evidence(
-                    claim_text
-                )
-
-
-                # Calculate confidence
-                confidence = calculate_confidence(
-                    claim_text,
-                    evidence
-                )
-
-
-                analyzed_claims.append({
-
-                    "claim": claim_text,
-
-                    "confidence": confidence,
-
-                    "evidence": evidence
-
-                })
+            another_submitted = st.form_submit_button(
+                "✨  Analyze New Question"
+            )
 
 
         # =================================================
-        # RESULTS
+        # PROCESS NEW QUESTION
         # =================================================
 
-        if analyzed_claims:
+        if another_submitted:
 
-            display_summary(
-                analyzed_claims
-            )
+            if not another_question.strip():
 
-            display_analysis_header()
-
-
-            for item in analyzed_claims:
-
-                display_claim(
-                    item["claim"],
-                    item["confidence"],
-                    item["evidence"]
+                st.warning(
+                    "✨ Please enter a question first."
                 )
 
+            else:
 
-            # =================================================
-            # ASK ANOTHER QUESTION
-            # =================================================
+                st.session_state["question"] = (
+                    another_question
+                )
 
-            st.markdown(
-                """
-                <div style="
-                    text-align:center;
-                    margin-top:45px;
-                    margin-bottom:10px;
-                    font-family:'Playfair Display', serif;
-                    font-size:25px;
-                    font-weight:700;
-                    color:#343b53;
-                ">
-                    💭 Have another question?
-                </div>
+                st.session_state["analyzed_claims"] = (
+                    analyze_question(
+                        another_question
+                    )
+                )
 
-                <div style="
-                    text-align:center;
-                    margin-bottom:25px;
-                    font-family:'Quicksand', sans-serif;
-                    font-size:15px;
-                    color:#7a8397;
-                ">
-                    Ask another question above and discover whether
-                    you can trust that answer too.
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+                st.rerun()
