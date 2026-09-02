@@ -76,17 +76,13 @@ def load_css():
            DEFAULT TEXT
         ===================================================== */
 
-        .stApp,
-        .stApp p,
-        .stApp span,
-        .stApp div,
-        .stApp label {
+.stApp {
+    color: #172033;
+}
 
-            font-family:
-                "Poppins",
-                sans-serif;
-
-        }
+.stApp p {
+    font-family: "Poppins", sans-serif;
+}
 
 
         /* =====================================================
@@ -1148,9 +1144,7 @@ def display_claim(claim, confidence, evidence):
     # EVIDENCE
     # =====================================================
 
-    with st.expander(
-        "📚  View supporting evidence"
-    ):
+    with st.expander("📚  View supporting evidence"):
 
         if not evidence:
 
