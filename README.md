@@ -80,7 +80,7 @@ It is responsible for processing user requests, sending prompts to the AI model,
 
 ### AI / Language Model
 
-**[Name of AI model/API you actually used]**
+**[OpenAI/Groq API Key/Tavily API Key]**
 
 The AI model generates responses to user questions and supports the analysis performed by the Confidence Layer.
 
@@ -110,8 +110,8 @@ This allows the system to provide evidence alongside an AI-generated statement r
 ### Development Tools
 
 * **Git & GitHub** — Version control and collaborative development
-* **[VS Code / other IDE]** — Development environment
-* **[Vite / npm / other]** — Project setup, dependency management, and development server
+* **[VS Code / GitHub codescape]** — Development environment
+* **[Streamlit]** — Project setup, dependency management, and development server
 
 ### Architecture
 
