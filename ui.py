@@ -9,139 +9,204 @@ def load_css():
     st.html("""
     <style>
 
-    /* ---------- GOOGLE FONTS ---------- */
-
     @import url(
         'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap'
     );
 
-    /* ---------- PAGE ---------- */
+    /* =========================
+       MAIN PAGE
+       ========================= */
 
     .stApp {
         background:
             radial-gradient(
-                circle at 10% 5%,
-                rgba(82, 183, 136, 0.12),
-                transparent 28%
-            ),
-            radial-gradient(
-                circle at 90% 10%,
-                rgba(72, 149, 239, 0.12),
+                circle at 0% 0%,
+                #dff7f0 0%,
                 transparent 30%
             ),
-            #f8fafc;
+            radial-gradient(
+                circle at 100% 0%,
+                #e3efff 0%,
+                transparent 32%
+            ),
+            #f5f8fb;
+        color: #172033 !important;
     }
 
     .main .block-container {
         max-width: 900px;
         padding-top: 2.5rem;
-        padding-bottom: 4rem;
+        padding-bottom: 5rem;
     }
 
-    /* ---------- DEFAULT TEXT ---------- */
 
-    html,
-    body,
-    [class*="css"] {
-        font-family: 'DM Sans', sans-serif;
+    /* =========================
+       TYPOGRAPHY
+       ========================= */
+
+    h1 {
+        font-family: 'Space Grotesk', sans-serif !important;
+        color: #10213f !important;
+        font-weight: 700 !important;
     }
 
-    p,
-    label,
+    h2 {
+        font-family: 'Space Grotesk', sans-serif !important;
+        color: #10213f !important;
+        font-weight: 700 !important;
+    }
+
+    h3 {
+        font-family: 'Space Grotesk', sans-serif !important;
+        color: #183153 !important;
+        font-weight: 700 !important;
+    }
+
+    p {
+        font-family: 'DM Sans', sans-serif !important;
+        color: #334155 !important;
+    }
+
     span {
         font-family: 'DM Sans', sans-serif;
     }
 
-    h1,
-    h2,
-    h3 {
-        font-family: 'Space Grotesk', sans-serif !important;
+    .stCaption,
+    [data-testid="stCaptionContainer"] {
+        color: #64748b !important;
     }
 
-    /* ---------- INPUT ---------- */
+
+    /* =========================
+       INPUT
+       ========================= */
 
     div[data-baseweb="input"] {
-        border-radius: 16px !important;
-        border: 1px solid #d6dee8 !important;
         background: #ffffff !important;
-        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+        border: 2px solid #cbd5e1 !important;
+        border-radius: 16px !important;
+        box-shadow:
+            0 4px 16px rgba(15, 23, 42, 0.07) !important;
     }
 
     div[data-baseweb="input"]:focus-within {
-        border: 1px solid #4895ef !important;
+        border-color: #0f9d8a !important;
         box-shadow:
-            0 0 0 3px rgba(72, 149, 239, 0.14),
-            0 6px 22px rgba(15, 23, 42, 0.07);
+            0 0 0 4px rgba(15, 157, 138, 0.12),
+            0 6px 20px rgba(15, 23, 42, 0.08) !important;
     }
 
     input {
+        background: #ffffff !important;
         color: #172033 !important;
-        background: transparent !important;
+        -webkit-text-fill-color: #172033 !important;
         font-family: 'DM Sans', sans-serif !important;
         font-size: 1rem !important;
     }
 
     input::placeholder {
-        color: #8290a3 !important;
+        color: #64748b !important;
+        opacity: 1 !important;
     }
 
-    /* ---------- BUTTON ---------- */
+
+    /* =========================
+       BUTTONS
+       ========================= */
 
     .stButton > button,
     .stFormSubmitButton > button {
-        border-radius: 14px !important;
+        background: #0f766e !important;
+        color: #ffffff !important;
         border: none !important;
-        background: #2563eb !important;
-        color: white !important;
+        border-radius: 14px !important;
         font-family: 'DM Sans', sans-serif !important;
         font-weight: 700 !important;
-        min-height: 44px !important;
+        min-height: 46px !important;
         transition: all 0.2s ease !important;
     }
 
     .stButton > button:hover,
     .stFormSubmitButton > button:hover {
-        background: #1d4ed8 !important;
-        transform: translateY(-1px);
-        box-shadow: 0 7px 18px rgba(37, 99, 235, 0.22);
+        background: #0b5f59 !important;
+        transform: translateY(-1px) !important;
+        box-shadow:
+            0 8px 20px rgba(15, 118, 110, 0.22) !important;
     }
 
-    /* ---------- EXPANDERS ---------- */
+
+    /* =========================
+       METRICS
+       ========================= */
+
+    [data-testid="stMetric"] {
+        background: #ffffff !important;
+        border: 1px solid #dbe4ec !important;
+        border-radius: 15px !important;
+        padding: 14px !important;
+        box-shadow:
+            0 4px 14px rgba(15, 23, 42, 0.05) !important;
+    }
+
+    [data-testid="stMetricLabel"] {
+        color: #64748b !important;
+        font-family: 'DM Sans', sans-serif !important;
+    }
+
+    [data-testid="stMetricValue"] {
+        color: #10213f !important;
+        font-family: 'Space Grotesk', sans-serif !important;
+    }
+
+
+    /* =========================
+       EXPANDERS
+       ========================= */
 
     div[data-testid="stExpander"] {
-        border: 1px solid #dce4ed !important;
-        border-radius: 15px !important;
         background: #ffffff !important;
-        overflow: hidden;
+        border: 1px solid #d8e2eb !important;
+        border-radius: 15px !important;
+        box-shadow:
+            0 3px 12px rgba(15, 23, 42, 0.04) !important;
     }
 
     div[data-testid="stExpander"] summary {
+        color: #183153 !important;
         font-family: 'DM Sans', sans-serif !important;
         font-weight: 700 !important;
-        color: #263449 !important;
     }
 
-    /* ---------- ALERTS ---------- */
+
+    /* =========================
+       ALERTS
+       ========================= */
 
     div[data-testid="stAlert"] {
-        border-radius: 14px;
+        border-radius: 15px !important;
     }
 
-    /* ---------- DIVIDERS ---------- */
+
+    /* =========================
+       DIVIDERS
+       ========================= */
 
     hr {
-        border-color: #e2e8f0 !important;
+        border-color: #dbe4ec !important;
     }
 
-    /* ---------- SPINNER ---------- */
 
-    div[data-testid="stSpinner"] {
-        font-family: 'DM Sans', sans-serif;
+    /* =========================
+       SPINNER
+       ========================= */
+
+    [data-testid="stSpinner"] {
+        color: #0f766e !important;
+        font-family: 'DM Sans', sans-serif !important;
     }
 
     </style>
     """)
-
 
 # ============================================================
 # HEADER
