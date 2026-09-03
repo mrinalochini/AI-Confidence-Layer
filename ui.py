@@ -2,7 +2,7 @@ import streamlit as st
 
 
 # ============================================================
-# GLOBAL THEME
+# THEME
 # ============================================================
 
 def load_css():
@@ -11,59 +11,55 @@ def load_css():
 <style>
 
 @import url(
-    'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800'
-    '&family=Space+Grotesk:wght@400;500;600;700&display=swap'
+'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800'
+'&family=Space+Grotesk:wght@400;500;600;700&display=swap'
 );
 
-
-/* ============================================================
-   APP BACKGROUND
-   ============================================================ */
+/* =========================
+   PAGE
+   ========================= */
 
 .stApp {
 
     background:
-
         radial-gradient(
-            circle at 5% 0%,
-            rgba(79, 125, 255, 0.12),
-            transparent 25%
+            circle at 5% 5%,
+            rgba(79, 125, 255, 0.13),
+            transparent 24%
         ),
-
         radial-gradient(
-            circle at 96% 8%,
-            rgba(255, 122, 112, 0.11),
+            circle at 95% 10%,
+            rgba(255, 119, 105, 0.12),
             transparent 23%
         ),
-
         radial-gradient(
-            circle at 45% 100%,
-            rgba(91, 220, 169, 0.10),
-            transparent 28%
+            circle at 20% 95%,
+            rgba(65, 211, 157, 0.10),
+            transparent 25%
         ),
-
-        #F8F9FC;
+        #F7F8FC;
 
     color: #172033;
 }
 
 
-/* ============================================================
-   PAGE WIDTH
-   ============================================================ */
+/* =========================
+   LAYOUT
+   ========================= */
 
 .block-container {
 
     max-width: 920px;
 
-    padding-top: 2.5rem;
+    padding-top: 2.2rem;
+
     padding-bottom: 5rem;
 }
 
 
-/* ============================================================
-   TYPOGRAPHY
-   ============================================================ */
+/* =========================
+   FONTS
+   ========================= */
 
 html,
 body,
@@ -87,117 +83,42 @@ h3 {
         #172033 !important;
 
     letter-spacing:
-        -0.045em;
+        -0.04em;
 }
 
 
-p {
-
-    font-family:
-        'DM Sans',
-        sans-serif !important;
-
-    color:
-        #667085;
-
-    line-height:
-        1.65;
-}
-
-
-/* ============================================================
-   HIDE STREAMLIT BRANDING
-   ============================================================ */
+/* =========================
+   STREAMLIT CLEANUP
+   ========================= */
 
 #MainMenu {
 
-    visibility:
-        hidden;
+    visibility: hidden;
 }
-
 
 footer {
 
-    visibility:
-        hidden;
+    visibility: hidden;
 }
-
 
 header {
 
-    background:
-        transparent !important;
+    background: transparent !important;
 }
 
 
-/* ============================================================
-   MAIN TITLE
-   ============================================================ */
-
-[data-testid="stHeading"] h1 {
-
-    font-family:
-        'Space Grotesk',
-        sans-serif !important;
-
-    font-size:
-        3.15rem !important;
-
-    font-weight:
-        700 !important;
-
-    letter-spacing:
-        -0.065em !important;
-
-    background:
-
-        linear-gradient(
-            100deg,
-            #3159D8 0%,
-            #4378F4 45%,
-            #E96B72 100%
-        );
-
-    -webkit-background-clip:
-        text;
-
-    -webkit-text-fill-color:
-        transparent;
-}
-
-
-/* ============================================================
-   HEADINGS
-   ============================================================ */
-
-h2 {
-
-    font-size:
-        1.7rem !important;
-}
-
-
-h3 {
-
-    font-size:
-        1.35rem !important;
-}
-
-
-/* ============================================================
-   TEXT INPUT
-   ============================================================ */
+/* =========================
+   INPUT
+   ========================= */
 
 .stTextInput > div > div > input {
 
-    background:
-        rgba(255, 255, 255, 0.96) !important;
+    background: #FFFFFF !important;
 
-    color:
-        #172033 !important;
+    color: #172033 !important;
 
     border:
-        1.5px solid #D9DFEA !important;
+        2px solid #DCE2EE !important;
 
     border-radius:
         18px !important;
@@ -206,7 +127,7 @@ h3 {
         54px !important;
 
     padding:
-        0.9rem 1.15rem !important;
+        0.9rem 1.1rem !important;
 
     font-family:
         'DM Sans',
@@ -215,34 +136,19 @@ h3 {
     font-size:
         1rem !important;
 
-    font-weight:
-        500 !important;
-
     box-shadow:
-
-        0 8px 25px
-        rgba(35, 55, 90, 0.06);
-
-    transition:
-        all 0.2s ease;
+        0 8px 25px rgba(35,55,90,0.06);
 }
 
 
 .stTextInput > div > div > input:focus {
 
     border-color:
-        #4674E8 !important;
+        #4777E8 !important;
 
     box-shadow:
-
-        0 0 0 4px
-        rgba(70, 116, 232, 0.10),
-
-        0 12px 30px
-        rgba(35, 55, 90, 0.08);
-
-    outline:
-        none !important;
+        0 0 0 4px rgba(71,119,232,0.10),
+        0 10px 30px rgba(35,55,90,0.08);
 }
 
 
@@ -253,52 +159,37 @@ h3 {
 }
 
 
-/* ============================================================
-   PRIMARY BUTTON
-   ============================================================ */
+/* =========================
+   MAIN BUTTON
+   ========================= */
 
 .stFormSubmitButton > button {
 
-    width:
-        100%;
+    width: 100%;
 
-    min-height:
-        52px;
+    min-height: 52px;
 
-    border:
-        none !important;
+    border: none !important;
 
-    border-radius:
-        15px !important;
+    border-radius: 15px !important;
 
     background:
-
         linear-gradient(
             100deg,
             #3159D8,
-            #4678ED
+            #4779EE
         ) !important;
 
-    color:
-        #FFFFFF !important;
+    color: white !important;
 
     font-family:
         'DM Sans',
         sans-serif !important;
 
-    font-size:
-        0.98rem !important;
-
-    font-weight:
-        700 !important;
+    font-weight: 800 !important;
 
     box-shadow:
-
-        0 10px 25px
-        rgba(49, 89, 216, 0.22);
-
-    transition:
-        all 0.2s ease;
+        0 10px 25px rgba(49,89,216,0.22);
 }
 
 
@@ -308,26 +199,24 @@ h3 {
         translateY(-2px);
 
     box-shadow:
-
-        0 14px 32px
-        rgba(49, 89, 216, 0.28);
+        0 14px 30px rgba(49,89,216,0.28);
 }
 
 
-/* ============================================================
-   SECONDARY BUTTONS
-   ============================================================ */
+/* =========================
+   NORMAL BUTTONS
+   ========================= */
 
 .stButton > button {
 
+    border:
+        1px solid #DCE2EE !important;
+
     background:
-        rgba(255, 255, 255, 0.86) !important;
+        #FFFFFF !important;
 
     color:
-        #3159D8 !important;
-
-    border:
-        1px solid #DCE3F0 !important;
+        #344054 !important;
 
     border-radius:
         13px !important;
@@ -337,78 +226,80 @@ h3 {
         sans-serif !important;
 
     font-weight:
-        600 !important;
+        700 !important;
 
     transition:
-        all 0.18s ease;
+        all .18s ease;
 }
 
 
 .stButton > button:hover {
 
     background:
-        #EEF3FF !important;
+        #F1F5FF !important;
 
     border-color:
-        #9DB4F4 !important;
+        #9DB5F3 !important;
+
+    color:
+        #3159D8 !important;
 
     transform:
         translateY(-1px);
 }
 
 
-/* ============================================================
-   CARDS
-   ============================================================ */
+/* =========================
+   EXPANDERS
+   ========================= */
 
-[data-testid="stVerticalBlockBorderWrapper"] {
+.stExpander {
 
     background:
-        rgba(255, 255, 255, 0.88) !important;
+        #FFFFFF !important;
 
     border:
-        1px solid #E5E9F1 !important;
+        1px solid #E1E6EF !important;
 
     border-radius:
-        21px !important;
-
-    box-shadow:
-
-        0 12px 35px
-        rgba(38, 54, 83, 0.055);
-
-    backdrop-filter:
-        blur(12px);
+        15px !important;
 }
 
 
-/* ============================================================
-   CLAIM CARD HOVER
-   ============================================================ */
+/* =========================
+   DIVIDER
+   ========================= */
 
-[data-testid="stVerticalBlockBorderWrapper"]:hover {
+hr {
 
-    border-color:
-        #D4DCEF !important;
+    border: none !important;
 
-    box-shadow:
+    height: 2px !important;
 
-        0 15px 40px
-        rgba(38, 54, 83, 0.08);
+    background:
+        linear-gradient(
+            90deg,
+            #4777E8,
+            #61DDA9,
+            #FFB45C,
+            #FF7777
+        ) !important;
+
+    opacity: .20;
 }
 
 
-/* ============================================================
-   METRIC CARDS
-   ============================================================ */
+/* =========================
+   METRICS
+   ========================= */
 
 [data-testid="stMetric"] {
 
     background:
-        rgba(255, 255, 255, 0.92);
+        #FFFFFF;
 
     border:
-        1px solid #E4E8F0;
+        1px solid #E2E7EF;
 
     border-radius:
         17px;
@@ -417,9 +308,18 @@ h3 {
         1rem;
 
     box-shadow:
+        0 7px 20px rgba(35,55,90,0.045);
+}
 
-        0 7px 22px
-        rgba(38, 54, 83, 0.045);
+
+[data-testid="stMetricValue"] {
+
+    font-family:
+        'Space Grotesk',
+        sans-serif !important;
+
+    color:
+        #172033 !important;
 }
 
 
@@ -427,263 +327,62 @@ h3 {
 
     color:
         #7A8496 !important;
-
-    font-family:
-        'DM Sans',
-        sans-serif !important;
-
-    font-weight:
-        600 !important;
 }
 
 
-[data-testid="stMetricValue"] {
-
-    color:
-        #172033 !important;
-
-    font-family:
-        'Space Grotesk',
-        sans-serif !important;
-}
-
-
-/* ============================================================
-   EXPANDERS
-   ============================================================ */
-
-.stExpander {
-
-    background:
-        rgba(255, 255, 255, 0.72) !important;
-
-    border:
-        1px solid #E2E7EF !important;
-
-    border-radius:
-        16px !important;
-}
-
-
-.stExpander summary {
-
-    color:
-        #344054 !important;
-
-    font-family:
-        'DM Sans',
-        sans-serif !important;
-
-    font-weight:
-        700 !important;
-}
-
-
-/* ============================================================
-   HIGH CONFIDENCE — MINT
-   ============================================================ */
+/* =========================
+   ALERTS
+   ========================= */
 
 .stSuccess {
 
-    background:
-        #ECFBF4 !important;
-
-    border:
-        1px solid #B9EBD1 !important;
-
-    border-left:
-        4px solid #35B879 !important;
-
-    color:
-        #176B48 !important;
-
     border-radius:
         13px !important;
+
+    background:
+        #EAF9F1 !important;
+
+    border:
+        1px solid #B8E9D0 !important;
 }
 
-
-/* ============================================================
-   MEDIUM CONFIDENCE — APRICOT
-   ============================================================ */
 
 .stWarning {
 
-    background:
-        #FFF7E9 !important;
-
-    border:
-        1px solid #F5D9A3 !important;
-
-    border-left:
-        4px solid #F2A93B !important;
-
-    color:
-        #875A17 !important;
-
     border-radius:
         13px !important;
+
+    background:
+        #FFF7E8 !important;
+
+    border:
+        1px solid #F4D29B !important;
 }
 
 
-/* ============================================================
-   LOW CONFIDENCE — CORAL
-   ============================================================ */
-
 .stError {
+
+    border-radius:
+        13px !important;
 
     background:
         #FFF0F1 !important;
 
     border:
-        1px solid #F3C2C6 !important;
-
-    border-left:
-        4px solid #E96B72 !important;
-
-    color:
-        #913B42 !important;
-
-    border-radius:
-        13px !important;
+        1px solid #F1C1C6 !important;
 }
 
-
-/* ============================================================
-   INFORMATION — BLUE
-   ============================================================ */
 
 .stInfo {
 
-    background:
-        #EEF4FF !important;
-
-    border:
-        1px solid #C9D8FA !important;
-
-    border-left:
-        4px solid #4678ED !important;
-
-    color:
-        #294A9B !important;
-
     border-radius:
         13px !important;
-}
-
-
-/* ============================================================
-   SOURCE LINKS
-   ============================================================ */
-
-.stLinkButton > a {
 
     background:
-        #F4F7FF !important;
+        #EDF4FF !important;
 
     border:
-        1px solid #D6E0F7 !important;
-
-    color:
-        #3159D8 !important;
-
-    border-radius:
-        10px !important;
-
-    font-family:
-        'DM Sans',
-        sans-serif !important;
-
-    font-weight:
-        700 !important;
-}
-
-
-.stLinkButton > a:hover {
-
-    background:
-        #EAF0FF !important;
-
-    border-color:
-        #9EB5F2 !important;
-}
-
-
-/* ============================================================
-   DIVIDERS
-   ============================================================ */
-
-hr {
-
-    border:
-        none !important;
-
-    height:
-        1px !important;
-
-    background:
-
-        linear-gradient(
-            90deg,
-            transparent,
-            #D8DFEC,
-            #F0B6B9,
-            #D8DFEC,
-            transparent
-        ) !important;
-
-    margin:
-        2.2rem 0 !important;
-}
-
-
-/* ============================================================
-   SPINNER
-   ============================================================ */
-
-.stSpinner > div {
-
-    border-top-color:
-        #4674E8 !important;
-}
-
-
-/* ============================================================
-   CAPTIONS
-   ============================================================ */
-
-[data-testid="stCaptionContainer"] {
-
-    color:
-        #7A8496 !important;
-
-    font-family:
-        'DM Sans',
-        sans-serif !important;
-}
-
-
-/* ============================================================
-   MOBILE
-   ============================================================ */
-
-@media (max-width: 700px) {
-
-    .block-container {
-
-        padding-left:
-            1rem;
-
-        padding-right:
-            1rem;
-    }
-
-
-    [data-testid="stHeading"] h1 {
-
-        font-size:
-            2.35rem !important;
-    }
-
+        1px solid #C7D8FB !important;
 }
 
 </style>
@@ -696,17 +395,55 @@ hr {
 
 def display_header():
 
-    st.title("🧠 AI Confidence Layer")
-
     st.markdown(
-        "Don't just get an AI answer."
+        """
+        <div style="
+            text-align:center;
+            padding: 18px 0 12px 0;
+        ">
+
+            <div style="
+                display:inline-block;
+                padding:7px 14px;
+                border-radius:30px;
+                background:#EAF4FF;
+                color:#3159D8;
+                font-family:'DM Sans',sans-serif;
+                font-size:0.82rem;
+                font-weight:700;
+                margin-bottom:14px;
+            ">
+                ✦ AI TRUST & EVIDENCE
+            </div>
+
+            <h1 style="
+                font-family:'Space Grotesk',sans-serif;
+                font-size:3.1rem;
+                line-height:1.05;
+                margin:0;
+                color:#172033;
+                letter-spacing:-0.06em;
+            ">
+                AI Confidence Layer
+            </h1>
+
+            <p style="
+                font-family:'DM Sans',sans-serif;
+                font-size:1.05rem;
+                color:#667085;
+                margin-top:14px;
+            ">
+                Don't just get an AI answer.
+                <strong style="color:#3159D8;">
+                    Understand why you should trust it.
+                </strong>
+            </p>
+
+        </div>
+        """,
     )
 
-    st.markdown(
-        "**Understand why you should trust it.**"
-    )
-
-    st.markdown("---")
+    st.divider()
 
 
 # ============================================================
@@ -716,27 +453,61 @@ def display_header():
 def display_first_question():
 
     st.markdown(
-        "### What are you curious about?"
-    )
+        """
+        <div style="
+            text-align:center;
+            padding:28px 10px 12px 10px;
+        ">
 
-    st.caption(
-        "Ask anything. We'll break the answer down, "
-        "check the evidence, and show you what deserves trust."
+            <div style="
+                font-size:2.2rem;
+                margin-bottom:8px;
+            ">
+                👋
+            </div>
+
+            <h2 style="
+                font-family:'Space Grotesk',sans-serif;
+                color:#172033;
+                margin:0;
+            ">
+                What are you curious about?
+            </h2>
+
+            <p style="
+                font-family:'DM Sans',sans-serif;
+                color:#667085;
+                max-width:620px;
+                margin:10px auto;
+            ">
+                Ask naturally. We'll break the answer into claims,
+                check the evidence, and help you understand
+                what deserves your trust.
+            </p>
+
+        </div>
+        """,
     )
 
 
 # ============================================================
-# QUICK QUESTIONS
+# QUICK START
 # ============================================================
 
 def display_quick_questions():
 
     st.markdown(
-        "### ✦ Start exploring"
-    )
-
-    st.caption(
-        "Try one of these questions to see the confidence layer."
+        """
+        <div style="
+            margin:20px 0 12px 0;
+            font-family:'Space Grotesk',sans-serif;
+            font-size:1.25rem;
+            font-weight:700;
+            color:#172033;
+        ">
+            ✦ Try it out
+        </div>
+        """
     )
 
     col1, col2 = st.columns(2)
@@ -744,13 +515,13 @@ def display_quick_questions():
     with col1:
 
         st.button(
-            "🔬 Try a science question",
+            "🔬  Test a science claim",
             key="quick_science",
             use_container_width=True
         )
 
         st.button(
-            "🌎 Explore a historical fact",
+            "🌍  Explore history",
             key="quick_history",
             use_container_width=True
         )
@@ -758,33 +529,59 @@ def display_quick_questions():
     with col2:
 
         st.button(
-            "🤖 Test an AI claim",
+            "🤖  Challenge an AI claim",
             key="quick_ai",
             use_container_width=True
         )
 
         st.button(
-            "💭 Ask something unexpected",
+            "💭  Ask something unexpected",
             key="quick_unexpected",
             use_container_width=True
         )
 
 
 # ============================================================
-# QUESTION
+# QUESTION CARD
 # ============================================================
 
 def display_question(question):
 
     st.markdown(
-        "### Your question"
+        f"""
+        <div style="
+            background:#FFFFFF;
+            border:1px solid #E2E7EF;
+            border-left:5px solid #4777E8;
+            border-radius:18px;
+            padding:18px 20px;
+            margin:10px 0 22px 0;
+            box-shadow:0 8px 25px rgba(35,55,90,0.05);
+        ">
+
+            <div style="
+                color:#7A8496;
+                font-family:'DM Sans',sans-serif;
+                font-size:0.78rem;
+                font-weight:800;
+                letter-spacing:.08em;
+                margin-bottom:7px;
+            ">
+                YOUR QUESTION
+            </div>
+
+            <div style="
+                color:#172033;
+                font-family:'DM Sans',sans-serif;
+                font-size:1.05rem;
+                font-weight:600;
+            ">
+                {question}
+            </div>
+
+        </div>
+        """
     )
-
-    with st.container(border=True):
-
-        st.markdown(
-            f"**{question}**"
-        )
 
 
 # ============================================================
@@ -794,11 +591,43 @@ def display_question(question):
 def display_analysis_header():
 
     st.markdown(
-        "### ✦ Claim-by-claim analysis"
-    )
+        """
+        <div style="
+            margin:24px 0 14px 0;
+        ">
 
-    st.caption(
-        "Every factual statement is checked against external evidence."
+            <div style="
+                display:inline-block;
+                color:#3159D8;
+                background:#EDF3FF;
+                border-radius:30px;
+                padding:6px 12px;
+                font-family:'DM Sans',sans-serif;
+                font-size:.76rem;
+                font-weight:800;
+            ">
+                ✦ EVIDENCE CHECK
+            </div>
+
+            <h2 style="
+                font-family:'Space Grotesk',sans-serif;
+                color:#172033;
+                margin:10px 0 3px 0;
+            ">
+                Claim-by-claim analysis
+            </h2>
+
+            <p style="
+                font-family:'DM Sans',sans-serif;
+                color:#667085;
+                margin-top:0;
+            ">
+                Every factual statement is evaluated against
+                retrieved evidence.
+            </p>
+
+        </div>
+        """
     )
 
 
@@ -806,11 +635,7 @@ def display_analysis_header():
 # CLAIM
 # ============================================================
 
-def display_claim(
-    claim,
-    confidence,
-    evidence
-):
+def display_claim(claim, confidence, evidence):
 
     level = confidence.get(
         "confidence",
@@ -823,132 +648,290 @@ def display_claim(
     )
 
 
-    with st.container(border=True):
+    # --------------------------------------------------------
+    # COLORS
+    # --------------------------------------------------------
 
-        st.caption(
-            "AI CLAIM"
-        )
+    if level == "HIGH":
+
+        accent = "#35B879"
+        background = "#F0FBF5"
+        badge = "#DDF7E9"
+        label = "✓ HIGH CONFIDENCE"
+        description = "Strongly supported"
+
+    elif level == "MEDIUM":
+
+        accent = "#F2A93B"
+        background = "#FFF9EE"
+        badge = "#FFF0CF"
+        label = "◐ MEDIUM CONFIDENCE"
+        description = "Partially supported"
+
+    elif level in [
+        "SPECULATIVE",
+        "PURE GENERATION"
+    ]:
+
+        accent = "#E98A35"
+        background = "#FFF5EA"
+        badge = "#FFE6C8"
+        label = "◌ SPECULATIVE"
+        description = "Limited external evidence"
+
+    else:
+
+        accent = "#E96B72"
+        background = "#FFF2F3"
+        badge = "#FFDDE0"
+        label = "× LOW CONFIDENCE"
+        description = "Needs verification"
+
+
+    # --------------------------------------------------------
+    # CLAIM CARD
+    # --------------------------------------------------------
+
+    st.markdown(
+        f"""
+        <div style="
+            background:#FFFFFF;
+            border:1px solid #E2E7EF;
+            border-top:4px solid {accent};
+            border-radius:20px;
+            padding:21px;
+            margin:16px 0 8px 0;
+            box-shadow:0 10px 30px rgba(35,55,90,0.055);
+        ">
+
+            <div style="
+                color:#8A94A6;
+                font-family:'DM Sans',sans-serif;
+                font-size:.72rem;
+                font-weight:800;
+                letter-spacing:.09em;
+                margin-bottom:9px;
+            ">
+                AI CLAIM
+            </div>
+
+            <div style="
+                color:#172033;
+                font-family:'DM Sans',sans-serif;
+                font-size:1.04rem;
+                line-height:1.65;
+                font-weight:600;
+                margin-bottom:16px;
+            ">
+                {claim}
+            </div>
+
+            <div style="
+                display:inline-block;
+                background:{badge};
+                color:{accent};
+                border-radius:30px;
+                padding:7px 12px;
+                font-family:'DM Sans',sans-serif;
+                font-size:.78rem;
+                font-weight:800;
+            ">
+                {label}
+            </div>
+
+            <span style="
+                color:#667085;
+                font-family:'DM Sans',sans-serif;
+                font-size:.82rem;
+                margin-left:7px;
+            ">
+                {description}
+            </span>
+
+        </div>
+        """
+    )
+
+
+    # --------------------------------------------------------
+    # WHY
+    # --------------------------------------------------------
+
+    st.markdown(
+        f"""
+        <div style="
+            background:{background};
+            border-left:4px solid {accent};
+            border-radius:12px;
+            padding:14px 16px;
+            margin:8px 0 12px 0;
+        ">
+
+            <div style="
+                color:{accent};
+                font-family:'DM Sans',sans-serif;
+                font-size:.75rem;
+                font-weight:800;
+                letter-spacing:.05em;
+                margin-bottom:5px;
+            ">
+                WHY THIS RATING?
+            </div>
+
+            <div style="
+                color:#475467;
+                font-family:'DM Sans',sans-serif;
+                font-size:.92rem;
+                line-height:1.55;
+            ">
+                {reason}
+            </div>
+
+        </div>
+        """
+    )
+
+
+    # --------------------------------------------------------
+    # EVIDENCE
+    # --------------------------------------------------------
+
+    if evidence:
 
         st.markdown(
-            f"**{claim}**"
+            f"""
+            <div style="
+                display:flex;
+                align-items:center;
+                gap:8px;
+                margin:14px 0 6px 0;
+            ">
+
+                <span style="
+                    color:#2679C9;
+                    background:#EAF5FF;
+                    padding:6px 10px;
+                    border-radius:20px;
+                    font-size:.76rem;
+                    font-weight:800;
+                    font-family:'DM Sans',sans-serif;
+                ">
+                    🔎 {len(evidence)} SOURCE
+                    {"S" if len(evidence) != 1 else ""}
+                </span>
+
+                <span style="
+                    color:#7A8496;
+                    font-size:.82rem;
+                    font-family:'DM Sans',sans-serif;
+                ">
+                    Supporting evidence
+                </span>
+
+            </div>
+            """
         )
 
+        with st.expander(
+            "View supporting evidence"
+        ):
 
-        # ----------------------------------------------------
-        # CONFIDENCE
-        # ----------------------------------------------------
+            for source in evidence:
 
-        if level == "HIGH":
-
-            st.success(
-                "✓  HIGH CONFIDENCE · Strongly supported"
-            )
-
-        elif level == "MEDIUM":
-
-            st.warning(
-                "◐  MEDIUM CONFIDENCE · Partially supported"
-            )
-
-        elif level in [
-            "SPECULATIVE",
-            "PURE GENERATION"
-        ]:
-
-            st.warning(
-                "◌  SPECULATIVE · Limited external evidence"
-            )
-
-        else:
-
-            st.error(
-                "×  LOW CONFIDENCE · Needs verification"
-            )
-
-
-        # ----------------------------------------------------
-        # REASON
-        # ----------------------------------------------------
-
-        st.markdown(
-            "**Why this rating?**"
-        )
-
-        st.info(
-            reason
-        )
-
-
-        # ----------------------------------------------------
-        # EVIDENCE
-        # ----------------------------------------------------
-
-        st.markdown(
-            "**Supporting evidence**"
-        )
-
-
-        if not evidence:
-
-            st.warning(
-                "No supporting sources were found. "
-                "Treat this statement as speculative."
-            )
-
-        else:
-
-            source_count = len(evidence)
-
-            st.caption(
-                f"◈ {source_count} source"
-                + (
-                    "s found"
-                    if source_count != 1
-                    else " found"
+                title = source.get(
+                    "title",
+                    "Untitled source"
                 )
-            )
+
+                content = source.get(
+                    "content",
+                    "No description available."
+                )
+
+                url = source.get(
+                    "url",
+                    ""
+                )
 
 
-            with st.expander(
-                "View supporting evidence"
-            ):
+                st.markdown(
+                    f"""
+                    <div style="
+                        background:#F8FBFF;
+                        border:1px solid #DCEAF7;
+                        border-radius:14px;
+                        padding:15px;
+                        margin:8px 0;
+                    ">
 
-                for source in evidence:
+                        <div style="
+                            color:#1F4F76;
+                            font-family:'DM Sans',sans-serif;
+                            font-weight:700;
+                            margin-bottom:7px;
+                        ">
+                            {title}
+                        </div>
 
-                    title = source.get(
-                        "title",
-                        "Untitled source"
+                        <div style="
+                            color:#667085;
+                            font-family:'DM Sans',sans-serif;
+                            font-size:.88rem;
+                            line-height:1.55;
+                        ">
+                            {content}
+                        </div>
+
+                    </div>
+                    """
+                )
+
+
+                if url:
+
+                    st.link_button(
+                        "↗  Open source",
+                        url
                     )
 
-                    content = source.get(
-                        "content",
-                        "No description available."
-                    )
+    else:
 
-                    url = source.get(
-                        "url",
-                        ""
-                    )
+        st.markdown(
+            """
+            <div style="
+                background:#FFF5EA;
+                border:1px dashed #E8A05B;
+                border-radius:14px;
+                padding:16px;
+                margin-top:10px;
+            ">
+
+                <div style="
+                    color:#B66A1D;
+                    font-family:'DM Sans',sans-serif;
+                    font-weight:800;
+                    margin-bottom:5px;
+                ">
+                    ◌ PURE GENERATION / SPECULATIVE
+                </div>
+
+                <div style="
+                    color:#875A36;
+                    font-family:'DM Sans',sans-serif;
+                    font-size:.88rem;
+                    line-height:1.55;
+                ">
+                    No supporting external evidence was found.
+                    Treat this statement as something to verify
+                    rather than established fact.
+                </div>
+
+            </div>
+            """
+        )
 
 
-                    st.markdown(
-                        f"**{title}**"
-                    )
-
-                    st.caption(
-                        content
-                    )
-
-
-                    if url:
-
-                        st.link_button(
-                            "↗  Open source",
-                            url
-                        )
-
-
-    st.divider()
+    st.markdown("<br>", unsafe_allow_html=True)
 
 
 # ============================================================
@@ -980,7 +963,7 @@ def display_summary(analyzed_claims):
     )
 
 
-    needs_review = sum(
+    review = sum(
         1
         for item in analyzed_claims
         if item["confidence"].get(
@@ -994,7 +977,15 @@ def display_summary(analyzed_claims):
 
 
     st.markdown(
-        "### ✦ Confidence overview"
+        """
+        <h2 style="
+            font-family:'Space Grotesk',sans-serif;
+            color:#172033;
+            margin:25px 0 15px 0;
+        ">
+            ✦ Confidence overview
+        </h2>
+        """
     )
 
 
@@ -1011,25 +1002,91 @@ def display_summary(analyzed_claims):
 
     with col2:
 
+        st.markdown(
+            """
+            <div style="
+                background:#F0FBF5;
+                border:1px solid #C6EED8;
+                border-radius:17px;
+                padding:12px 14px;
+                text-align:center;
+            ">
+                <div style="
+                    color:#35B879;
+                    font-size:.75rem;
+                    font-weight:800;
+                ">
+                    ✓ STRONG
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
         st.metric(
-            "✓ Strong",
-            high
+            "",
+            high,
+            label_visibility="collapsed"
         )
 
 
     with col3:
 
+        st.markdown(
+            """
+            <div style="
+                background:#FFF9EE;
+                border:1px solid #F4DDAF;
+                border-radius:17px;
+                padding:12px 14px;
+                text-align:center;
+            ">
+                <div style="
+                    color:#C98522;
+                    font-size:.75rem;
+                    font-weight:800;
+                ">
+                    ◐ PARTIAL
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
         st.metric(
-            "◐ Partial",
-            medium
+            "",
+            medium,
+            label_visibility="collapsed"
         )
 
 
     with col4:
 
+        st.markdown(
+            """
+            <div style="
+                background:#FFF2F3;
+                border:1px solid #F3C7CB;
+                border-radius:17px;
+                padding:12px 14px;
+                text-align:center;
+            ">
+                <div style="
+                    color:#D75B63;
+                    font-size:.75rem;
+                    font-weight:800;
+                ">
+                    ⚠ REVIEW
+                </div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
         st.metric(
-            "⚠ Review",
-            needs_review
+            "",
+            review,
+            label_visibility="collapsed"
         )
 
 
@@ -1040,7 +1097,7 @@ def display_summary(analyzed_claims):
 def display_how_it_works():
 
     with st.expander(
-        "◎ How does the Confidence Layer work?"
+        "◎  How does AI Confidence Layer work?"
     ):
 
         st.markdown(
@@ -1063,7 +1120,8 @@ def display_how_it_works():
 
             **05 · Explain**
 
-            You see the confidence level and the reasoning behind it.
+            You see both the confidence level and why
+            that rating was given.
             """
         )
 
@@ -1075,17 +1133,42 @@ def display_how_it_works():
 def display_question_prompt():
 
     st.markdown(
-        "### ✦ Keep exploring"
-    )
+        """
+        <div style="
+            text-align:center;
+            padding:25px 10px 10px 10px;
+        ">
 
-    st.caption(
-        "Ask a follow-up, challenge the answer, "
-        "or explore something completely different."
+            <div style="
+                font-size:1.8rem;
+                margin-bottom:5px;
+            ">
+                ✨
+            </div>
+
+            <h2 style="
+                font-family:'Space Grotesk',sans-serif;
+                color:#172033;
+                margin:0;
+            ">
+                Keep exploring
+            </h2>
+
+            <p style="
+                font-family:'DM Sans',sans-serif;
+                color:#667085;
+            ">
+                Ask a follow-up, challenge the answer,
+                or explore something completely different.
+            </p>
+
+        </div>
+        """
     )
 
 
 # ============================================================
-# CLEAR CONVERSATION
+# CLEAR
 # ============================================================
 
 def display_clear_button():
