@@ -10,84 +10,111 @@ def load_css():
     st.html("""
     <style>
 
-    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+    /* ========================================================
+       FONTS
+       ======================================================== */
+
+    @import url(
+        'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800'
+        '&family=Sora:wght@400;500;600;700&display=swap'
+    );
 
 
     /* ========================================================
-       MAIN APP
+       MAIN BACKGROUND
        ======================================================== */
 
     .stApp {
+
         background:
             radial-gradient(
-                circle at 5% 5%,
-                rgba(124, 92, 255, 0.18),
-                transparent 27%
+                circle at 0% 0%,
+                rgba(0, 210, 190, 0.16),
+                transparent 25%
             ),
+
             radial-gradient(
-                circle at 95% 10%,
-                rgba(0, 207, 255, 0.15),
-                transparent 27%
+                circle at 100% 5%,
+                rgba(255, 125, 92, 0.13),
+                transparent 25%
             ),
+
             radial-gradient(
                 circle at 50% 100%,
-                rgba(255, 92, 205, 0.10),
-                transparent 32%
+                rgba(255, 202, 72, 0.10),
+                transparent 30%
             ),
+
             linear-gradient(
                 135deg,
-                #F8F7FF 0%,
-                #F4F7FF 50%,
-                #EFFBFC 100%
+                #F7FCFB 0%,
+                #F5FAFC 50%,
+                #FFF9F5 100%
             );
 
-        color: #172033;
+        color: #172A35;
     }
 
 
     /* ========================================================
-       CONTENT WIDTH
+       PAGE WIDTH
        ======================================================== */
 
     .block-container {
+
         max-width: 900px;
-        padding-top: 2.5rem;
+
+        padding-top: 2.3rem;
         padding-bottom: 4rem;
     }
 
 
     /* ========================================================
-       FONTS
+       GLOBAL FONTS
        ======================================================== */
 
     html,
     body,
     [class*="css"] {
-        font-family: 'DM Sans', sans-serif;
+
+        font-family: 'Manrope', sans-serif;
     }
 
     h1,
     h2,
     h3 {
-        font-family: 'Space Grotesk', sans-serif !important;
-        color: #172033 !important;
+
+        font-family: 'Sora', sans-serif !important;
+
+        color: #132B36 !important;
+
         letter-spacing: -0.035em;
+    }
+
+    p {
+
+        font-family: 'Manrope', sans-serif !important;
+
+        color: #60737C;
     }
 
 
     /* ========================================================
-       HIDE STREAMLIT BRANDING
+       STREAMLIT CLEANUP
        ======================================================== */
 
     #MainMenu {
+
         visibility: hidden;
     }
 
     footer {
+
         visibility: hidden;
     }
 
     header {
+
         background: transparent !important;
     }
 
@@ -97,73 +124,72 @@ def load_css():
        ======================================================== */
 
     [data-testid="stHeading"] h1 {
-        font-family: 'Space Grotesk', sans-serif !important;
-        font-size: 3.4rem !important;
+
+        font-family: 'Sora', sans-serif !important;
+
+        font-size: 3.25rem !important;
+
         font-weight: 700 !important;
-        letter-spacing: -0.055em !important;
+
+        letter-spacing: -0.06em !important;
 
         background: linear-gradient(
             90deg,
-            #7048F5,
-            #8759F5,
-            #536DFF,
-            #00AFCB
+            #00A99D,
+            #00B8C8,
+            #1688A8
         );
 
         -webkit-background-clip: text;
+
         -webkit-text-fill-color: transparent;
     }
 
 
     /* ========================================================
-       NORMAL TEXT
-       ======================================================== */
-
-    p {
-        font-family: 'DM Sans', sans-serif !important;
-        color: #66728A;
-    }
-
-
-    /* ========================================================
-       QUESTION INPUT
+       INPUT
        ======================================================== */
 
     .stTextInput > div > div > input {
 
-        background: rgba(255, 255, 255, 0.95) !important;
+        background: rgba(255, 255, 255, 0.96) !important;
 
-        color: #18233D !important;
+        color: #172A35 !important;
 
-        border: 1.5px solid rgba(112, 72, 245, 0.18) !important;
+        border: 1.5px solid rgba(0, 169, 157, 0.22) !important;
 
         border-radius: 18px !important;
 
-        padding: 0.85rem 1.1rem !important;
+        padding: 0.9rem 1.1rem !important;
 
-        font-family: 'DM Sans', sans-serif !important;
+        font-family: 'Manrope', sans-serif !important;
 
         font-size: 1rem !important;
 
+        font-weight: 500 !important;
+
         box-shadow:
-            0 8px 30px rgba(64, 51, 130, 0.07);
+            0 8px 28px rgba(20, 70, 80, 0.07);
 
         transition: all 0.2s ease;
     }
 
+
     .stTextInput > div > div > input:focus {
 
-        border-color: #7655E8 !important;
+        border-color: #00A99D !important;
 
         box-shadow:
-            0 0 0 4px rgba(118, 85, 232, 0.10),
-            0 12px 35px rgba(74, 57, 140, 0.10);
+            0 0 0 4px rgba(0, 169, 157, 0.10),
+            0 12px 32px rgba(20, 70, 80, 0.10);
 
         outline: none !important;
     }
 
+
     .stTextInput > div > div > input::placeholder {
-        color: #98A0B5 !important;
+
+        color: #8A9BA2 !important;
     }
 
 
@@ -184,24 +210,27 @@ def load_css():
 
         background: linear-gradient(
             135deg,
-            #7048F5,
-            #5B6CFF,
-            #00B8D9
+            #00A99D 0%,
+            #00B8C8 55%,
+            #1688A8 100%
         ) !important;
 
         color: white !important;
 
-        font-family: 'DM Sans', sans-serif !important;
+        font-family: 'Manrope', sans-serif !important;
 
         font-size: 0.98rem !important;
 
-        font-weight: 700 !important;
+        font-weight: 800 !important;
 
         box-shadow:
-            0 10px 25px rgba(99, 79, 230, 0.23);
+            0 10px 24px rgba(0, 157, 165, 0.22);
 
-        transition: all 0.18s ease;
+        transition:
+            transform 0.18s ease,
+            box-shadow 0.18s ease;
     }
+
 
     .stFormSubmitButton > button:hover,
     .stButton > button:hover {
@@ -209,7 +238,26 @@ def load_css():
         transform: translateY(-2px);
 
         box-shadow:
-            0 15px 32px rgba(99, 79, 230, 0.30);
+            0 15px 30px rgba(0, 157, 165, 0.30);
+    }
+
+
+    /* ========================================================
+       CONTAINERS / CARDS
+       ======================================================== */
+
+    [data-testid="stVerticalBlockBorderWrapper"] {
+
+        background: rgba(255, 255, 255, 0.78) !important;
+
+        border: 1px solid rgba(25, 85, 95, 0.10) !important;
+
+        border-radius: 20px !important;
+
+        box-shadow:
+            0 10px 30px rgba(30, 65, 75, 0.055);
+
+        backdrop-filter: blur(10px);
     }
 
 
@@ -219,30 +267,34 @@ def load_css():
 
     [data-testid="stMetric"] {
 
-        background: rgba(255, 255, 255, 0.78);
+        background: rgba(255, 255, 255, 0.80);
 
-        border: 1px solid rgba(118, 85, 232, 0.11);
+        border: 1px solid rgba(0, 169, 157, 0.11);
 
         border-radius: 18px;
 
         padding: 1rem;
 
         box-shadow:
-            0 8px 25px rgba(40, 50, 90, 0.05);
+            0 8px 22px rgba(30, 65, 75, 0.05);
     }
+
 
     [data-testid="stMetricLabel"] {
 
-        font-family: 'DM Sans', sans-serif !important;
+        font-family: 'Manrope', sans-serif !important;
 
-        color: #737E95 !important;
+        color: #71838B !important;
+
+        font-weight: 600 !important;
     }
+
 
     [data-testid="stMetricValue"] {
 
-        font-family: 'Space Grotesk', sans-serif !important;
+        font-family: 'Sora', sans-serif !important;
 
-        color: #252D49 !important;
+        color: #17333E !important;
     }
 
 
@@ -252,55 +304,64 @@ def load_css():
 
     .stExpander {
 
-        background: rgba(255, 255, 255, 0.72) !important;
+        background: rgba(250, 253, 253, 0.80) !important;
 
-        border: 1px solid rgba(118, 85, 232, 0.12) !important;
+        border: 1px solid rgba(0, 169, 157, 0.12) !important;
 
         border-radius: 16px !important;
 
         box-shadow:
-            0 7px 22px rgba(45, 54, 90, 0.04);
+            0 7px 22px rgba(30, 65, 75, 0.04);
     }
+
 
     .stExpander summary {
 
-        font-family: 'DM Sans', sans-serif !important;
+        font-family: 'Manrope', sans-serif !important;
 
         font-weight: 700 !important;
 
-        color: #3C4562 !important;
+        color: #29434D !important;
     }
 
 
     /* ========================================================
-       LINK BUTTONS
+       SUCCESS — HIGH CONFIDENCE
+       ======================================================== */
+
+    .stAlert[data-baseweb="notification"] {
+
+        border-radius: 14px !important;
+
+        font-family: 'Manrope', sans-serif !important;
+    }
+
+
+    /* ========================================================
+       LINKS
        ======================================================== */
 
     .stLinkButton > a {
 
         border-radius: 10px !important;
 
-        border: 1px solid rgba(118, 85, 232, 0.20) !important;
+        border: 1px solid rgba(0, 169, 157, 0.20) !important;
 
-        color: #6849D9 !important;
+        color: #008D84 !important;
 
-        background: #F7F4FF !important;
+        background: #F0FBF9 !important;
 
-        font-family: 'DM Sans', sans-serif !important;
+        font-family: 'Manrope', sans-serif !important;
 
         font-weight: 700 !important;
     }
 
 
-    /* ========================================================
-       ALERTS
-       ======================================================== */
+    .stLinkButton > a:hover {
 
-    .stAlert {
+        background: #E1F7F4 !important;
 
-        border-radius: 15px !important;
-
-        font-family: 'DM Sans', sans-serif !important;
+        border-color: #00A99D !important;
     }
 
 
@@ -317,12 +378,22 @@ def load_css():
         background: linear-gradient(
             90deg,
             transparent,
-            rgba(118, 85, 232, 0.20),
-            rgba(0, 184, 217, 0.20),
+            rgba(0, 169, 157, 0.22),
+            rgba(255, 125, 92, 0.20),
             transparent
         ) !important;
 
         margin: 2rem 0 !important;
+    }
+
+
+    /* ========================================================
+       SPINNER
+       ======================================================== */
+
+    .stSpinner > div {
+
+        border-top-color: #00A99D !important;
     }
 
 
@@ -333,12 +404,14 @@ def load_css():
     @media (max-width: 700px) {
 
         .block-container {
+
             padding-left: 1rem;
             padding-right: 1rem;
         }
 
         [data-testid="stHeading"] h1 {
-            font-size: 2.4rem !important;
+
+            font-size: 2.35rem !important;
         }
     }
 
@@ -401,7 +474,9 @@ def display_question(question):
 
 def display_analysis_header():
 
-    st.markdown("### ✦ Claim-by-Claim Analysis")
+    st.markdown(
+        "### ✦ Claim-by-Claim Analysis"
+    )
 
     st.caption(
         "Each statement is evaluated against retrieved evidence."
@@ -425,10 +500,6 @@ def display_claim(claim, confidence, evidence):
     )
 
 
-    # --------------------------------------------------------
-    # Claim container
-    # --------------------------------------------------------
-
     with st.container(border=True):
 
         st.caption("AI CLAIM")
@@ -439,7 +510,7 @@ def display_claim(claim, confidence, evidence):
 
 
         # ----------------------------------------------------
-        # Confidence state
+        # HIGH
         # ----------------------------------------------------
 
         if level == "HIGH":
@@ -448,11 +519,21 @@ def display_claim(claim, confidence, evidence):
                 "🟢 HIGH CONFIDENCE"
             )
 
+
+        # ----------------------------------------------------
+        # MEDIUM
+        # ----------------------------------------------------
+
         elif level == "MEDIUM":
 
             st.warning(
                 "🟡 MEDIUM CONFIDENCE"
             )
+
+
+        # ----------------------------------------------------
+        # SPECULATIVE
+        # ----------------------------------------------------
 
         elif level in [
             "SPECULATIVE",
@@ -463,6 +544,11 @@ def display_claim(claim, confidence, evidence):
                 "🟠 SPECULATIVE — Pure Generation"
             )
 
+
+        # ----------------------------------------------------
+        # LOW
+        # ----------------------------------------------------
+
         else:
 
             st.error(
@@ -471,19 +557,24 @@ def display_claim(claim, confidence, evidence):
 
 
         # ----------------------------------------------------
-        # Reason
+        # REASON
         # ----------------------------------------------------
 
-        st.markdown("**Why this rating?**")
+        st.markdown(
+            "**Why this rating?**"
+        )
 
         st.info(reason)
 
 
         # ----------------------------------------------------
-        # Evidence
+        # EVIDENCE
         # ----------------------------------------------------
 
-        st.markdown("**Supporting Evidence**")
+        st.markdown(
+            "**Supporting Evidence**"
+        )
+
 
         if not evidence:
 
@@ -492,11 +583,16 @@ def display_claim(claim, confidence, evidence):
                 "Treat this statement as speculative."
             )
 
+
         else:
 
             with st.expander(
                 f"View {len(evidence)} supporting source"
-                + ("s" if len(evidence) != 1 else "")
+                + (
+                    "s"
+                    if len(evidence) != 1
+                    else ""
+                )
             ):
 
                 for source in evidence:
@@ -520,7 +616,9 @@ def display_claim(claim, confidence, evidence):
                         f"**{title}**"
                     )
 
-                    st.caption(content)
+                    st.caption(
+                        content
+                    )
 
                     if url:
 
@@ -528,6 +626,7 @@ def display_claim(claim, confidence, evidence):
                             "↗ Open source",
                             url
                         )
+
 
     st.divider()
 
@@ -543,20 +642,25 @@ def display_summary(analyzed_claims):
     high = sum(
         1
         for item in analyzed_claims
-        if item["confidence"].get("confidence") == "HIGH"
+        if item["confidence"].get(
+            "confidence"
+        ) == "HIGH"
     )
 
     medium = sum(
         1
         for item in analyzed_claims
-        if item["confidence"].get("confidence") == "MEDIUM"
+        if item["confidence"].get(
+            "confidence"
+        ) == "MEDIUM"
     )
 
     needs_review = sum(
         1
         for item in analyzed_claims
-        if item["confidence"].get("confidence")
-        in [
+        if item["confidence"].get(
+            "confidence"
+        ) in [
             "LOW",
             "SPECULATIVE",
             "PURE GENERATION"
@@ -564,21 +668,44 @@ def display_summary(analyzed_claims):
     )
 
 
-    st.markdown("### ✦ Confidence Overview")
+    st.markdown(
+        "### ✦ Confidence Overview"
+    )
+
 
     col1, col2, col3, col4 = st.columns(4)
 
+
     with col1:
-        st.metric("Claims", total)
+
+        st.metric(
+            "Claims",
+            total
+        )
+
 
     with col2:
-        st.metric("High", high)
+
+        st.metric(
+            "High",
+            high
+        )
+
 
     with col3:
-        st.metric("Medium", medium)
+
+        st.metric(
+            "Medium",
+            medium
+        )
+
 
     with col4:
-        st.metric("Needs Review", needs_review)
+
+        st.metric(
+            "Needs Review",
+            needs_review
+        )
 
 
 # ============================================================
@@ -587,7 +714,9 @@ def display_summary(analyzed_claims):
 
 def display_question_prompt():
 
-    st.markdown("### ✦ Keep exploring")
+    st.markdown(
+        "### ✦ Keep exploring"
+    )
 
     st.caption(
         "Ask something related to your previous question, "
