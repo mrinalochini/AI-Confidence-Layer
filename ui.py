@@ -8,426 +8,686 @@ import streamlit as st
 def load_css():
 
     st.html("""
-    <style>
+<style>
 
-    @import url(
-        'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800'
-        '&family=Sora:wght@400;500;600;700&display=swap'
-    );
-
-
-    /* ========================================================
-       BACKGROUND
-       ======================================================== */
-
-    .stApp {
-
-        background:
-            radial-gradient(
-                circle at 0% 0%,
-                rgba(0, 210, 190, 0.16),
-                transparent 25%
-            ),
-
-            radial-gradient(
-                circle at 100% 5%,
-                rgba(255, 125, 92, 0.14),
-                transparent 25%
-            ),
-
-            radial-gradient(
-                circle at 50% 100%,
-                rgba(255, 202, 72, 0.10),
-                transparent 30%
-            ),
-
-            linear-gradient(
-                135deg,
-                #F7FCFB 0%,
-                #F5FAFC 50%,
-                #FFF9F5 100%
-            );
-
-        color: #172A35;
-    }
+@import url(
+    'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800'
+    '&family=Space+Grotesk:wght@400;500;600;700&display=swap'
+);
 
 
-    /* ========================================================
-       LAYOUT
-       ======================================================== */
+/* ============================================================
+   APP BACKGROUND
+   ============================================================ */
 
-    .block-container {
+.stApp {
 
-        max-width: 900px;
+    background:
 
-        padding-top: 2.3rem;
+        radial-gradient(
+            circle at 5% 0%,
+            rgba(79, 125, 255, 0.12),
+            transparent 25%
+        ),
 
-        padding-bottom: 4rem;
-    }
+        radial-gradient(
+            circle at 96% 8%,
+            rgba(255, 122, 112, 0.11),
+            transparent 23%
+        ),
 
+        radial-gradient(
+            circle at 45% 100%,
+            rgba(91, 220, 169, 0.10),
+            transparent 28%
+        ),
 
-    /* ========================================================
-       FONTS
-       ======================================================== */
+        #F8F9FC;
 
-    html,
-    body,
-    [class*="css"] {
-
-        font-family: 'Manrope', sans-serif;
-    }
-
-
-    h1,
-    h2,
-    h3 {
-
-        font-family: 'Sora', sans-serif !important;
-
-        color: #132B36 !important;
-
-        letter-spacing: -0.035em;
-    }
+    color: #172033;
+}
 
 
-    p {
+/* ============================================================
+   PAGE WIDTH
+   ============================================================ */
 
-        font-family: 'Manrope', sans-serif !important;
+.block-container {
 
-        color: #60737C;
-    }
+    max-width: 920px;
 
-
-    /* ========================================================
-       HIDE STREAMLIT UI
-       ======================================================== */
-
-    #MainMenu {
-
-        visibility: hidden;
-    }
-
-    footer {
-
-        visibility: hidden;
-    }
-
-    header {
-
-        background: transparent !important;
-    }
+    padding-top: 2.5rem;
+    padding-bottom: 5rem;
+}
 
 
-    /* ========================================================
-       TITLE
-       ======================================================== */
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
 
-    [data-testid="stHeading"] h1 {
+html,
+body,
+[class*="css"] {
 
-        font-family: 'Sora', sans-serif !important;
+    font-family:
+        'DM Sans',
+        sans-serif;
+}
 
-        font-size: 3.2rem !important;
 
-        font-weight: 700 !important;
+h1,
+h2,
+h3 {
 
-        letter-spacing: -0.06em !important;
+    font-family:
+        'Space Grotesk',
+        sans-serif !important;
 
-        background: linear-gradient(
-            90deg,
-            #009F91,
-            #00B8C8,
-            #197FA0
+    color:
+        #172033 !important;
+
+    letter-spacing:
+        -0.045em;
+}
+
+
+p {
+
+    font-family:
+        'DM Sans',
+        sans-serif !important;
+
+    color:
+        #667085;
+
+    line-height:
+        1.65;
+}
+
+
+/* ============================================================
+   HIDE STREAMLIT BRANDING
+   ============================================================ */
+
+#MainMenu {
+
+    visibility:
+        hidden;
+}
+
+
+footer {
+
+    visibility:
+        hidden;
+}
+
+
+header {
+
+    background:
+        transparent !important;
+}
+
+
+/* ============================================================
+   MAIN TITLE
+   ============================================================ */
+
+[data-testid="stHeading"] h1 {
+
+    font-family:
+        'Space Grotesk',
+        sans-serif !important;
+
+    font-size:
+        3.15rem !important;
+
+    font-weight:
+        700 !important;
+
+    letter-spacing:
+        -0.065em !important;
+
+    background:
+
+        linear-gradient(
+            100deg,
+            #3159D8 0%,
+            #4378F4 45%,
+            #E96B72 100%
         );
 
-        -webkit-background-clip: text;
+    -webkit-background-clip:
+        text;
 
-        -webkit-text-fill-color: transparent;
-    }
-
-
-    /* ========================================================
-       INPUT
-       ======================================================== */
-
-    .stTextInput > div > div > input {
-
-        background: rgba(255, 255, 255, 0.97) !important;
-
-        color: #172A35 !important;
-
-        border: 1.5px solid rgba(0, 169, 157, 0.24) !important;
-
-        border-radius: 18px !important;
-
-        padding: 0.9rem 1.1rem !important;
-
-        font-family: 'Manrope', sans-serif !important;
-
-        font-size: 1rem !important;
-
-        font-weight: 500 !important;
-
-        box-shadow:
-            0 8px 28px rgba(20, 70, 80, 0.07);
-    }
+    -webkit-text-fill-color:
+        transparent;
+}
 
 
-    .stTextInput > div > div > input:focus {
+/* ============================================================
+   HEADINGS
+   ============================================================ */
 
-        border-color: #00A99D !important;
+h2 {
 
-        box-shadow:
-            0 0 0 4px rgba(0, 169, 157, 0.10),
-            0 12px 32px rgba(20, 70, 80, 0.10);
-    }
-
-
-    .stTextInput > div > div > input::placeholder {
-
-        color: #8A9BA2 !important;
-    }
+    font-size:
+        1.7rem !important;
+}
 
 
-    /* ========================================================
-       MAIN BUTTON
-       ======================================================== */
+h3 {
 
-    .stFormSubmitButton > button {
+    font-size:
+        1.35rem !important;
+}
 
-        width: 100%;
 
-        min-height: 48px;
+/* ============================================================
+   TEXT INPUT
+   ============================================================ */
 
-        border: none !important;
+.stTextInput > div > div > input {
 
-        border-radius: 15px !important;
+    background:
+        rgba(255, 255, 255, 0.96) !important;
 
-        background: linear-gradient(
-            135deg,
-            #00A99D,
-            #00B8C8,
-            #1688A8
+    color:
+        #172033 !important;
+
+    border:
+        1.5px solid #D9DFEA !important;
+
+    border-radius:
+        18px !important;
+
+    min-height:
+        54px !important;
+
+    padding:
+        0.9rem 1.15rem !important;
+
+    font-family:
+        'DM Sans',
+        sans-serif !important;
+
+    font-size:
+        1rem !important;
+
+    font-weight:
+        500 !important;
+
+    box-shadow:
+
+        0 8px 25px
+        rgba(35, 55, 90, 0.06);
+
+    transition:
+        all 0.2s ease;
+}
+
+
+.stTextInput > div > div > input:focus {
+
+    border-color:
+        #4674E8 !important;
+
+    box-shadow:
+
+        0 0 0 4px
+        rgba(70, 116, 232, 0.10),
+
+        0 12px 30px
+        rgba(35, 55, 90, 0.08);
+
+    outline:
+        none !important;
+}
+
+
+.stTextInput > div > div > input::placeholder {
+
+    color:
+        #98A2B3 !important;
+}
+
+
+/* ============================================================
+   PRIMARY BUTTON
+   ============================================================ */
+
+.stFormSubmitButton > button {
+
+    width:
+        100%;
+
+    min-height:
+        52px;
+
+    border:
+        none !important;
+
+    border-radius:
+        15px !important;
+
+    background:
+
+        linear-gradient(
+            100deg,
+            #3159D8,
+            #4678ED
         ) !important;
 
-        color: white !important;
+    color:
+        #FFFFFF !important;
 
-        font-family: 'Manrope', sans-serif !important;
+    font-family:
+        'DM Sans',
+        sans-serif !important;
 
-        font-size: 0.98rem !important;
+    font-size:
+        0.98rem !important;
 
-        font-weight: 800 !important;
+    font-weight:
+        700 !important;
 
-        box-shadow:
-            0 10px 24px rgba(0, 157, 165, 0.22);
-    }
+    box-shadow:
 
+        0 10px 25px
+        rgba(49, 89, 216, 0.22);
 
-    .stFormSubmitButton > button:hover {
+    transition:
+        all 0.2s ease;
+}
 
-        transform: translateY(-2px);
 
-        box-shadow:
-            0 15px 30px rgba(0, 157, 165, 0.30);
-    }
+.stFormSubmitButton > button:hover {
 
+    transform:
+        translateY(-2px);
 
-    /* ========================================================
-       NORMAL BUTTONS
-       ======================================================== */
+    box-shadow:
 
-    .stButton > button {
+        0 14px 32px
+        rgba(49, 89, 216, 0.28);
+}
 
-        border-radius: 13px !important;
 
-        border: 1px solid rgba(0, 169, 157, 0.20) !important;
+/* ============================================================
+   SECONDARY BUTTONS
+   ============================================================ */
 
-        background: rgba(255, 255, 255, 0.80) !important;
+.stButton > button {
 
-        color: #087F78 !important;
+    background:
+        rgba(255, 255, 255, 0.86) !important;
 
-        font-family: 'Manrope', sans-serif !important;
+    color:
+        #3159D8 !important;
 
-        font-weight: 700 !important;
+    border:
+        1px solid #DCE3F0 !important;
 
-        transition: all 0.18s ease;
-    }
+    border-radius:
+        13px !important;
 
+    font-family:
+        'DM Sans',
+        sans-serif !important;
 
-    .stButton > button:hover {
+    font-weight:
+        600 !important;
 
-        background: #E8FAF7 !important;
+    transition:
+        all 0.18s ease;
+}
 
-        border-color: #00A99D !important;
 
-        transform: translateY(-1px);
-    }
+.stButton > button:hover {
 
+    background:
+        #EEF3FF !important;
 
-    /* ========================================================
-       CARDS
-       ======================================================== */
+    border-color:
+        #9DB4F4 !important;
 
-    [data-testid="stVerticalBlockBorderWrapper"] {
+    transform:
+        translateY(-1px);
+}
 
-        background: rgba(255, 255, 255, 0.82) !important;
 
-        border: 1px solid rgba(25, 85, 95, 0.10) !important;
+/* ============================================================
+   CARDS
+   ============================================================ */
 
-        border-radius: 20px !important;
+[data-testid="stVerticalBlockBorderWrapper"] {
 
-        box-shadow:
-            0 10px 30px rgba(30, 65, 75, 0.055);
-    }
+    background:
+        rgba(255, 255, 255, 0.88) !important;
 
+    border:
+        1px solid #E5E9F1 !important;
 
-    /* ========================================================
-       METRICS
-       ======================================================== */
+    border-radius:
+        21px !important;
 
-    [data-testid="stMetric"] {
+    box-shadow:
 
-        background: rgba(255, 255, 255, 0.82);
+        0 12px 35px
+        rgba(38, 54, 83, 0.055);
 
-        border: 1px solid rgba(0, 169, 157, 0.12);
+    backdrop-filter:
+        blur(12px);
+}
 
-        border-radius: 18px;
 
-        padding: 1rem;
+/* ============================================================
+   CLAIM CARD HOVER
+   ============================================================ */
 
-        box-shadow:
-            0 8px 22px rgba(30, 65, 75, 0.05);
-    }
+[data-testid="stVerticalBlockBorderWrapper"]:hover {
 
+    border-color:
+        #D4DCEF !important;
 
-    [data-testid="stMetricLabel"] {
+    box-shadow:
 
-        font-family: 'Manrope', sans-serif !important;
+        0 15px 40px
+        rgba(38, 54, 83, 0.08);
+}
 
-        color: #71838B !important;
 
-        font-weight: 600 !important;
-    }
+/* ============================================================
+   METRIC CARDS
+   ============================================================ */
 
+[data-testid="stMetric"] {
 
-    [data-testid="stMetricValue"] {
+    background:
+        rgba(255, 255, 255, 0.92);
 
-        font-family: 'Sora', sans-serif !important;
+    border:
+        1px solid #E4E8F0;
 
-        color: #17333E !important;
-    }
+    border-radius:
+        17px;
 
+    padding:
+        1rem;
 
-    /* ========================================================
-       EXPANDERS
-       ======================================================== */
+    box-shadow:
 
-    .stExpander {
+        0 7px 22px
+        rgba(38, 54, 83, 0.045);
+}
 
-        background: rgba(250, 253, 253, 0.82) !important;
 
-        border: 1px solid rgba(0, 169, 157, 0.13) !important;
+[data-testid="stMetricLabel"] {
 
-        border-radius: 16px !important;
+    color:
+        #7A8496 !important;
 
-        box-shadow:
-            0 7px 22px rgba(30, 65, 75, 0.04);
-    }
+    font-family:
+        'DM Sans',
+        sans-serif !important;
 
+    font-weight:
+        600 !important;
+}
 
-    .stExpander summary {
 
-        font-family: 'Manrope', sans-serif !important;
+[data-testid="stMetricValue"] {
 
-        font-weight: 700 !important;
+    color:
+        #172033 !important;
 
-        color: #29434D !important;
-    }
+    font-family:
+        'Space Grotesk',
+        sans-serif !important;
+}
 
 
-    /* ========================================================
-       LINKS
-       ======================================================== */
+/* ============================================================
+   EXPANDERS
+   ============================================================ */
 
-    .stLinkButton > a {
+.stExpander {
 
-        border-radius: 10px !important;
+    background:
+        rgba(255, 255, 255, 0.72) !important;
 
-        border: 1px solid rgba(0, 169, 157, 0.20) !important;
+    border:
+        1px solid #E2E7EF !important;
 
-        color: #008D84 !important;
+    border-radius:
+        16px !important;
+}
 
-        background: #F0FBF9 !important;
 
-        font-family: 'Manrope', sans-serif !important;
+.stExpander summary {
 
-        font-weight: 700 !important;
-    }
+    color:
+        #344054 !important;
 
+    font-family:
+        'DM Sans',
+        sans-serif !important;
 
-    /* ========================================================
-       ALERTS
-       ======================================================== */
+    font-weight:
+        700 !important;
+}
 
-    .stAlert {
 
-        border-radius: 14px !important;
+/* ============================================================
+   HIGH CONFIDENCE — MINT
+   ============================================================ */
 
-        font-family: 'Manrope', sans-serif !important;
-    }
+.stSuccess {
 
+    background:
+        #ECFBF4 !important;
 
-    /* ========================================================
-       DIVIDERS
-       ======================================================== */
+    border:
+        1px solid #B9EBD1 !important;
 
-    hr {
+    border-left:
+        4px solid #35B879 !important;
 
-        border: none !important;
+    color:
+        #176B48 !important;
 
-        height: 1px !important;
+    border-radius:
+        13px !important;
+}
 
-        background: linear-gradient(
+
+/* ============================================================
+   MEDIUM CONFIDENCE — APRICOT
+   ============================================================ */
+
+.stWarning {
+
+    background:
+        #FFF7E9 !important;
+
+    border:
+        1px solid #F5D9A3 !important;
+
+    border-left:
+        4px solid #F2A93B !important;
+
+    color:
+        #875A17 !important;
+
+    border-radius:
+        13px !important;
+}
+
+
+/* ============================================================
+   LOW CONFIDENCE — CORAL
+   ============================================================ */
+
+.stError {
+
+    background:
+        #FFF0F1 !important;
+
+    border:
+        1px solid #F3C2C6 !important;
+
+    border-left:
+        4px solid #E96B72 !important;
+
+    color:
+        #913B42 !important;
+
+    border-radius:
+        13px !important;
+}
+
+
+/* ============================================================
+   INFORMATION — BLUE
+   ============================================================ */
+
+.stInfo {
+
+    background:
+        #EEF4FF !important;
+
+    border:
+        1px solid #C9D8FA !important;
+
+    border-left:
+        4px solid #4678ED !important;
+
+    color:
+        #294A9B !important;
+
+    border-radius:
+        13px !important;
+}
+
+
+/* ============================================================
+   SOURCE LINKS
+   ============================================================ */
+
+.stLinkButton > a {
+
+    background:
+        #F4F7FF !important;
+
+    border:
+        1px solid #D6E0F7 !important;
+
+    color:
+        #3159D8 !important;
+
+    border-radius:
+        10px !important;
+
+    font-family:
+        'DM Sans',
+        sans-serif !important;
+
+    font-weight:
+        700 !important;
+}
+
+
+.stLinkButton > a:hover {
+
+    background:
+        #EAF0FF !important;
+
+    border-color:
+        #9EB5F2 !important;
+}
+
+
+/* ============================================================
+   DIVIDERS
+   ============================================================ */
+
+hr {
+
+    border:
+        none !important;
+
+    height:
+        1px !important;
+
+    background:
+
+        linear-gradient(
             90deg,
             transparent,
-            rgba(0, 169, 157, 0.22),
-            rgba(255, 125, 92, 0.20),
+            #D8DFEC,
+            #F0B6B9,
+            #D8DFEC,
             transparent
         ) !important;
 
-        margin: 2rem 0 !important;
+    margin:
+        2.2rem 0 !important;
+}
+
+
+/* ============================================================
+   SPINNER
+   ============================================================ */
+
+.stSpinner > div {
+
+    border-top-color:
+        #4674E8 !important;
+}
+
+
+/* ============================================================
+   CAPTIONS
+   ============================================================ */
+
+[data-testid="stCaptionContainer"] {
+
+    color:
+        #7A8496 !important;
+
+    font-family:
+        'DM Sans',
+        sans-serif !important;
+}
+
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 700px) {
+
+    .block-container {
+
+        padding-left:
+            1rem;
+
+        padding-right:
+            1rem;
     }
 
 
-    /* ========================================================
-       SPINNER
-       ======================================================== */
+    [data-testid="stHeading"] h1 {
 
-    .stSpinner > div {
-
-        border-top-color: #00A99D !important;
+        font-size:
+            2.35rem !important;
     }
 
+}
 
-    /* ========================================================
-       MOBILE
-       ======================================================== */
-
-    @media (max-width: 700px) {
-
-        .block-container {
-
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
-
-        [data-testid="stHeading"] h1 {
-
-            font-size: 2.35rem !important;
-        }
-    }
-
-    </style>
-    """)
+</style>
+""")
 
 
 # ============================================================
@@ -456,25 +716,27 @@ def display_header():
 def display_first_question():
 
     st.markdown(
-        "### What would you like to know?"
+        "### What are you curious about?"
     )
 
     st.caption(
-        "Ask naturally. We'll break the answer down and show "
-        "you what the evidence actually supports."
+        "Ask anything. We'll break the answer down, "
+        "check the evidence, and show you what deserves trust."
     )
 
 
 # ============================================================
-# QUICK START
+# QUICK QUESTIONS
 # ============================================================
 
 def display_quick_questions():
 
-    st.markdown("### ⚡ Try something")
+    st.markdown(
+        "### ✦ Start exploring"
+    )
 
     st.caption(
-        "Not sure what to ask? Start with one of these."
+        "Try one of these questions to see the confidence layer."
     )
 
     col1, col2 = st.columns(2)
@@ -482,13 +744,13 @@ def display_quick_questions():
     with col1:
 
         st.button(
-            "🔬 Ask a science question",
+            "🔬 Try a science question",
             key="quick_science",
             use_container_width=True
         )
 
         st.button(
-            "🌍 Ask about history",
+            "🌎 Explore a historical fact",
             key="quick_history",
             use_container_width=True
         )
@@ -502,19 +764,21 @@ def display_quick_questions():
         )
 
         st.button(
-            "🧠 Challenge a fact",
-            key="quick_fact",
+            "💭 Ask something unexpected",
+            key="quick_unexpected",
             use_container_width=True
         )
 
 
 # ============================================================
-# QUESTION DISPLAY
+# QUESTION
 # ============================================================
 
 def display_question(question):
 
-    st.markdown("### 👤 Your Question")
+    st.markdown(
+        "### Your question"
+    )
 
     with st.container(border=True):
 
@@ -530,11 +794,11 @@ def display_question(question):
 def display_analysis_header():
 
     st.markdown(
-        "### ✦ Claim-by-Claim Analysis"
+        "### ✦ Claim-by-claim analysis"
     )
 
     st.caption(
-        "We check each factual statement against retrieved evidence."
+        "Every factual statement is checked against external evidence."
     )
 
 
@@ -542,7 +806,11 @@ def display_analysis_header():
 # CLAIM
 # ============================================================
 
-def display_claim(claim, confidence, evidence):
+def display_claim(
+    claim,
+    confidence,
+    evidence
+):
 
     level = confidence.get(
         "confidence",
@@ -557,23 +825,29 @@ def display_claim(claim, confidence, evidence):
 
     with st.container(border=True):
 
-        st.caption("AI CLAIM")
+        st.caption(
+            "AI CLAIM"
+        )
 
         st.markdown(
             f"**{claim}**"
         )
 
 
+        # ----------------------------------------------------
+        # CONFIDENCE
+        # ----------------------------------------------------
+
         if level == "HIGH":
 
             st.success(
-                "🟢 HIGH CONFIDENCE · Strongly supported"
+                "✓  HIGH CONFIDENCE · Strongly supported"
             )
 
         elif level == "MEDIUM":
 
             st.warning(
-                "🟡 MEDIUM CONFIDENCE · Partially supported"
+                "◐  MEDIUM CONFIDENCE · Partially supported"
             )
 
         elif level in [
@@ -582,25 +856,35 @@ def display_claim(claim, confidence, evidence):
         ]:
 
             st.warning(
-                "🟠 SPECULATIVE · Little or no external evidence"
+                "◌  SPECULATIVE · Limited external evidence"
             )
 
         else:
 
             st.error(
-                "🔴 LOW CONFIDENCE · Needs verification"
+                "×  LOW CONFIDENCE · Needs verification"
             )
 
+
+        # ----------------------------------------------------
+        # REASON
+        # ----------------------------------------------------
 
         st.markdown(
             "**Why this rating?**"
         )
 
-        st.info(reason)
+        st.info(
+            reason
+        )
 
+
+        # ----------------------------------------------------
+        # EVIDENCE
+        # ----------------------------------------------------
 
         st.markdown(
-            "**Supporting Evidence**"
+            "**Supporting evidence**"
         )
 
 
@@ -613,11 +897,13 @@ def display_claim(claim, confidence, evidence):
 
         else:
 
+            source_count = len(evidence)
+
             st.caption(
-                f"🔎 {len(evidence)} source"
+                f"◈ {source_count} source"
                 + (
                     "s found"
-                    if len(evidence) != 1
+                    if source_count != 1
                     else " found"
                 )
             )
@@ -657,9 +943,10 @@ def display_claim(claim, confidence, evidence):
                     if url:
 
                         st.link_button(
-                            "↗ Open source",
+                            "↗  Open source",
                             url
                         )
+
 
     st.divider()
 
@@ -670,7 +957,10 @@ def display_claim(claim, confidence, evidence):
 
 def display_summary(analyzed_claims):
 
-    total = len(analyzed_claims)
+    total = len(
+        analyzed_claims
+    )
+
 
     high = sum(
         1
@@ -680,6 +970,7 @@ def display_summary(analyzed_claims):
         ) == "HIGH"
     )
 
+
     medium = sum(
         1
         for item in analyzed_claims
@@ -687,6 +978,7 @@ def display_summary(analyzed_claims):
             "confidence"
         ) == "MEDIUM"
     )
+
 
     needs_review = sum(
         1
@@ -702,7 +994,7 @@ def display_summary(analyzed_claims):
 
 
     st.markdown(
-        "### ✦ Confidence Overview"
+        "### ✦ Confidence overview"
     )
 
 
@@ -720,7 +1012,7 @@ def display_summary(analyzed_claims):
     with col2:
 
         st.metric(
-            "🟢 Strong",
+            "✓ Strong",
             high
         )
 
@@ -728,7 +1020,7 @@ def display_summary(analyzed_claims):
     with col3:
 
         st.metric(
-            "🟡 Partial",
+            "◐ Partial",
             medium
         )
 
@@ -736,7 +1028,7 @@ def display_summary(analyzed_claims):
     with col4:
 
         st.metric(
-            "🟠 Review",
+            "⚠ Review",
             needs_review
         )
 
@@ -748,16 +1040,16 @@ def display_summary(analyzed_claims):
 def display_how_it_works():
 
     with st.expander(
-        "🧭 How does AI Confidence Layer work?"
+        "◎ How does the Confidence Layer work?"
     ):
 
         st.markdown(
             """
             **01 · Generate**
 
-            The AI creates a natural-language answer to your question.
+            The AI creates a natural answer to your question.
 
-            **02 · Break down**
+            **02 · Break it down**
 
             The answer is separated into individual factual claims.
 
@@ -771,8 +1063,7 @@ def display_how_it_works():
 
             **05 · Explain**
 
-            You see not only a confidence level, but *why*
-            that level was assigned.
+            You see the confidence level and the reasoning behind it.
             """
         )
 
@@ -789,7 +1080,7 @@ def display_question_prompt():
 
     st.caption(
         "Ask a follow-up, challenge the answer, "
-        "or switch to a completely different topic."
+        "or explore something completely different."
     )
 
 
@@ -800,7 +1091,7 @@ def display_question_prompt():
 def display_clear_button():
 
     if st.button(
-        "🧹 Clear conversation",
+        "↺  Start a new conversation",
         use_container_width=True
     ):
 
