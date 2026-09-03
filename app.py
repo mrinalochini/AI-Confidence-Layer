@@ -5,8 +5,8 @@ from evidence_engine import find_evidence
 from confidence_engine import calculate_confidence
 
 from ui import (
-    load_css,
     display_header,
+    display_first_question,
     display_claim,
     display_summary,
     display_analysis_header,
@@ -26,61 +26,129 @@ st.set_page_config(
 
 
 # ============================================================
-# LOAD UI
-# ============================================================
-
-load_css()
-
-
-# ============================================================
 # SESSION STATE
 # ============================================================
 
 if "messages" not in st.session_state:
-    st.session_state.messages = []
 
-if "has_answer" not in st.session_state:
-    st.session_state.has_answer = False
+    st.session_state.messages = []
 
 
 # ============================================================
-# HERO
+# HEADER
 # ============================================================
 
 display_header()
 
 
 # ============================================================
+# QUESTION PROCESSING FUNCTION
+# ============================================================
+
+def process_question(question):
+
+    question = question.strip()
+
+
+    # --------------------------------------------------------
+    # GENERATE AI CLAIMS
+    # --------------------------------------------------------
+
+    with st.spinner("Thinking..."):
+
+        result = generate_claims(question)
+
+
+    analyzed_claims = []
+
+
+    # --------------------------------------------------------
+    # ANALYZE EACH CLAIM
+    # --------------------------------------------------------
+
+    for claim in result.get("claims", []):
+
+        claim_text = claim.get(
+            "text",
+            ""
+        )
+
+
+        if not claim_text:
+
+            continue
+
+
+        # ----------------------------------------------------
+        # FIND EVIDENCE
+        # ----------------------------------------------------
+
+        with st.spinner("Processing..."):
+
+            evidence = find_evidence(
+                claim_text
+            )
+
+
+        # ----------------------------------------------------
+        # CALCULATE CONFIDENCE
+        # ----------------------------------------------------
+
+        with st.spinner("Evaluating..."):
+
+            confidence = calculate_confidence(
+                claim_text,
+                evidence
+            )
+
+
+        analyzed_claims.append(
+            {
+                "claim": claim_text,
+                "confidence": confidence,
+                "evidence": evidence
+            }
+        )
+
+
+    # --------------------------------------------------------
+    # SAVE CONVERSATION
+    # --------------------------------------------------------
+
+    st.session_state.messages.append(
+        {
+            "question": question,
+            "analyzed_claims": analyzed_claims
+        }
+    )
+
+
+# ============================================================
 # FIRST QUESTION
 # ============================================================
 
-if not st.session_state.has_answer:
+if len(st.session_state.messages) == 0:
 
-    st.markdown(
-        "<div class='question-heading'>What would you like to know?</div>",
-        unsafe_allow_html=True
-    )
-
-    st.markdown(
-        "<div class='question-subheading'>"
-        "Ask a question and we'll help you understand "
-        "how much you can trust the answer."
-        "</div>",
-        unsafe_allow_html=True
-    )
+    display_first_question()
 
 
 # ============================================================
-# QUESTION FORM
+# QUESTION INPUT
 # ============================================================
 
-with st.form("question_form", clear_on_submit=True):
+with st.form(
+    "question_form",
+    clear_on_submit=True
+):
 
     question = st.text_input(
         "Question",
-        placeholder="Ask anything...",
+        placeholder=(
+            "Example: Who invented the telephone?"
+        ),
         label_visibility="collapsed"
     )
+
 
     submitted = st.form_submit_button(
         "🔍  Analyze Answer"
@@ -88,97 +156,43 @@ with st.form("question_form", clear_on_submit=True):
 
 
 # ============================================================
-# PROCESS FIRST / NEW QUESTION
+# PROCESS QUESTION
 # ============================================================
 
 if submitted:
 
     if not question.strip():
 
-        st.warning("Please enter a question first.")
+        st.warning(
+            "Please enter a question first."
+        )
 
     else:
 
-        question = question.strip()
+        process_question(question)
 
-        # Save question
-        st.session_state.messages.append({
-            "question": question
-        })
-
-        # -----------------------------------------------
-        # THINKING
-        # -----------------------------------------------
-
-        with st.spinner("Thinking..."):
-
-            result = generate_claims(question)
-
-        analyzed_claims = []
-
-        # -----------------------------------------------
-        # PROCESS CLAIMS
-        # -----------------------------------------------
-
-        for claim in result.get("claims", []):
-
-            claim_text = claim.get("text", "")
-
-            # Evidence
-            with st.spinner("Processing..."):
-
-                evidence = find_evidence(claim_text)
-
-            # Confidence
-            with st.spinner("Evaluating..."):
-
-                confidence = calculate_confidence(
-                    claim_text,
-                    evidence
-                )
-
-            analyzed_claims.append({
-                "claim": claim_text,
-                "confidence": confidence,
-                "evidence": evidence
-            })
-
-        # -----------------------------------------------
-        # SAVE RESULT
-        # -----------------------------------------------
-
-        st.session_state.messages[-1][
-            "analyzed_claims"
-        ] = analyzed_claims
-
-        st.session_state.has_answer = True
-
-        # Refresh page
         st.rerun()
 
 
 # ============================================================
-# DISPLAY ALL PREVIOUS QUESTIONS / ANSWERS
+# DISPLAY ALL ANSWERS
 # ============================================================
 
 for message in st.session_state.messages:
 
-    if "analyzed_claims" not in message:
-        continue
 
     # --------------------------------------------------------
     # QUESTION
     # --------------------------------------------------------
 
     st.markdown(
-        "<div class='user-question-card'>"
-        "<div class='user-question-label'>YOUR QUESTION</div>"
-        f"<div class='user-question-text'>"
-        f"{message['question']}"
-        "</div>"
-        "</div>",
-        unsafe_allow_html=True
+        "### 👤 Your Question"
     )
+
+    st.write(
+        message["question"]
+    )
+
 
     # --------------------------------------------------------
     # SUMMARY
@@ -188,11 +202,13 @@ for message in st.session_state.messages:
         message["analyzed_claims"]
     )
 
+
     # --------------------------------------------------------
     # CLAIM ANALYSIS
     # --------------------------------------------------------
 
     display_analysis_header()
+
 
     for item in message["analyzed_claims"]:
 
@@ -207,9 +223,10 @@ for message in st.session_state.messages:
 # FOLLOW-UP QUESTION
 # ============================================================
 
-if st.session_state.has_answer:
+if len(st.session_state.messages) > 0:
 
     display_question_prompt()
+
 
     with st.form(
         "follow_up_question_form",
@@ -219,85 +236,34 @@ if st.session_state.has_answer:
         follow_up_question = st.text_input(
             "Follow-up question",
             placeholder=(
-                "Ask something related or explore a new topic..."
+                "Ask something related or "
+                "explore a new topic..."
             ),
             label_visibility="collapsed"
         )
+
 
         follow_up_submitted = st.form_submit_button(
             "🔍  Analyze Answer"
         )
 
 
-    # ========================================================
+    # --------------------------------------------------------
     # PROCESS FOLLOW-UP
-    # ========================================================
+    # --------------------------------------------------------
 
     if follow_up_submitted:
 
         if not follow_up_question.strip():
 
-            st.warning("Please enter a question first.")
+            st.warning(
+                "Please enter a question first."
+            )
 
         else:
 
-            follow_up_question = (
-                follow_up_question.strip()
+            process_question(
+                follow_up_question
             )
-
-            # -----------------------------------------------
-            # SAVE QUESTION
-            # -----------------------------------------------
-
-            st.session_state.messages.append({
-                "question": follow_up_question
-            })
-
-            # -----------------------------------------------
-            # THINKING
-            # -----------------------------------------------
-
-            with st.spinner("Thinking..."):
-
-                result = generate_claims(
-                    follow_up_question
-                )
-
-            analyzed_claims = []
-
-            # -----------------------------------------------
-            # PROCESS
-            # -----------------------------------------------
-
-            for claim in result.get("claims", []):
-
-                claim_text = claim.get("text", "")
-
-                with st.spinner("Processing..."):
-
-                    evidence = find_evidence(
-                        claim_text
-                    )
-
-                with st.spinner("Evaluating..."):
-
-                    confidence = calculate_confidence(
-                        claim_text,
-                        evidence
-                    )
-
-                analyzed_claims.append({
-                    "claim": claim_text,
-                    "confidence": confidence,
-                    "evidence": evidence
-                })
-
-            # -----------------------------------------------
-            # SAVE
-            # -----------------------------------------------
-
-            st.session_state.messages[-1][
-                "analyzed_claims"
-            ] = analyzed_claims
 
             st.rerun()
