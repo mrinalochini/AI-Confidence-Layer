@@ -5,6 +5,7 @@ from evidence_engine import find_evidence
 from confidence_engine import calculate_confidence
 
 from ui import (
+    load_css,
     display_header,
     display_first_question,
     display_claim,
@@ -14,15 +15,12 @@ from ui import (
 )
 
 
-# ============================================================
-# PAGE CONFIG
-# ============================================================
-
 st.set_page_config(
     page_title="AI Confidence Layer",
     page_icon="🧠",
     layout="centered"
 )
+
 
 load_css()
 # ============================================================
