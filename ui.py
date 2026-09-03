@@ -214,13 +214,6 @@ def load_css():
 
 def display_header():
 
-    st.markdown(
-        """
-        <div style="text-align:center;">
-        """,
-        unsafe_allow_html=False
-    )
-
     st.markdown("### ✦ AI TRUST & EVIDENCE")
 
     st.title("AI Confidence Layer")
