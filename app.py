@@ -8,19 +8,17 @@ from ui import (
     load_css,
     display_header,
     display_first_question,
-    display_quick_questions,
-    display_question,
+    display_user_question,
+    display_ai_answer,
     display_claim,
     display_summary,
     display_analysis_header,
-    display_how_it_works,
-    display_question_prompt,
-    display_clear_button
+    display_question_prompt
 )
 
 
 # ============================================================
-# PAGE
+# PAGE CONFIG
 # ============================================================
 
 st.set_page_config(
@@ -31,10 +29,15 @@ st.set_page_config(
 
 
 # ============================================================
-# THEME
+# DESIGN
 # ============================================================
 
 load_css()
+
+
+# ============================================================
+# HEADER
+# ============================================================
 
 display_header()
 
@@ -44,7 +47,6 @@ display_header()
 # ============================================================
 
 if "messages" not in st.session_state:
-
     st.session_state.messages = []
 
 
@@ -56,57 +58,62 @@ def process_question(question):
 
     question = question.strip()
 
+    # --------------------------------------------------------
+    # AI ANSWER
+    # --------------------------------------------------------
+
     with st.spinner("Thinking..."):
 
         result = generate_claims(question)
 
+    # --------------------------------------------------------
+    # CLAIMS
+    # --------------------------------------------------------
 
     analyzed_claims = []
 
-
     for claim in result.get("claims", []):
 
-        claim_text = claim.get(
-            "text",
-            ""
-        )
-
+        claim_text = claim.get("text", "").strip()
 
         if not claim_text:
-
             continue
 
+        # ----------------------------------------------------
+        # EVIDENCE
+        # ----------------------------------------------------
 
         with st.spinner("Checking the evidence..."):
 
-            evidence = find_evidence(
-                claim_text
-            )
+            evidence = find_evidence(claim_text)
 
+        # ----------------------------------------------------
+        # CONFIDENCE
+        # ----------------------------------------------------
 
-        with st.spinner("Evaluating trustworthiness..."):
+        with st.spinner("Evaluating trust..."):
 
             confidence = calculate_confidence(
                 claim_text,
                 evidence
             )
 
-
         analyzed_claims.append(
             {
                 "claim": claim_text,
-
                 "confidence": confidence,
-
                 "evidence": evidence
             }
         )
 
+    # --------------------------------------------------------
+    # SAVE CONVERSATION
+    # --------------------------------------------------------
 
     st.session_state.messages.append(
         {
             "question": question,
-
+            "answer": result.get("answer", ""),
             "analyzed_claims": analyzed_claims
         }
     )
@@ -120,13 +127,9 @@ if len(st.session_state.messages) == 0:
 
     display_first_question()
 
-    display_quick_questions()
-
-    st.markdown("---")
-
 
 # ============================================================
-# QUESTION INPUT
+# QUESTION FORM
 # ============================================================
 
 with st.form(
@@ -136,18 +139,13 @@ with st.form(
 
     question = st.text_input(
         "Question",
-
-        placeholder=(
-            "Ask anything — e.g. "
-            "Is artificial intelligence conscious?"
-        ),
-
+        placeholder="Try: Is artificial intelligence replacing jobs?",
         label_visibility="collapsed"
     )
 
-
     submitted = st.form_submit_button(
-        "🔍  Analyze Answer"
+        "🔍 Analyze Answer",
+        use_container_width=True
     )
 
 
@@ -160,7 +158,7 @@ if submitted:
     if not question.strip():
 
         st.warning(
-            "Please enter a question first."
+            "Tell me what's on your mind first 😊"
         )
 
     else:
@@ -171,23 +169,40 @@ if submitted:
 
 
 # ============================================================
-# CONVERSATION
+# DISPLAY CONVERSATION
 # ============================================================
 
 for message in st.session_state.messages:
 
-    display_question(
+    st.markdown("---")
+
+    display_user_question(
         message["question"]
     )
 
+    # --------------------------------------------------------
+    # NATURAL AI ANSWER
+    # --------------------------------------------------------
+
+    display_ai_answer(
+        message.get("answer", "")
+    )
+
+    # --------------------------------------------------------
+    # TRUST SUMMARY
+    # --------------------------------------------------------
 
     display_summary(
         message["analyzed_claims"]
     )
 
+    st.markdown("")
+
+    # --------------------------------------------------------
+    # CLAIM ANALYSIS
+    # --------------------------------------------------------
 
     display_analysis_header()
-
 
     for item in message["analyzed_claims"]:
 
@@ -198,9 +213,6 @@ for message in st.session_state.messages:
         )
 
 
-    display_how_it_works()
-
-
 # ============================================================
 # FOLLOW-UP
 # ============================================================
@@ -209,7 +221,6 @@ if len(st.session_state.messages) > 0:
 
     display_question_prompt()
 
-
     with st.form(
         "follow_up_question_form",
         clear_on_submit=True
@@ -217,28 +228,21 @@ if len(st.session_state.messages) > 0:
 
         follow_up_question = st.text_input(
             "Follow-up question",
-
-            placeholder=(
-                "Ask a follow-up or explore something new..."
-            ),
-
+            placeholder="Ask a follow-up or explore something completely new...",
             label_visibility="collapsed"
         )
 
-
-        follow_up_submitted = (
-            st.form_submit_button(
-                "↗  Ask another question"
-            )
+        follow_up_submitted = st.form_submit_button(
+            "✨ Ask AI",
+            use_container_width=True
         )
-
 
     if follow_up_submitted:
 
         if not follow_up_question.strip():
 
             st.warning(
-                "Please enter a question first."
+                "What would you like to explore? 😊"
             )
 
         else:
@@ -248,8 +252,3 @@ if len(st.session_state.messages) > 0:
             )
 
             st.rerun()
-
-
-    st.markdown("---")
-
-    display_clear_button()
