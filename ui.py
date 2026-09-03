@@ -1423,32 +1423,51 @@ def display_question_prompt():
     <div style="
         position:relative;
 
-        margin-top:52px;
+        margin-top:58px;
+        margin-bottom:18px;
 
-        margin-bottom:20px;
-
-        padding:
-            29px 25px 24px;
+        padding:30px 25px 25px;
 
         text-align:center;
 
         background:
             linear-gradient(
                 135deg,
-                rgba(246,243,255,.85),
-                rgba(239,250,255,.85)
+                rgba(246,243,255,.95),
+                rgba(238,250,255,.95)
             );
 
         border:
             1px solid #DFE2F0;
 
-        border-radius:22px;
+        border-radius:24px;
+
+        box-shadow:
+            0 12px 35px
+            rgba(73,78,125,.07);
     ">
 
         <div style="
-            font-size:25px;
+            display:inline-flex;
 
-            margin-bottom:7px;
+            align-items:center;
+            justify-content:center;
+
+            width:43px;
+            height:43px;
+
+            border-radius:14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #EEE7FF,
+                    #E4F8FF
+                );
+
+            font-size:21px;
+
+            margin-bottom:10px;
         ">
             ✨
         </div>
@@ -1463,9 +1482,11 @@ def display_question_prompt():
 
             font-weight:800;
 
+            letter-spacing:-.4px;
+
             color:#29334C;
         ">
-            Have another question?
+            What would you like to know next?
         </div>
 
 
@@ -1476,12 +1497,35 @@ def display_question_prompt():
 
             font-size:14px;
 
+            line-height:1.6;
+
             color:#7A8499;
 
             margin-top:7px;
         ">
-            Keep exploring. Ask another question and
-            we'll check the answer again.
+            Ask something related to your previous question
+            or explore a completely different topic.
+        </div>
+
+
+        <div style="
+            margin-top:13px;
+
+            font-family:
+                'Space Grotesk',
+                sans-serif;
+
+            font-size:10px;
+
+            font-weight:700;
+
+            color:#9A91C4;
+
+            letter-spacing:1px;
+
+            text-transform:uppercase;
+        ">
+            ✦ Keep exploring · Keep questioning AI
         </div>
 
     </div>
