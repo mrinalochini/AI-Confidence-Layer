@@ -31,49 +31,155 @@ st.set_page_config(
 
 load_css()
 
+
+# =========================================================
+# SESSION STATE
+# =========================================================
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+
+if "has_answer" not in st.session_state:
+    st.session_state.has_answer = False
+
+
+# =========================================================
+# HERO
+# =========================================================
+
 display_header()
 
 
 # =========================================================
-# ANALYZE QUESTION
+# QUESTION INPUT
 # =========================================================
 
-def analyze_question(question):
+if not st.session_state.has_answer:
 
-    with st.spinner(
-        "🧠 Thinking... This may take a few minutes."
-    ):
+    # -----------------------------------------------------
+    # FIRST QUESTION
+    # -----------------------------------------------------
 
-        # Generate claims
+    st.markdown(
+        """
+        <div style="
+            margin-top:20px;
+            margin-bottom:10px;
+            font-family:'Space Grotesk', sans-serif;
+            font-size:18px;
+            font-weight:700;
+            color:#27324A;
+        ">
+            What would you like to know?
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-        result = generate_claims(
-            question
+    st.markdown(
+        """
+        <div style="
+            margin-bottom:13px;
+            font-family:'DM Sans', sans-serif;
+            font-size:14px;
+            color:#7B8499;
+        ">
+            Ask a question and we'll help you understand
+            how much you can trust the answer.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+
+# =========================================================
+# FORM
+# =========================================================
+
+with st.form("question_form", clear_on_submit=True):
+
+    question = st.text_input(
+        "Question",
+        placeholder=(
+            "Example: Who invented the telephone?"
+        ),
+        label_visibility="collapsed"
+    )
+
+    submitted = st.form_submit_button(
+        "🔍  Analyze Answer",
+        use_container_width=False
+    )
+
+
+# =========================================================
+# PROCESS QUESTION
+# =========================================================
+
+if submitted:
+
+    if not question.strip():
+
+        st.warning(
+            "Please enter a question first."
         )
+
+    else:
+
+        question = question.strip()
+
+        # -------------------------------------------------
+        # SAVE QUESTION
+        # -------------------------------------------------
+
+        st.session_state.messages.append({
+            "question": question
+        })
+
+
+        # -------------------------------------------------
+        # GENERATE CLAIMS
+        # -------------------------------------------------
+
+        with st.spinner("Thinking..."):
+
+            result = generate_claims(question)
 
 
         analyzed_claims = []
 
 
-        # Process each claim
+        # -------------------------------------------------
+        # PROCESS EACH CLAIM
+        # -------------------------------------------------
 
         for claim in result["claims"]:
 
             claim_text = claim["text"]
 
 
-            # Retrieve evidence
+            # ---------------------------------------------
+            # RETRIEVE EVIDENCE
+            # ---------------------------------------------
 
-            evidence = find_evidence(
-                claim_text
-            )
+            with st.spinner("Processing..."):
+
+                evidence = find_evidence(
+                    claim_text
+                )
 
 
-            # Calculate confidence
+            # ---------------------------------------------
+            # CALCULATE CONFIDENCE
+            # ---------------------------------------------
 
-            confidence = calculate_confidence(
-                claim_text,
-                evidence
-            )
+            with st.spinner("Evaluating..."):
+
+                confidence = calculate_confidence(
+                    claim_text,
+                    evidence
+                )
 
 
             analyzed_claims.append({
@@ -87,163 +193,232 @@ def analyze_question(question):
             })
 
 
-    return analyzed_claims
+        # -------------------------------------------------
+        # SAVE RESULT
+        # -------------------------------------------------
+
+        st.session_state.messages[-1][
+            "analyzed_claims"
+        ] = analyzed_claims
+
+
+        st.session_state.has_answer = True
+
+
+        # -------------------------------------------------
+        # FORCE RERUN
+        # -------------------------------------------------
+
+        st.rerun()
 
 
 # =========================================================
-# FIRST QUESTION FORM
+# DISPLAY PREVIOUS QUESTIONS / ANSWERS
 # =========================================================
 
-with st.form(
-    "question_form",
-    clear_on_submit=False
-):
+for message in st.session_state.messages:
+
+    if "analyzed_claims" not in message:
+        continue
+
+
+    # -----------------------------------------------------
+    # QUESTION DISPLAY
+    # -----------------------------------------------------
 
     st.markdown(
-        """
+        f"""
         <div style="
-            font-family:'Space Grotesk',sans-serif;
-            font-size:20px;
-            font-weight:700;
-            color:#343B53;
-            margin-bottom:6px;
-        ">
-            💬 What would you like to know?
-        </div>
+            margin-top:32px;
+            margin-bottom:18px;
+            padding:18px 20px;
 
-        <div style="
-            font-family:'Quicksand',sans-serif;
-            font-size:14px;
-            color:#7A8195;
-            margin-bottom:13px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #F5F1FF,
+                    #EFFAFF
+                );
+
+            border:1px solid #DFE2F1;
+
+            border-radius:18px;
         ">
-            Ask anything and we'll help you understand
-            how much you can trust the answer.
+
+            <div style="
+                font-family:'Space Grotesk', sans-serif;
+                font-size:10px;
+                font-weight:700;
+                color:#8067D9;
+                letter-spacing:1.2px;
+                text-transform:uppercase;
+                margin-bottom:7px;
+            ">
+                YOUR QUESTION
+            </div>
+
+            <div style="
+                font-family:'Manrope', sans-serif;
+                font-size:18px;
+                font-weight:700;
+                line-height:1.5;
+                color:#273149;
+            ">
+                {question if False else message["question"]}
+            </div>
+
         </div>
         """,
         unsafe_allow_html=True
     )
 
 
-    question = st.text_input(
-        "Question",
-        placeholder="Try: Who invented the telephone?",
-        label_visibility="collapsed",
-        key="main_question"
+    # -----------------------------------------------------
+    # SUMMARY
+    # -----------------------------------------------------
+
+    display_summary(
+        message["analyzed_claims"]
     )
 
 
-    submitted = st.form_submit_button(
-        "🔍  Analyze Answer"
-    )
+    # -----------------------------------------------------
+    # CLAIM ANALYSIS
+    # -----------------------------------------------------
+
+    display_analysis_header()
 
 
-# =========================================================
-# RUN FIRST QUESTION
-# =========================================================
+    for item in message["analyzed_claims"]:
 
-if submitted:
-
-    if not question.strip():
-
-        st.warning(
-            "✨ Please enter a question first."
-        )
-
-    else:
-
-        st.session_state["analyzed_claims"] = (
-            analyze_question(question)
-        )
-
-        st.session_state["has_answer"] = True
-
-
-# =========================================================
-# SHOW ANSWER
-# =========================================================
-
-if st.session_state.get(
-    "has_answer",
-    False
-):
-
-    analyzed_claims = st.session_state.get(
-        "analyzed_claims",
-        []
-    )
-
-
-    if analyzed_claims:
-
-        # -------------------------------------------------
-        # SUMMARY
-        # -------------------------------------------------
-
-        display_summary(
-            analyzed_claims
+        display_claim(
+            item["claim"],
+            item["confidence"],
+            item["evidence"]
         )
 
 
-        # -------------------------------------------------
-        # CLAIM ANALYSIS
-        # -------------------------------------------------
+# =========================================================
+# FOLLOW-UP COMPOSER
+# =========================================================
 
-        display_analysis_header()
+if st.session_state.has_answer:
+
+    display_question_prompt()
 
 
-        for item in analyzed_claims:
+    # -----------------------------------------------------
+    # SECOND / FOLLOW-UP QUESTION
+    # -----------------------------------------------------
 
-            display_claim(
-                item["claim"],
-                item["confidence"],
-                item["evidence"]
+    with st.form(
+        "follow_up_question_form",
+        clear_on_submit=True
+    ):
+
+        follow_up_question = st.text_input(
+            "Follow-up question",
+            placeholder=(
+                "Ask a related question or explore something new..."
+            ),
+            label_visibility="collapsed"
+        )
+
+
+        follow_up_submitted = st.form_submit_button(
+            "🔍  Analyze Answer",
+            use_container_width=False
+        )
+
+
+    # -----------------------------------------------------
+    # PROCESS FOLLOW-UP
+    # -----------------------------------------------------
+
+    if follow_up_submitted:
+
+        if not follow_up_question.strip():
+
+            st.warning(
+                "Please enter a question first."
+            )
+
+        else:
+
+            follow_up_question = (
+                follow_up_question.strip()
             )
 
 
-        # =================================================
-        # FOLLOW-UP QUESTION
-        # =================================================
+            # ---------------------------------------------
+            # SAVE NEW QUESTION
+            # ---------------------------------------------
 
-        display_question_prompt()
-
-
-        with st.form(
-            "followup_question_form",
-            clear_on_submit=False
-        ):
-
-            followup_question = st.text_input(
-                "Another question",
-                placeholder="Ask another question...",
-                label_visibility="collapsed",
-                key="followup_question"
-            )
+            st.session_state.messages.append({
+                "question": follow_up_question
+            })
 
 
-            followup_submitted = st.form_submit_button(
-                "✨  Analyze New Question"
-            )
+            # ---------------------------------------------
+            # GENERATE
+            # ---------------------------------------------
 
+            with st.spinner("Thinking..."):
 
-        # =================================================
-        # RUN FOLLOW-UP QUESTION
-        # =================================================
-
-        if followup_submitted:
-
-            if not followup_question.strip():
-
-                st.warning(
-                    "✨ Please enter a question first."
+                result = generate_claims(
+                    follow_up_question
                 )
 
-            else:
 
-                st.session_state["analyzed_claims"] = (
-                    analyze_question(
-                        followup_question
+            analyzed_claims = []
+
+
+            # ---------------------------------------------
+            # CLAIMS
+            # ---------------------------------------------
+
+            for claim in result["claims"]:
+
+                claim_text = claim["text"]
+
+
+                with st.spinner("Processing..."):
+
+                    evidence = find_evidence(
+                        claim_text
                     )
-                )
 
-                st.rerun()
+
+                with st.spinner("Evaluating..."):
+
+                    confidence = calculate_confidence(
+                        claim_text,
+                        evidence
+                    )
+
+
+                analyzed_claims.append({
+
+                    "claim": claim_text,
+
+                    "confidence": confidence,
+
+                    "evidence": evidence
+
+                })
+
+
+            # ---------------------------------------------
+            # SAVE
+            # ---------------------------------------------
+
+            st.session_state.messages[-1][
+                "analyzed_claims"
+            ] = analyzed_claims
+
+
+            # ---------------------------------------------
+            # RERUN
+            # ---------------------------------------------
+
+            st.rerun()
