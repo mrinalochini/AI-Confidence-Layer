@@ -8,6 +8,7 @@ from ui import (
     load_css,
     display_header,
     display_first_question,
+    display_question,
     display_claim,
     display_summary,
     display_analysis_header,
@@ -23,6 +24,7 @@ st.set_page_config(
 
 
 load_css()
+display_header()
 # ============================================================
 # SESSION STATE
 # ============================================================
@@ -178,35 +180,15 @@ if submitted:
 
 for message in st.session_state.messages:
 
-
-    # --------------------------------------------------------
-    # QUESTION
-    # --------------------------------------------------------
-
-    st.markdown(
-        "### 👤 Your Question"
-    )
-
-    st.write(
+    display_question(
         message["question"]
     )
-
-
-    # --------------------------------------------------------
-    # SUMMARY
-    # --------------------------------------------------------
 
     display_summary(
         message["analyzed_claims"]
     )
 
-
-    # --------------------------------------------------------
-    # CLAIM ANALYSIS
-    # --------------------------------------------------------
-
     display_analysis_header()
-
 
     for item in message["analyzed_claims"]:
 
