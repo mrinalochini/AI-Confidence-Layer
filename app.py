@@ -8,13 +8,20 @@ from ui import (
     load_css,
     display_header,
     display_first_question,
+    display_quick_questions,
     display_question,
     display_claim,
     display_summary,
     display_analysis_header,
-    display_question_prompt
+    display_how_it_works,
+    display_question_prompt,
+    display_clear_button
 )
 
+
+# ============================================================
+# PAGE
+# ============================================================
 
 st.set_page_config(
     page_title="AI Confidence Layer",
@@ -23,8 +30,15 @@ st.set_page_config(
 )
 
 
+# ============================================================
+# THEME
+# ============================================================
+
 load_css()
+
 display_header()
+
+
 # ============================================================
 # SESSION STATE
 # ============================================================
@@ -33,18 +47,14 @@ if "messages" not in st.session_state:
 
     st.session_state.messages = []
 
+
 # ============================================================
-# QUESTION PROCESSING FUNCTION
+# PROCESS QUESTION
 # ============================================================
 
 def process_question(question):
 
     question = question.strip()
-
-
-    # --------------------------------------------------------
-    # GENERATE AI CLAIMS
-    # --------------------------------------------------------
 
     with st.spinner("Thinking..."):
 
@@ -53,10 +63,6 @@ def process_question(question):
 
     analyzed_claims = []
 
-
-    # --------------------------------------------------------
-    # ANALYZE EACH CLAIM
-    # --------------------------------------------------------
 
     for claim in result.get("claims", []):
 
@@ -71,22 +77,14 @@ def process_question(question):
             continue
 
 
-        # ----------------------------------------------------
-        # FIND EVIDENCE
-        # ----------------------------------------------------
-
-        with st.spinner("Processing..."):
+        with st.spinner("Checking the evidence..."):
 
             evidence = find_evidence(
                 claim_text
             )
 
 
-        # ----------------------------------------------------
-        # CALCULATE CONFIDENCE
-        # ----------------------------------------------------
-
-        with st.spinner("Evaluating..."):
+        with st.spinner("Evaluating trustworthiness..."):
 
             confidence = calculate_confidence(
                 claim_text,
@@ -97,31 +95,34 @@ def process_question(question):
         analyzed_claims.append(
             {
                 "claim": claim_text,
+
                 "confidence": confidence,
+
                 "evidence": evidence
             }
         )
 
 
-    # --------------------------------------------------------
-    # SAVE CONVERSATION
-    # --------------------------------------------------------
-
     st.session_state.messages.append(
         {
             "question": question,
+
             "analyzed_claims": analyzed_claims
         }
     )
 
 
 # ============================================================
-# FIRST QUESTION
+# FIRST SCREEN
 # ============================================================
 
 if len(st.session_state.messages) == 0:
 
     display_first_question()
+
+    display_quick_questions()
+
+    st.markdown("---")
 
 
 # ============================================================
@@ -135,9 +136,12 @@ with st.form(
 
     question = st.text_input(
         "Question",
+
         placeholder=(
-            "Example: Who invented the telephone?"
+            "Ask anything — e.g. "
+            "Is artificial intelligence conscious?"
         ),
+
         label_visibility="collapsed"
     )
 
@@ -148,7 +152,7 @@ with st.form(
 
 
 # ============================================================
-# PROCESS QUESTION
+# SUBMIT
 # ============================================================
 
 if submitted:
@@ -167,7 +171,7 @@ if submitted:
 
 
 # ============================================================
-# DISPLAY ALL ANSWERS
+# CONVERSATION
 # ============================================================
 
 for message in st.session_state.messages:
@@ -176,11 +180,14 @@ for message in st.session_state.messages:
         message["question"]
     )
 
+
     display_summary(
         message["analyzed_claims"]
     )
 
+
     display_analysis_header()
+
 
     for item in message["analyzed_claims"]:
 
@@ -191,8 +198,11 @@ for message in st.session_state.messages:
         )
 
 
+    display_how_it_works()
+
+
 # ============================================================
-# FOLLOW-UP QUESTION
+# FOLLOW-UP
 # ============================================================
 
 if len(st.session_state.messages) > 0:
@@ -207,22 +217,21 @@ if len(st.session_state.messages) > 0:
 
         follow_up_question = st.text_input(
             "Follow-up question",
+
             placeholder=(
-                "Ask something related or "
-                "explore a new topic..."
+                "Ask a follow-up or explore something new..."
             ),
+
             label_visibility="collapsed"
         )
 
 
-        follow_up_submitted = st.form_submit_button(
-            "🔍  Analyze Answer"
+        follow_up_submitted = (
+            st.form_submit_button(
+                "↗  Ask another question"
+            )
         )
 
-
-    # --------------------------------------------------------
-    # PROCESS FOLLOW-UP
-    # --------------------------------------------------------
 
     if follow_up_submitted:
 
@@ -239,3 +248,8 @@ if len(st.session_state.messages) > 0:
             )
 
             st.rerun()
+
+
+    st.markdown("---")
+
+    display_clear_button()
