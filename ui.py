@@ -10,10 +10,6 @@ def load_css():
     st.html("""
     <style>
 
-    /* ========================================================
-       FONTS
-       ======================================================== */
-
     @import url(
         'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800'
         '&family=Sora:wght@400;500;600;700&display=swap'
@@ -21,7 +17,7 @@ def load_css():
 
 
     /* ========================================================
-       MAIN BACKGROUND
+       BACKGROUND
        ======================================================== */
 
     .stApp {
@@ -35,7 +31,7 @@ def load_css():
 
             radial-gradient(
                 circle at 100% 5%,
-                rgba(255, 125, 92, 0.13),
+                rgba(255, 125, 92, 0.14),
                 transparent 25%
             ),
 
@@ -57,7 +53,7 @@ def load_css():
 
 
     /* ========================================================
-       PAGE WIDTH
+       LAYOUT
        ======================================================== */
 
     .block-container {
@@ -65,12 +61,13 @@ def load_css():
         max-width: 900px;
 
         padding-top: 2.3rem;
+
         padding-bottom: 4rem;
     }
 
 
     /* ========================================================
-       GLOBAL FONTS
+       FONTS
        ======================================================== */
 
     html,
@@ -79,6 +76,7 @@ def load_css():
 
         font-family: 'Manrope', sans-serif;
     }
+
 
     h1,
     h2,
@@ -91,6 +89,7 @@ def load_css():
         letter-spacing: -0.035em;
     }
 
+
     p {
 
         font-family: 'Manrope', sans-serif !important;
@@ -100,7 +99,7 @@ def load_css():
 
 
     /* ========================================================
-       STREAMLIT CLEANUP
+       HIDE STREAMLIT UI
        ======================================================== */
 
     #MainMenu {
@@ -120,14 +119,14 @@ def load_css():
 
 
     /* ========================================================
-       MAIN TITLE
+       TITLE
        ======================================================== */
 
     [data-testid="stHeading"] h1 {
 
         font-family: 'Sora', sans-serif !important;
 
-        font-size: 3.25rem !important;
+        font-size: 3.2rem !important;
 
         font-weight: 700 !important;
 
@@ -135,9 +134,9 @@ def load_css():
 
         background: linear-gradient(
             90deg,
-            #00A99D,
+            #009F91,
             #00B8C8,
-            #1688A8
+            #197FA0
         );
 
         -webkit-background-clip: text;
@@ -152,11 +151,11 @@ def load_css():
 
     .stTextInput > div > div > input {
 
-        background: rgba(255, 255, 255, 0.96) !important;
+        background: rgba(255, 255, 255, 0.97) !important;
 
         color: #172A35 !important;
 
-        border: 1.5px solid rgba(0, 169, 157, 0.22) !important;
+        border: 1.5px solid rgba(0, 169, 157, 0.24) !important;
 
         border-radius: 18px !important;
 
@@ -170,8 +169,6 @@ def load_css():
 
         box-shadow:
             0 8px 28px rgba(20, 70, 80, 0.07);
-
-        transition: all 0.2s ease;
     }
 
 
@@ -182,8 +179,6 @@ def load_css():
         box-shadow:
             0 0 0 4px rgba(0, 169, 157, 0.10),
             0 12px 32px rgba(20, 70, 80, 0.10);
-
-        outline: none !important;
     }
 
 
@@ -194,11 +189,10 @@ def load_css():
 
 
     /* ========================================================
-       ANALYZE BUTTON
+       MAIN BUTTON
        ======================================================== */
 
-    .stFormSubmitButton > button,
-    .stButton > button {
+    .stFormSubmitButton > button {
 
         width: 100%;
 
@@ -210,9 +204,9 @@ def load_css():
 
         background: linear-gradient(
             135deg,
-            #00A99D 0%,
-            #00B8C8 55%,
-            #1688A8 100%
+            #00A99D,
+            #00B8C8,
+            #1688A8
         ) !important;
 
         color: white !important;
@@ -225,15 +219,10 @@ def load_css():
 
         box-shadow:
             0 10px 24px rgba(0, 157, 165, 0.22);
-
-        transition:
-            transform 0.18s ease,
-            box-shadow 0.18s ease;
     }
 
 
-    .stFormSubmitButton > button:hover,
-    .stButton > button:hover {
+    .stFormSubmitButton > button:hover {
 
         transform: translateY(-2px);
 
@@ -243,12 +232,44 @@ def load_css():
 
 
     /* ========================================================
-       CONTAINERS / CARDS
+       NORMAL BUTTONS
+       ======================================================== */
+
+    .stButton > button {
+
+        border-radius: 13px !important;
+
+        border: 1px solid rgba(0, 169, 157, 0.20) !important;
+
+        background: rgba(255, 255, 255, 0.80) !important;
+
+        color: #087F78 !important;
+
+        font-family: 'Manrope', sans-serif !important;
+
+        font-weight: 700 !important;
+
+        transition: all 0.18s ease;
+    }
+
+
+    .stButton > button:hover {
+
+        background: #E8FAF7 !important;
+
+        border-color: #00A99D !important;
+
+        transform: translateY(-1px);
+    }
+
+
+    /* ========================================================
+       CARDS
        ======================================================== */
 
     [data-testid="stVerticalBlockBorderWrapper"] {
 
-        background: rgba(255, 255, 255, 0.78) !important;
+        background: rgba(255, 255, 255, 0.82) !important;
 
         border: 1px solid rgba(25, 85, 95, 0.10) !important;
 
@@ -256,8 +277,6 @@ def load_css():
 
         box-shadow:
             0 10px 30px rgba(30, 65, 75, 0.055);
-
-        backdrop-filter: blur(10px);
     }
 
 
@@ -267,9 +286,9 @@ def load_css():
 
     [data-testid="stMetric"] {
 
-        background: rgba(255, 255, 255, 0.80);
+        background: rgba(255, 255, 255, 0.82);
 
-        border: 1px solid rgba(0, 169, 157, 0.11);
+        border: 1px solid rgba(0, 169, 157, 0.12);
 
         border-radius: 18px;
 
@@ -304,9 +323,9 @@ def load_css():
 
     .stExpander {
 
-        background: rgba(250, 253, 253, 0.80) !important;
+        background: rgba(250, 253, 253, 0.82) !important;
 
-        border: 1px solid rgba(0, 169, 157, 0.12) !important;
+        border: 1px solid rgba(0, 169, 157, 0.13) !important;
 
         border-radius: 16px !important;
 
@@ -322,18 +341,6 @@ def load_css():
         font-weight: 700 !important;
 
         color: #29434D !important;
-    }
-
-
-    /* ========================================================
-       SUCCESS — HIGH CONFIDENCE
-       ======================================================== */
-
-    .stAlert[data-baseweb="notification"] {
-
-        border-radius: 14px !important;
-
-        font-family: 'Manrope', sans-serif !important;
     }
 
 
@@ -357,11 +364,15 @@ def load_css():
     }
 
 
-    .stLinkButton > a:hover {
+    /* ========================================================
+       ALERTS
+       ======================================================== */
 
-        background: #E1F7F4 !important;
+    .stAlert {
 
-        border-color: #00A99D !important;
+        border-radius: 14px !important;
+
+        font-family: 'Manrope', sans-serif !important;
     }
 
 
@@ -449,8 +460,52 @@ def display_first_question():
     )
 
     st.caption(
-        "Ask anything and we'll show you how trustworthy the answer is."
+        "Ask naturally. We'll break the answer down and show "
+        "you what the evidence actually supports."
     )
+
+
+# ============================================================
+# QUICK START
+# ============================================================
+
+def display_quick_questions():
+
+    st.markdown("### ⚡ Try something")
+
+    st.caption(
+        "Not sure what to ask? Start with one of these."
+    )
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        st.button(
+            "🔬 Ask a science question",
+            key="quick_science",
+            use_container_width=True
+        )
+
+        st.button(
+            "🌍 Ask about history",
+            key="quick_history",
+            use_container_width=True
+        )
+
+    with col2:
+
+        st.button(
+            "🤖 Test an AI claim",
+            key="quick_ai",
+            use_container_width=True
+        )
+
+        st.button(
+            "🧠 Challenge a fact",
+            key="quick_fact",
+            use_container_width=True
+        )
 
 
 # ============================================================
@@ -479,7 +534,7 @@ def display_analysis_header():
     )
 
     st.caption(
-        "Each statement is evaluated against retrieved evidence."
+        "We check each factual statement against retrieved evidence."
     )
 
 
@@ -509,31 +564,17 @@ def display_claim(claim, confidence, evidence):
         )
 
 
-        # ----------------------------------------------------
-        # HIGH
-        # ----------------------------------------------------
-
         if level == "HIGH":
 
             st.success(
-                "🟢 HIGH CONFIDENCE"
+                "🟢 HIGH CONFIDENCE · Strongly supported"
             )
-
-
-        # ----------------------------------------------------
-        # MEDIUM
-        # ----------------------------------------------------
 
         elif level == "MEDIUM":
 
             st.warning(
-                "🟡 MEDIUM CONFIDENCE"
+                "🟡 MEDIUM CONFIDENCE · Partially supported"
             )
-
-
-        # ----------------------------------------------------
-        # SPECULATIVE
-        # ----------------------------------------------------
 
         elif level in [
             "SPECULATIVE",
@@ -541,24 +582,15 @@ def display_claim(claim, confidence, evidence):
         ]:
 
             st.warning(
-                "🟠 SPECULATIVE — Pure Generation"
+                "🟠 SPECULATIVE · Little or no external evidence"
             )
-
-
-        # ----------------------------------------------------
-        # LOW
-        # ----------------------------------------------------
 
         else:
 
             st.error(
-                "🔴 LOW CONFIDENCE"
+                "🔴 LOW CONFIDENCE · Needs verification"
             )
 
-
-        # ----------------------------------------------------
-        # REASON
-        # ----------------------------------------------------
 
         st.markdown(
             "**Why this rating?**"
@@ -566,10 +598,6 @@ def display_claim(claim, confidence, evidence):
 
         st.info(reason)
 
-
-        # ----------------------------------------------------
-        # EVIDENCE
-        # ----------------------------------------------------
 
         st.markdown(
             "**Supporting Evidence**"
@@ -583,16 +611,20 @@ def display_claim(claim, confidence, evidence):
                 "Treat this statement as speculative."
             )
 
-
         else:
 
-            with st.expander(
-                f"View {len(evidence)} supporting source"
+            st.caption(
+                f"🔎 {len(evidence)} source"
                 + (
-                    "s"
+                    "s found"
                     if len(evidence) != 1
-                    else ""
+                    else " found"
                 )
+            )
+
+
+            with st.expander(
+                "View supporting evidence"
             ):
 
                 for source in evidence:
@@ -612,6 +644,7 @@ def display_claim(claim, confidence, evidence):
                         ""
                     )
 
+
                     st.markdown(
                         f"**{title}**"
                     )
@@ -620,13 +653,13 @@ def display_claim(claim, confidence, evidence):
                         content
                     )
 
+
                     if url:
 
                         st.link_button(
                             "↗ Open source",
                             url
                         )
-
 
     st.divider()
 
@@ -687,7 +720,7 @@ def display_summary(analyzed_claims):
     with col2:
 
         st.metric(
-            "High",
+            "🟢 Strong",
             high
         )
 
@@ -695,7 +728,7 @@ def display_summary(analyzed_claims):
     with col3:
 
         st.metric(
-            "Medium",
+            "🟡 Partial",
             medium
         )
 
@@ -703,13 +736,49 @@ def display_summary(analyzed_claims):
     with col4:
 
         st.metric(
-            "Needs Review",
+            "🟠 Review",
             needs_review
         )
 
 
 # ============================================================
-# FOLLOW-UP PROMPT
+# HOW IT WORKS
+# ============================================================
+
+def display_how_it_works():
+
+    with st.expander(
+        "🧭 How does AI Confidence Layer work?"
+    ):
+
+        st.markdown(
+            """
+            **01 · Generate**
+
+            The AI creates a natural-language answer to your question.
+
+            **02 · Break down**
+
+            The answer is separated into individual factual claims.
+
+            **03 · Find evidence**
+
+            Each claim is checked against external sources.
+
+            **04 · Evaluate**
+
+            The evidence is compared with the claim.
+
+            **05 · Explain**
+
+            You see not only a confidence level, but *why*
+            that level was assigned.
+            """
+        )
+
+
+# ============================================================
+# FOLLOW-UP
 # ============================================================
 
 def display_question_prompt():
@@ -719,6 +788,22 @@ def display_question_prompt():
     )
 
     st.caption(
-        "Ask something related to your previous question, "
-        "or explore a completely different topic."
+        "Ask a follow-up, challenge the answer, "
+        "or switch to a completely different topic."
     )
+
+
+# ============================================================
+# CLEAR CONVERSATION
+# ============================================================
+
+def display_clear_button():
+
+    if st.button(
+        "🧹 Clear conversation",
+        use_container_width=True
+    ):
+
+        st.session_state.messages = []
+
+        st.rerun()
