@@ -3,19 +3,18 @@ import streamlit as st
 
 
 # =========================================================
-# HTML HELPER
+# HTML RENDERER
 # =========================================================
 
 def render_html(content):
     """
-    Use Streamlit's native HTML renderer.
-    This prevents HTML from being displayed as code.
+    Render custom HTML safely using Streamlit's HTML renderer.
     """
     st.html(content)
 
 
 # =========================================================
-# PAGE CSS
+# GLOBAL DESIGN
 # =========================================================
 
 def load_css():
@@ -24,42 +23,48 @@ def load_css():
     <style>
 
     /* =====================================================
-       GOOGLE FONTS
+       FUTURISTIC FONT SYSTEM
        ===================================================== */
 
     @import url(
-        'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Quicksand:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap'
+        'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap'
     );
 
 
     /* =====================================================
-       WHOLE PAGE
+       MAIN PAGE
        ===================================================== */
 
     .stApp {
 
         background:
+
             radial-gradient(
-                circle at 5% 5%,
-                rgba(255, 210, 238, 0.55),
-                transparent 27%
+                circle at 8% 5%,
+                rgba(139, 92, 246, 0.12),
+                transparent 25%
             ),
 
             radial-gradient(
-                circle at 95% 10%,
-                rgba(207, 227, 255, 0.65),
-                transparent 30%
+                circle at 92% 8%,
+                rgba(34, 211, 238, 0.12),
+                transparent 25%
             ),
 
             radial-gradient(
                 circle at 50% 100%,
-                rgba(255, 231, 187, 0.45),
-                transparent 35%
+                rgba(236, 72, 153, 0.08),
+                transparent 30%
             ),
 
-            #F8F9FF;
+            linear-gradient(
+                135deg,
+                #F8FAFF 0%,
+                #F9F7FF 50%,
+                #F5FBFF 100%
+            );
 
-        color: #26324A;
+        color: #182238;
 
     }
 
@@ -70,36 +75,89 @@ def load_css():
 
     .block-container {
 
-        max-width: 950px !important;
+        max-width: 960px !important;
 
-        padding-top: 2rem !important;
+        padding-top: 2.5rem !important;
 
-        padding-bottom: 4rem !important;
+        padding-bottom: 5rem !important;
 
     }
 
 
     /* =====================================================
-       QUESTION INPUT
+       REMOVE STREAMLIT DEFAULT TOP SPACE
+       ===================================================== */
+
+    header[data-testid="stHeader"] {
+
+        background: transparent !important;
+
+    }
+
+
+    /* =====================================================
+       QUESTION LABEL
+       ===================================================== */
+
+    .question-label {
+
+        font-family:
+            "Space Grotesk",
+            sans-serif;
+
+        font-size: 18px;
+
+        font-weight: 700;
+
+        color: #27324A;
+
+        margin-bottom: 7px;
+
+    }
+
+
+    .question-description {
+
+        font-family:
+            "DM Sans",
+            sans-serif;
+
+        font-size: 14px;
+
+        color: #778198;
+
+        margin-bottom: 14px;
+
+    }
+
+
+    /* =====================================================
+       TEXT INPUT
        ===================================================== */
 
     div[data-baseweb="input"] {
 
-        background: #FFFFFF !important;
+        background: rgba(255,255,255,0.94) !important;
 
-        border: 2px solid #D9DDEF !important;
+        border: 1.5px solid #D9DDEF !important;
 
-        border-radius: 17px !important;
+        border-radius: 18px !important;
+
+        min-height: 58px !important;
 
         box-shadow:
-            0 7px 22px rgba(67, 76, 120, 0.08) !important;
+            0 8px 28px rgba(70, 80, 130, 0.08) !important;
+
+        transition:
+            border-color .2s ease,
+            box-shadow .2s ease !important;
 
     }
 
 
     div[data-baseweb="input"]:hover {
 
-        border-color: #B8B2EA !important;
+        border-color: #A99AEF !important;
 
     }
 
@@ -108,24 +166,24 @@ def load_css():
 
         background: #FFFFFF !important;
 
-        border-color: #8064E8 !important;
+        border-color: #7657E8 !important;
 
         box-shadow:
-            0 0 0 4px rgba(128, 100, 232, 0.12),
-            0 8px 24px rgba(67, 76, 120, 0.10) !important;
+            0 0 0 4px rgba(118,87,232,0.10),
+            0 12px 32px rgba(91,76,180,0.12) !important;
 
     }
 
 
-    /* THE ACTUAL TEXT THE USER TYPES */
+    /* ACTUAL TEXT USER TYPES */
 
     div[data-baseweb="input"] input {
 
-        background: #FFFFFF !important;
+        background: transparent !important;
 
-        color: #20283D !important;
+        color: #172038 !important;
 
-        -webkit-text-fill-color: #20283D !important;
+        -webkit-text-fill-color: #172038 !important;
 
         font-family:
             "DM Sans",
@@ -133,18 +191,16 @@ def load_css():
 
         font-size: 17px !important;
 
-        font-weight: 500 !important;
+        font-weight: 600 !important;
 
     }
 
 
-    /* PLACEHOLDER */
-
     div[data-baseweb="input"] input::placeholder {
 
-        color: #969DB1 !important;
+        color: #9AA2B5 !important;
 
-        -webkit-text-fill-color: #969DB1 !important;
+        -webkit-text-fill-color: #9AA2B5 !important;
 
         opacity: 1 !important;
 
@@ -157,10 +213,10 @@ def load_css():
 
     div[data-testid="InputInstructions"] {
 
-        color: #9AA0B2 !important;
+        color: #9AA2B5 !important;
 
         font-family:
-            "Quicksand",
+            "DM Sans",
             sans-serif !important;
 
     }
@@ -173,56 +229,44 @@ def load_css():
     .stButton > button,
     div[data-testid="stFormSubmitButton"] > button {
 
-        background:
-            linear-gradient(
-                135deg,
-                #7756E8 0%,
-                #A84FD3 50%,
-                #4C91E9 100%
-            ) !important;
+        min-height: 52px !important;
 
-        color: #FFFFFF !important;
-
-        -webkit-text-fill-color: #FFFFFF !important;
+        padding:
+            9px 25px !important;
 
         border: none !important;
 
         border-radius: 15px !important;
 
-        min-height: 52px !important;
+        background:
+            linear-gradient(
+                135deg,
+                #7657E8 0%,
+                #9B5DE5 48%,
+                #3AA8E8 100%
+            ) !important;
 
-        padding: 10px 28px !important;
+        color: white !important;
+
+        -webkit-text-fill-color: white !important;
 
         font-family:
             "Space Grotesk",
             sans-serif !important;
 
-        font-size: 16px !important;
+        font-size: 15px !important;
 
         font-weight: 700 !important;
+
+        letter-spacing: .2px !important;
 
         box-shadow:
-            0 9px 24px rgba(103, 78, 213, 0.25) !important;
+            0 10px 26px
+            rgba(107,82,215,0.25) !important;
 
         transition:
-            transform 0.2s ease,
-            box-shadow 0.2s ease !important;
-
-    }
-
-
-    .stButton > button p,
-    div[data-testid="stFormSubmitButton"] > button p {
-
-        color: #FFFFFF !important;
-
-        -webkit-text-fill-color: #FFFFFF !important;
-
-        font-family:
-            "Space Grotesk",
-            sans-serif !important;
-
-        font-weight: 700 !important;
+            transform .2s ease,
+            box-shadow .2s ease !important;
 
     }
 
@@ -230,20 +274,28 @@ def load_css():
     .stButton > button:hover,
     div[data-testid="stFormSubmitButton"] > button:hover {
 
-        background:
-            linear-gradient(
-                135deg,
-                #6846DC,
-                #963CC4,
-                #3D82DC
-            ) !important;
-
-        color: #FFFFFF !important;
-
-        transform: translateY(-2px);
+        transform:
+            translateY(-2px) !important;
 
         box-shadow:
-            0 13px 30px rgba(103, 78, 213, 0.32) !important;
+            0 14px 32px
+            rgba(107,82,215,0.34) !important;
+
+    }
+
+
+    .stButton > button p,
+    div[data-testid="stFormSubmitButton"] > button p {
+
+        color: white !important;
+
+        -webkit-text-fill-color: white !important;
+
+        font-family:
+            "Space Grotesk",
+            sans-serif !important;
+
+        font-weight: 700 !important;
 
     }
 
@@ -254,24 +306,26 @@ def load_css():
 
     div[data-testid="stExpander"] {
 
-        background: #FFFFFF !important;
+        background:
+            rgba(255,255,255,0.78) !important;
 
         border:
-            1px solid #E0E4F0 !important;
+            1px solid #E1E5F0 !important;
 
-        border-radius: 16px !important;
-
-        margin-top: 12px !important;
+        border-radius: 17px !important;
 
         box-shadow:
-            0 5px 18px rgba(65, 75, 120, 0.06) !important;
+            0 6px 22px
+            rgba(63,73,110,0.06) !important;
+
+        overflow: hidden !important;
 
     }
 
 
     div[data-testid="stExpander"] summary {
 
-        color: #414A63 !important;
+        color: #39435B !important;
 
         font-family:
             "Space Grotesk",
@@ -285,7 +339,7 @@ def load_css():
 
 
     /* =====================================================
-       WARNINGS / INFO
+       ALERTS
        ===================================================== */
 
     div[data-testid="stAlert"] {
@@ -293,19 +347,8 @@ def load_css():
         border-radius: 15px !important;
 
         font-family:
-            "Quicksand",
+            "DM Sans",
             sans-serif !important;
-
-    }
-
-
-    /* =====================================================
-       DIVIDERS
-       ===================================================== */
-
-    hr {
-
-        border-color: #E5E7F0 !important;
 
     }
 
@@ -315,83 +358,215 @@ def load_css():
 
 
 # =========================================================
-# HEADER
+# HERO
 # =========================================================
 
 def display_header():
 
     render_html("""
     <div style="
+        position:relative;
+        overflow:hidden;
+
         background:
             linear-gradient(
                 135deg,
-                #FFFFFF 0%,
-                #FAF4FF 45%,
-                #EFF8FF 100%
+                rgba(255,255,255,.97),
+                rgba(248,246,255,.97)
             );
 
-        border: 1px solid #E2E2F0;
+        border:1px solid rgba(215,218,238,.9);
 
-        border-radius: 28px;
+        border-radius:30px;
 
-        padding: 44px 35px;
+        padding:42px 38px 39px;
 
-        margin-bottom: 38px;
+        margin-bottom:36px;
 
-        text-align: center;
+        text-align:center;
 
         box-shadow:
-            0 15px 40px rgba(75, 84, 130, 0.10);
+            0 20px 50px
+            rgba(68,75,125,.10);
     ">
 
+        <!-- Decorative glow -->
+
         <div style="
-            font-size: 50px;
-            margin-bottom: 12px;
+            position:absolute;
+            width:190px;
+            height:190px;
+
+            border-radius:50%;
+
+            background:
+                rgba(125,90,230,.10);
+
+            filter:blur(45px);
+
+            top:-80px;
+            left:-60px;
+        "></div>
+
+
+        <div style="
+            position:absolute;
+            width:180px;
+            height:180px;
+
+            border-radius:50%;
+
+            background:
+                rgba(38,190,225,.10);
+
+            filter:blur(45px);
+
+            bottom:-90px;
+            right:-50px;
+        "></div>
+
+
+        <!-- AI badge -->
+
+        <div style="
+            display:inline-flex;
+
+            align-items:center;
+
+            gap:7px;
+
+            padding:
+                7px 13px;
+
+            border-radius:999px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #F1ECFF,
+                    #EAF8FF
+                );
+
+            border:
+                1px solid #DDD9F3;
+
+            color:#6953C8;
+
+            font-family:
+                'Space Grotesk',
+                sans-serif;
+
+            font-size:11px;
+
+            font-weight:700;
+
+            letter-spacing:1.3px;
+
+            text-transform:uppercase;
+
+            margin-bottom:17px;
         ">
-            🧠✨
+            ✦ Evidence-Aware AI
         </div>
 
 
+        <!-- Brain -->
+
+        <div style="
+            font-size:48px;
+
+            line-height:1;
+
+            margin-bottom:15px;
+        ">
+            🧠
+        </div>
+
+
+        <!-- Main title -->
+
         <div style="
             font-family:
-                'Playfair Display',
-                serif;
+                'Manrope',
+                sans-serif;
 
-            font-size: 44px;
+            font-size:43px;
 
-            font-weight: 700;
+            font-weight:800;
 
-            color: #20283D;
+            line-height:1.12;
 
-            line-height: 1.15;
+            letter-spacing:-1.5px;
 
-            margin-bottom: 16px;
+            background:
+                linear-gradient(
+                    90deg,
+                    #26304A,
+                    #704FE1,
+                    #258FC8
+                );
+
+            -webkit-background-clip:text;
+
+            -webkit-text-fill-color:transparent;
+
+            margin-bottom:15px;
         ">
             AI Confidence Layer
         </div>
 
 
+        <!-- Subtitle -->
+
         <div style="
             font-family:
-                'Quicksand',
+                'DM Sans',
                 sans-serif;
 
-            font-size: 18px;
+            font-size:17px;
 
-            color: #68728A;
+            line-height:1.65;
 
-            line-height: 1.6;
+            color:#707A91;
+
+            max-width:650px;
+
+            margin:auto;
         ">
 
             Don't just get an AI answer.
 
             <span style="
-                color: #7654E8;
-                font-weight: 700;
+                color:#704FE1;
+
+                font-weight:700;
             ">
                 Understand why you should trust it.
             </span>
 
+        </div>
+
+
+        <!-- Small trust line -->
+
+        <div style="
+            margin-top:21px;
+
+            font-family:
+                'Space Grotesk',
+                sans-serif;
+
+            font-size:11px;
+
+            color:#98A0B3;
+
+            letter-spacing:.8px;
+
+            text-transform:uppercase;
+        ">
+            Claims &nbsp;•&nbsp;
+            Evidence &nbsp;•&nbsp;
+            Confidence
         </div>
 
     </div>
@@ -406,37 +581,78 @@ def display_analysis_header():
 
     render_html("""
     <div style="
-        margin-top: 40px;
-        margin-bottom: 20px;
+        margin-top:42px;
+
+        margin-bottom:21px;
+
+        display:flex;
+
+        align-items:center;
+
+        gap:13px;
     ">
 
         <div style="
-            font-family:
-                'Playfair Display',
-                serif;
+            width:43px;
+            height:43px;
 
-            font-size: 30px;
+            border-radius:13px;
 
-            font-weight: 700;
+            display:flex;
 
-            color: #20283D;
+            align-items:center;
+
+            justify-content:center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #EEE9FF,
+                    #E7F8FF
+                );
+
+            border:
+                1px solid #DDDDF0;
+
+            font-size:20px;
         ">
-            🔬 Claim-by-Claim Analysis
+            ✦
         </div>
 
 
-        <div style="
-            font-family:
-                'Quicksand',
-                sans-serif;
+        <div>
 
-            font-size: 14px;
+            <div style="
+                font-family:
+                    'Manrope',
+                    sans-serif;
 
-            color: #7B8499;
+                font-size:28px;
 
-            margin-top: 6px;
-        ">
-            See exactly which parts of the answer deserve your trust.
+                font-weight:800;
+
+                color:#26304A;
+
+                letter-spacing:-.6px;
+            ">
+                Claim-by-Claim Analysis
+            </div>
+
+
+            <div style="
+                font-family:
+                    'DM Sans',
+                    sans-serif;
+
+                font-size:13px;
+
+                color:#8790A4;
+
+                margin-top:3px;
+            ">
+                See what the AI said — and how strongly the evidence supports it.
+            </div>
+
         </div>
 
     </div>
@@ -444,7 +660,7 @@ def display_analysis_header():
 
 
 # =========================================================
-# CLAIM
+# CLAIM CARD
 # =========================================================
 
 def display_claim(claim, confidence, evidence):
@@ -480,19 +696,19 @@ def display_claim(claim, confidence, evidence):
 
     if level == "HIGH":
 
-        icon = "🟢"
+        icon = "✓"
 
         badge = "HIGH CONFIDENCE"
 
-        badge_bg = "#E7F9EF"
+        accent = "#159A63"
 
-        badge_color = "#168A4A"
+        badge_bg = "#E7FAF2"
 
-        background = "#F5FFF9"
+        card_bg = "#FBFFFD"
 
-        border = "#CBEED9"
+        border = "#CDEFE0"
 
-        label = "Evidence-backed claim"
+        label = "Strongly supported"
 
 
     # =====================================================
@@ -501,19 +717,19 @@ def display_claim(claim, confidence, evidence):
 
     elif level == "MEDIUM":
 
-        icon = "🔵"
+        icon = "◐"
 
         badge = "MEDIUM CONFIDENCE"
 
-        badge_bg = "#EAF3FF"
+        accent = "#2587C8"
 
-        badge_color = "#2874C7"
+        badge_bg = "#E8F6FF"
 
-        background = "#F5FAFF"
+        card_bg = "#FBFEFF"
 
-        border = "#D1E5F8"
+        border = "#D2EAF8"
 
-        label = "Partially supported claim"
+        label = "Partially supported"
 
 
     # =====================================================
@@ -522,19 +738,19 @@ def display_claim(claim, confidence, evidence):
 
     elif level == "SPECULATIVE":
 
-        icon = "✨"
+        icon = "✦"
 
         badge = "PURE GENERATION"
 
-        badge_bg = "#FFF0C9"
+        accent = "#B77718"
 
-        badge_color = "#A86408"
+        badge_bg = "#FFF2D2"
 
-        background = "#FFF9EA"
+        card_bg = "#FFFCF4"
 
-        border = "#E7C36F"
+        border = "#E7CA88"
 
-        label = "AI-generated insight"
+        label = "No retrieved source"
 
 
     # =====================================================
@@ -543,55 +759,79 @@ def display_claim(claim, confidence, evidence):
 
     else:
 
-        icon = "🔴"
+        icon = "!"
 
         badge = "LOW CONFIDENCE"
 
-        badge_bg = "#FFEAEA"
+        accent = "#D45252"
 
-        badge_color = "#C83C3C"
+        badge_bg = "#FFF0F0"
 
-        background = "#FFF8F8"
+        card_bg = "#FFFBFB"
 
-        border = "#F0CCCC"
+        border = "#F0D0D0"
 
-        label = "Weakly supported claim"
+        label = "Weakly supported"
 
 
     # =====================================================
-    # CLAIM CARD
+    # MAIN CARD
     # =====================================================
 
     render_html(f"""
     <div style="
-        background: {background};
+        position:relative;
+
+        background:
+            linear-gradient(
+                135deg,
+                {card_bg},
+                #FFFFFF
+            );
 
         border:
             1px solid {border};
 
-        border-radius: 23px;
+        border-radius:23px;
 
-        padding: 25px 27px;
+        padding:26px 27px 24px;
 
-        margin-bottom: 17px;
+        margin-bottom:16px;
 
         box-shadow:
-            0 9px 26px
-            rgba(70, 76, 120, 0.07);
+            0 10px 30px
+            rgba(60,72,110,.07);
+
+        overflow:hidden;
     ">
 
+        <!-- Accent line -->
+
         <div style="
-            display: flex;
+            position:absolute;
 
-            justify-content:
-                space-between;
+            left:0;
+            top:0;
+            bottom:0;
 
-            align-items:
-                center;
+            width:4px;
 
-            gap: 15px;
+            background:{accent};
+        "></div>
 
-            margin-bottom: 17px;
+
+        <!-- Card header -->
+
+        <div style="
+            display:flex;
+
+            justify-content:space-between;
+
+            align-items:center;
+
+            gap:15px;
+
+            margin-bottom:18px;
         ">
 
             <div style="
@@ -599,76 +839,86 @@ def display_claim(claim, confidence, evidence):
                     'Space Grotesk',
                     sans-serif;
 
-                font-size: 12px;
+                font-size:11px;
 
-                letter-spacing: 1.2px;
+                color:#8992A5;
 
-                text-transform: uppercase;
+                font-weight:700;
 
-                color: #7A8195;
+                letter-spacing:1.2px;
 
-                font-weight: 700;
+                text-transform:uppercase;
             ">
-                {label}
+                {icon} &nbsp; {label}
             </div>
 
 
             <div style="
-                background: {badge_bg};
+                display:inline-flex;
 
-                color: {badge_color};
+                align-items:center;
 
-                border-radius: 999px;
+                gap:6px;
 
-                padding:
-                    8px 13px;
+                background:{badge_bg};
+
+                color:{accent};
+
+                border-radius:999px;
+
+                padding:8px 12px;
 
                 font-family:
                     'Space Grotesk',
                     sans-serif;
 
-                font-size: 12px;
+                font-size:11px;
 
-                font-weight: 700;
+                font-weight:700;
 
-                white-space: nowrap;
+                letter-spacing:.4px;
+
+                white-space:nowrap;
             ">
-                {icon} {badge}
+                {badge}
             </div>
 
         </div>
 
 
+        <!-- Claim -->
+
         <div style="
             font-family:
-                'DM Sans',
+                'Manrope',
                 sans-serif;
 
-            font-size: 21px;
+            font-size:20px;
 
-            line-height: 1.6;
+            line-height:1.58;
 
-            color: #26324A;
+            font-weight:650;
 
-            font-weight: 600;
+            color:#263149;
         ">
             {safe_claim}
         </div>
 
 
+        <!-- Why -->
+
         <div style="
-            margin-top: 21px;
+            margin-top:20px;
+
+            padding:14px 16px;
 
             background:
-                rgba(255,255,255,0.78);
+                rgba(248,249,253,.82);
 
-            border-left:
-                4px solid {badge_color};
+            border-radius:13px;
 
-            border-radius: 12px;
-
-            padding:
-                14px 16px;
+            border:
+                1px solid #EAECF3;
         ">
 
             <div style="
@@ -676,32 +926,32 @@ def display_claim(claim, confidence, evidence):
                     'Space Grotesk',
                     sans-serif;
 
-                color: {badge_color};
+                font-size:10px;
 
-                font-size: 12px;
+                font-weight:700;
 
-                font-weight: 700;
+                color:{accent};
 
-                letter-spacing: 0.5px;
+                letter-spacing:1px;
 
-                margin-bottom: 5px;
+                margin-bottom:6px;
+
+                text-transform:uppercase;
             ">
-                💡 WHY THIS RATING?
+                Why this rating?
             </div>
 
 
             <div style="
                 font-family:
-                    'Quicksand',
+                    'DM Sans',
                     sans-serif;
 
-                color: #626B7E;
+                font-size:14px;
 
-                font-size: 14px;
+                line-height:1.6;
 
-                line-height: 1.6;
-
-                font-weight: 500;
+                color:#697389;
             ">
                 {safe_reason}
             </div>
@@ -713,26 +963,30 @@ def display_claim(claim, confidence, evidence):
 
 
     # =====================================================
-    # SPECULATIVE NOTICE
+    # PURE GENERATION NOTICE
     # =====================================================
 
     if level == "SPECULATIVE":
 
         render_html("""
         <div style="
-            background: #FFF8E8;
+            background:
+                linear-gradient(
+                    135deg,
+                    #FFF9EA,
+                    #FFFDF6
+                );
 
             border:
-                2px dashed #D89A2B;
+                1.5px dashed #D5A13D;
 
-            border-radius: 15px;
+            border-radius:16px;
 
-            padding:
-                15px 17px;
+            padding:15px 17px;
 
-            margin-top: -5px;
+            margin-top:-4px;
 
-            margin-bottom: 17px;
+            margin-bottom:17px;
         ">
 
             <div style="
@@ -740,32 +994,34 @@ def display_claim(claim, confidence, evidence):
                     'Space Grotesk',
                     sans-serif;
 
-                color: #A86408;
+                font-size:11px;
 
-                font-size: 13px;
+                font-weight:700;
 
-                font-weight: 700;
+                color:#A86D13;
 
-                margin-bottom: 5px;
+                letter-spacing:1px;
+
+                margin-bottom:5px;
             ">
-                ✨ PURE AI GENERATION
+                ✦ PURE GENERATION · SPECULATIVE
             </div>
 
 
             <div style="
                 font-family:
-                    'Quicksand',
+                    'DM Sans',
                     sans-serif;
 
-                color: #806126;
+                font-size:13px;
 
-                font-size: 14px;
+                line-height:1.6;
 
-                line-height: 1.55;
+                color:#806A3C;
             ">
                 No retrieved supporting source was found.
-                Treat this statement as an AI-generated insight
-                rather than a verified fact.
+                Treat this as an AI-generated insight rather
+                than a verified fact.
             </div>
 
         </div>
@@ -773,10 +1029,10 @@ def display_claim(claim, confidence, evidence):
 
 
     # =====================================================
-    # SUPPORTING EVIDENCE
+    # EVIDENCE
     # =====================================================
 
-    with st.expander("📚  View Supporting Evidence"):
+    with st.expander("▸  View Supporting Evidence"):
 
         if not evidence:
 
@@ -786,9 +1042,9 @@ def display_claim(claim, confidence, evidence):
 
         else:
 
-            for index, source in enumerate(evidence):
+            for source in evidence:
 
-                source_title = html.escape(
+                title = html.escape(
                     str(
                         source.get(
                             "title",
@@ -798,7 +1054,7 @@ def display_claim(claim, confidence, evidence):
                 )
 
 
-                source_content = html.escape(
+                content = html.escape(
                     str(
                         source.get(
                             "content",
@@ -810,16 +1066,16 @@ def display_claim(claim, confidence, evidence):
 
                 render_html(f"""
                 <div style="
-                    background: #FAFBFF;
+                    background:#FBFCFF;
 
                     border:
-                        1px solid #E4E7F0;
+                        1px solid #E4E7F1;
 
-                    border-radius: 15px;
+                    border-radius:15px;
 
-                    padding: 17px;
+                    padding:17px;
 
-                    margin-bottom: 12px;
+                    margin-bottom:12px;
                 ">
 
                     <div style="
@@ -827,30 +1083,30 @@ def display_claim(claim, confidence, evidence):
                             'Space Grotesk',
                             sans-serif;
 
-                        color: #39415A;
+                        font-size:14px;
 
-                        font-size: 15px;
+                        font-weight:700;
 
-                        font-weight: 700;
+                        color:#39435B;
 
-                        margin-bottom: 8px;
+                        margin-bottom:7px;
                     ">
-                        📖 {source_title}
+                        ◈ &nbsp; {title}
                     </div>
 
 
                     <div style="
                         font-family:
-                            'Quicksand',
+                            'DM Sans',
                             sans-serif;
 
-                        color: #697286;
+                        font-size:13px;
 
-                        font-size: 14px;
+                        line-height:1.65;
 
-                        line-height: 1.6;
+                        color:#6D778C;
                     ">
-                        {source_content}
+                        {content}
                     </div>
 
                 </div>
@@ -860,7 +1116,7 @@ def display_claim(claim, confidence, evidence):
                 if source.get("url"):
 
                     st.markdown(
-                        f"[🔗 Read source →]({source['url']})"
+                        f"[↗ Open source]({source['url']})"
                     )
 
 
@@ -876,250 +1132,279 @@ def display_summary(analyzed_claims):
     high = sum(
         1
         for item in analyzed_claims
-        if item["confidence"]["confidence"].upper()
-        == "HIGH"
+        if str(
+            item["confidence"]["confidence"]
+        ).upper() == "HIGH"
     )
 
 
     medium = sum(
         1
         for item in analyzed_claims
-        if item["confidence"]["confidence"].upper()
-        == "MEDIUM"
+        if str(
+            item["confidence"]["confidence"]
+        ).upper() == "MEDIUM"
     )
 
 
     speculative = sum(
         1
         for item in analyzed_claims
-        if item["confidence"]["confidence"].upper()
-        == "SPECULATIVE"
+        if str(
+            item["confidence"]["confidence"]
+        ).upper() == "SPECULATIVE"
     )
 
 
     low = sum(
         1
         for item in analyzed_claims
-        if item["confidence"]["confidence"].upper()
-        == "LOW"
+        if str(
+            item["confidence"]["confidence"]
+        ).upper() == "LOW"
     )
 
 
     render_html(f"""
     <div style="
-        margin-top: 30px;
-        margin-bottom: 25px;
+        margin-top:33px;
+
+        margin-bottom:29px;
+
+        background:
+            rgba(255,255,255,.76);
+
+        border:
+            1px solid #E0E4F0;
+
+        border-radius:22px;
+
+        padding:22px;
+
+        box-shadow:
+            0 9px 28px
+            rgba(64,74,115,.06);
     ">
 
         <div style="
             font-family:
-                'Playfair Display',
-                serif;
+                'Space Grotesk',
+                sans-serif;
 
-            font-size: 30px;
+            font-size:11px;
 
-            font-weight: 700;
+            font-weight:700;
 
-            color: #20283D;
+            letter-spacing:1.3px;
 
-            margin-bottom: 15px;
+            color:#8A92A5;
+
+            text-transform:uppercase;
+
+            margin-bottom:6px;
         ">
-            ✨ Trust Summary
+            Overall assessment
         </div>
 
 
         <div style="
-            display: grid;
+            font-family:
+                'Manrope',
+                sans-serif;
+
+            font-size:25px;
+
+            font-weight:800;
+
+            color:#273149;
+
+            margin-bottom:17px;
+        ">
+            ✦ Trust Summary
+        </div>
+
+
+        <div style="
+            display:grid;
 
             grid-template-columns:
                 repeat(5, 1fr);
 
-            gap: 10px;
+            gap:9px;
         ">
 
-
             <div style="
-                background: #FFFFFF;
-                border: 1px solid #E2E5EF;
-                border-radius: 16px;
-                padding: 15px;
-                text-align: center;
+                background:#F6F4FF;
+
+                border:1px solid #E5E0FA;
+
+                border-radius:14px;
+
+                padding:13px 7px;
+
+                text-align:center;
             ">
-
                 <div style="
-                    font-family:
-                        'Space Grotesk',
-                        sans-serif;
+                    font-family:'Space Grotesk',sans-serif;
 
-                    font-size: 25px;
+                    font-size:23px;
 
-                    font-weight: 700;
+                    font-weight:700;
 
-                    color: #7654E8;
+                    color:#7657E8;
                 ">
                     {total}
                 </div>
 
                 <div style="
-                    font-family:
-                        'Quicksand',
-                        sans-serif;
+                    font-family:'DM Sans',sans-serif;
 
-                    font-size: 12px;
+                    font-size:11px;
 
-                    color: #7A8195;
+                    color:#7F879A;
                 ">
                     Claims
                 </div>
-
             </div>
 
 
             <div style="
-                background: #F0FFF6;
-                border: 1px solid #D1F0DE;
-                border-radius: 16px;
-                padding: 15px;
-                text-align: center;
+                background:#F0FCF7;
+
+                border:1px solid #D8F1E5;
+
+                border-radius:14px;
+
+                padding:13px 7px;
+
+                text-align:center;
             ">
-
                 <div style="
-                    font-family:
-                        'Space Grotesk',
-                        sans-serif;
+                    font-family:'Space Grotesk',sans-serif;
 
-                    font-size: 25px;
+                    font-size:23px;
 
-                    font-weight: 700;
+                    font-weight:700;
 
-                    color: #168A4A;
+                    color:#159A63;
                 ">
                     {high}
                 </div>
 
                 <div style="
-                    font-family:
-                        'Quicksand',
-                        sans-serif;
+                    font-family:'DM Sans',sans-serif;
 
-                    font-size: 12px;
+                    font-size:11px;
 
-                    color: #61806F;
+                    color:#718D81;
                 ">
                     High
                 </div>
-
             </div>
 
 
             <div style="
-                background: #F0F7FF;
-                border: 1px solid #D7E8FA;
-                border-radius: 16px;
-                padding: 15px;
-                text-align: center;
+                background:#F1FAFF;
+
+                border:1px solid #D9EDF8;
+
+                border-radius:14px;
+
+                padding:13px 7px;
+
+                text-align:center;
             ">
-
                 <div style="
-                    font-family:
-                        'Space Grotesk',
-                        sans-serif;
+                    font-family:'Space Grotesk',sans-serif;
 
-                    font-size: 25px;
+                    font-size:23px;
 
-                    font-weight: 700;
+                    font-weight:700;
 
-                    color: #2874C7;
+                    color:#2587C8;
                 ">
                     {medium}
                 </div>
 
                 <div style="
-                    font-family:
-                        'Quicksand',
-                        sans-serif;
+                    font-family:'DM Sans',sans-serif;
 
-                    font-size: 12px;
+                    font-size:11px;
 
-                    color: #617B99;
+                    color:#71879A;
                 ">
                     Medium
                 </div>
-
             </div>
 
 
             <div style="
-                background: #FFF8E8;
-                border: 1px solid #F2D89D;
-                border-radius: 16px;
-                padding: 15px;
-                text-align: center;
+                background:#FFF9EA;
+
+                border:1px solid #F0DCA8;
+
+                border-radius:14px;
+
+                padding:13px 7px;
+
+                text-align:center;
             ">
-
                 <div style="
-                    font-family:
-                        'Space Grotesk',
-                        sans-serif;
+                    font-family:'Space Grotesk',sans-serif;
 
-                    font-size: 25px;
+                    font-size:23px;
 
-                    font-weight: 700;
+                    font-weight:700;
 
-                    color: #A86408;
+                    color:#B77718;
                 ">
                     {speculative}
                 </div>
 
                 <div style="
-                    font-family:
-                        'Quicksand',
-                        sans-serif;
+                    font-family:'DM Sans',sans-serif;
 
-                    font-size: 12px;
+                    font-size:11px;
 
-                    color: #8A6A35;
+                    color:#8B754E;
                 ">
-                    Speculative
+                    Pure Gen.
                 </div>
-
             </div>
 
 
             <div style="
-                background: #FFF2F2;
-                border: 1px solid #F0D3D3;
-                border-radius: 16px;
-                padding: 15px;
-                text-align: center;
+                background:#FFF4F4;
+
+                border:1px solid #F1D7D7;
+
+                border-radius:14px;
+
+                padding:13px 7px;
+
+                text-align:center;
             ">
-
                 <div style="
-                    font-family:
-                        'Space Grotesk',
-                        sans-serif;
+                    font-family:'Space Grotesk',sans-serif;
 
-                    font-size: 25px;
+                    font-size:23px;
 
-                    font-weight: 700;
+                    font-weight:700;
 
-                    color: #C83C3C;
+                    color:#D45252;
                 ">
                     {low}
                 </div>
 
                 <div style="
-                    font-family:
-                        'Quicksand',
-                        sans-serif;
+                    font-family:'DM Sans',sans-serif;
 
-                    font-size: 12px;
+                    font-size:11px;
 
-                    color: #956565;
+                    color:#946D6D;
                 ">
                     Low
                 </div>
-
             </div>
 
         </div>
@@ -1129,53 +1414,74 @@ def display_summary(analyzed_claims):
 
 
 # =========================================================
-# FOLLOW-UP QUESTION HEADER
+# FOLLOW-UP QUESTION
 # =========================================================
 
 def display_question_prompt():
 
     render_html("""
     <div style="
-        text-align: center;
+        position:relative;
 
-        margin-top: 52px;
+        margin-top:52px;
 
-        margin-bottom: 20px;
+        margin-bottom:20px;
 
-        padding-top: 32px;
+        padding:
+            29px 25px 24px;
 
-        border-top:
-            1px solid #E1E4EF;
+        text-align:center;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(246,243,255,.85),
+                rgba(239,250,255,.85)
+            );
+
+        border:
+            1px solid #DFE2F0;
+
+        border-radius:22px;
     ">
 
         <div style="
-            font-family:
-                'Playfair Display',
-                serif;
+            font-size:25px;
 
-            font-size: 28px;
-
-            font-weight: 700;
-
-            color: #20283D;
+            margin-bottom:7px;
         ">
-            💭 Have another question?
+            ✨
         </div>
 
 
         <div style="
             font-family:
-                'Quicksand',
+                'Manrope',
                 sans-serif;
 
-            font-size: 15px;
+            font-size:25px;
 
-            color: #7A8195;
+            font-weight:800;
 
-            margin-top: 7px;
+            color:#29334C;
         ">
-            Ask something related to this answer —
-            or explore something completely new.
+            Have another question?
+        </div>
+
+
+        <div style="
+            font-family:
+                'DM Sans',
+                sans-serif;
+
+            font-size:14px;
+
+            color:#7A8499;
+
+            margin-top:7px;
+        ">
+            Keep exploring. Ask another question and
+            we'll check the answer again.
         </div>
 
     </div>
