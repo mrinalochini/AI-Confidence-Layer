@@ -5,20 +5,16 @@ from openai import OpenAI
 
 def calculate_confidence(claim, evidence):
 
-    # =====================================================
-    # NO RETRIEVED EVIDENCE
-    # =====================================================
-
     if not evidence:
-
         return {
             "confidence": "SPECULATIVE",
             "reason": (
-                "No retrieved source was found to support this claim. "
-                "The statement may come from the AI's internal knowledge "
-                "or reasoning, so it should be treated as speculative."
+                "No external evidence was retrieved for this claim, "
+                "so it should be treated as unverified."
             )
         }
+
+    # existing LLM verification code below...
 
 
     # =====================================================
